@@ -9,7 +9,7 @@ import config from '../config/config';
  * @param {string} token - The reset password token
  */
 export const sendResetEmail = (email: string, token: string) => {
-  const resetLink = `${config.server.url}/api/v1/reset-password/${token}`;
+  const resetLink = `${config.client.url}/reset-password/${token}`;
   const mailOptions = {
     from: config.email.from,
     to: email,
@@ -33,7 +33,7 @@ export const sendResetEmail = (email: string, token: string) => {
  * @param {string} token - The email verification token
  */
 export const sendVerifyEmail = (email: string, token: string) => {
-  const verifyLink = `${config.server.url}/api/v1/verify-email/${token}`;
+  const verifyLink = `${config.client.url}/verify-email/${token}`;
   const mailOptions = {
     from: config.email.from,
     to: email,

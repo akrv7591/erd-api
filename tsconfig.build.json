@@ -3,7 +3,7 @@
     "compilerOptions": {
       "esModuleInterop": true
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "src/**/*.model.ts"],
     "exclude": ["node_modules", "__test__", "dist"]
   }
   

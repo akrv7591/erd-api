@@ -43,7 +43,7 @@ export type ExpressMiddleware<
 //   res.json({ message: 'you have signed up' }) // strongly typed response obj
 // };
 export interface UserSignUpCredentials {
-  username: string;
+  name: string;
   email: string;
   password: string;
 }

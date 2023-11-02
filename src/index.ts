@@ -1,10 +1,29 @@
 import app from './app';
 import config from './config/config';
 import logger from './middleware/logger';
+import {erdSequelize} from "./sequelize-models/erd-api";
+import * as http from "http";
 
-const server = app.listen(Number(config.server.port), () => {
-  logger.log('info', `Server is running on Port: ${config.server.port}`);
-});
+const initDb = async () => {
+  try {
+    await erdSequelize.authenticate()
+    // await erdSequelize.sync({alter: true})
+  } catch (e) {
+    console.error(e)
+    throw new Error("DB CONNECTION FAILED")
+  }
+}
+
+let server: http.Server
+
+(async () => {
+  await initDb()
+  server = app.listen(Number(config.server.port), () => {
+    logger.log('info', `Server is running on Port: ${config.server.port}`);
+  });
+})()
+
+
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM signal received.');

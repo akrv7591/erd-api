@@ -10,15 +10,19 @@ const envSchema = Joi.object().keys({
   NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
   PORT: Joi.string().required().default('4000'),
   SERVER_URL: Joi.string().required(),
+  CLIENT_URL: Joi.string().required(),
   CORS_ORIGIN: Joi.string().required().default('*'),
   ACCESS_TOKEN_SECRET: Joi.string().min(8).required(),
   ACCESS_TOKEN_EXPIRE: Joi.string().required().default('20m'),
   REFRESH_TOKEN_SECRET: Joi.string().min(8).required(),
   REFRESH_TOKEN_EXPIRE: Joi.string().required().default('1d'),
   REFRESH_TOKEN_COOKIE_NAME: Joi.string().required().default('jid'),
-  MYSQL_DATABASE: Joi.string().required(),
-  MYSQL_ROOT_PASSWORD: Joi.string().required(),
-  DATABASE_URL: Joi.string().required(),
+  DB_USERNAME: Joi.string().required(),
+  DB_PASSWORD: Joi.string().required(),
+  DB_HOST: Joi.string().required(),
+  DB_PORT: Joi.number().required(),
+  DB_NAME: Joi.string().required(),
+  DB_DIALECT: Joi.string().required(),
   SMTP_HOST: Joi.string().required(),
   SMTP_PORT: Joi.string().default('587'),
   SMTP_USERNAME: Joi.string().required(),
@@ -44,6 +48,9 @@ const config = {
     port: validatedEnv.PORT,
     url: validatedEnv.SERVER_URL
   },
+  client: {
+    url: validatedEnv.CLIENT_URL
+  },
   cors: {
     cors_origin: validatedEnv.CORS_ORIGIN
   },
@@ -68,6 +75,16 @@ const config = {
       }
     },
     from: validatedEnv.EMAIL_FROM
+  },
+  db: {
+    erd: {
+      host: validatedEnv.DB_HOST,
+      username: validatedEnv.DB_USERNAME,
+      password: validatedEnv.DB_PASSWORD,
+      database: validatedEnv.DB_NAME,
+      dialect: validatedEnv.DB_DIALECT,
+      port: validatedEnv.DB_PORT
+    }
   }
 } as const;
 
