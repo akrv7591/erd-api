@@ -67,7 +67,7 @@ export class User extends Model<IUser, ICUser> {
   declare password: string
 
   @Column({
-    type: DataType.STRING
+    type: DataType.DATE
   })
   declare emailVerified?: Date | null
 

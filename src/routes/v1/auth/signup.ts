@@ -6,10 +6,7 @@ import * as argon2 from "argon2";
 import {randomUUID} from "crypto";
 import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import {sendVerifyEmail} from "../../../utils/sendEmail.util";
-import {createAccessToken, createRefreshToken} from "../../../utils/generateTokens.util";
-import {RefreshToken} from "../../../sequelize-models/erd-api/RefreshToken.model";
-import config from "../../../config/config";
-import {refreshTokenCookieConfig} from "../../../config/cookieConfig";
+import handleAuthTokens from "../../../utils/handleAuthTokens";
 
 /**
  * This function handles the signup process for new users. It expects a request object with the following properties:
@@ -65,24 +62,11 @@ export const signup = async (
     // Send an email with the verification link
     sendVerifyEmail(email, token);
 
-    const accessToken = createAccessToken(newUser);
-    const newRefreshToken = createRefreshToken(newUser);
-
-    // store new refresh token in db
-    await RefreshToken.create({
-      token: newRefreshToken,
-      userId: newUser.id
-    }).catch(e => console.log(e))
-
-    // save refresh token in cookie
-    res.cookie(
-      config.jwt.refresh_token.cookie_name,
-      newRefreshToken,
-      refreshTokenCookieConfig
-    );
+    const accessToken = await handleAuthTokens(req, res, newUser)
 
     res.status(httpStatus.CREATED).json({accessToken});
   } catch (err) {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR);
+    console.error(err)
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 };

@@ -1,13 +1,16 @@
 import express from "express";
-import user from "./user";
+import userRouter from "./user";
 import auth from "./auth";
 import verifyEmailRouter from "./verify-email";
 import passwordRouter from "./password";
+import isAuth from "../../middleware/isAuth";
+import teamRouter from "./team";
 
 const router = express.Router()
 
 router.use("/auth", auth)
-router.use("/user", user)
+router.use("/user", isAuth, userRouter)
+router.use("/team", isAuth, teamRouter)
 router.use("", verifyEmailRouter)
 router.use("", passwordRouter)
 

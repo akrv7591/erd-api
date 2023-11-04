@@ -4,8 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="migrated from prisma to sequelize">
+      <change afterPath="$PROJECT_DIR$/src/middleware/pagination.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/team/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/team/list.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/team/upsert.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__test__/middleware/isAuth.test.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/isAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/isAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth/refresh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth/refresh.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth/signin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth/signin.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth/signup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth/signup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/user/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/user/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/verify-email.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/verify-email/verify-email.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/express.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/express.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/jwt.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/generateTokens.util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/generateTokens.util.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erd-api/src/routes/v1/user",
+    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erd-api/src/routes/v1/team",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -42,6 +62,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routes/v1/team" />
+      <recent name="$PROJECT_DIR$/src/routes/v1/auth" />
+      <recent name="$PROJECT_DIR$/src/sequelize-models/erd-api" />
       <recent name="$PROJECT_DIR$/src/routes/v1/user" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -54,11 +77,38 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698706964439</updated>
-      <workItem from="1698706967538" duration="14312000" />
+      <workItem from="1698706967538" duration="18758000" />
+      <workItem from="1698808860217" duration="30286000" />
+      <workItem from="1698999935761" duration="2590000" />
+      <workItem from="1699005823148" duration="15133000" />
     </task>
+    <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
+      <option name="closed" value="true" />
+      <created>1698910733227</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698910733227</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="migrated from prisma to sequelize" />
+    <option name="LAST_COMMIT_MESSAGE" value="migrated from prisma to sequelize" />
   </component>
 </project>

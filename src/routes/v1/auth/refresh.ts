@@ -3,8 +3,9 @@ import config from "../../../config/config";
 import httpStatus from "http-status";
 import {RefreshToken} from "../../../sequelize-models/erd-api/RefreshToken.model";
 import {Request, Response} from "express";
-import jwt, {type JwtPayload} from "jsonwebtoken";
 import logger from "../../../middleware/logger";
+import {jwtVerify} from "jose";
+import {IAuthorizedUser} from "../../../types/express";
 import {createAccessToken, createRefreshToken} from "../../../utils/generateTokens.util";
 import {User} from "../../../sequelize-models/erd-api/User.model";
 
@@ -22,8 +23,6 @@ import {User} from "../../../sequelize-models/erd-api/User.model";
  *   - A 200 OK status code if the token was valid and the user was granted a new refresh and access token
  */
 
-// @ts-expect-error
-const {verify} = jwt;
 
 export const refresh = async (req: Request, res: Response) => {
   const refreshToken: string | undefined =
@@ -46,22 +45,23 @@ export const refresh = async (req: Request, res: Response) => {
 
   // Detected refresh token reuse!
   if (!foundRefreshToken) {
-    verify(
-      refreshToken,
-      config.jwt.refresh_token.secret,
-      async (err: unknown, payload: JwtPayload) => {
-        if (err) return res.sendStatus(httpStatus.FORBIDDEN);
+    try {
+      const {payload} = await jwtVerify<IAuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
 
-        logger.warn('Attempted refresh token reuse!');
+      logger.warn('Attempted refresh token reuse!');
 
-        // Delete all tokens of the user because we detected that a token was stolen from him
-        await RefreshToken.destroy({
-          where: {
-            userId: payload.userId
-          }
-        });
-      }
-    );
+      // Delete all tokens of the user because we detected that a token was stolen from him
+      await RefreshToken.destroy({
+        where: {
+          userId: payload.id
+        }
+      });
+
+    } catch (err) {
+      if (err) return res.sendStatus(httpStatus.FORBIDDEN);
+
+    }
+    console.log("REFRESH TOKEN FAILED")
     return res.status(httpStatus.FORBIDDEN);
   }
 
@@ -74,44 +74,35 @@ export const refresh = async (req: Request, res: Response) => {
 
 
   // evaluate jwt
-  verify(
-    refreshToken,
-    config.jwt.refresh_token.secret,
-    async (err: unknown, payload: JwtPayload) => {
-      if (err || foundRefreshToken.userId !== payload.userId) {
-        return res.sendStatus(httpStatus.FORBIDDEN);
-      }
-
-      const user = await User.findOne({
-        where: {
-          id: payload.userId
-        }
-      })
+  try {
+    const {payload} = await jwtVerify<IAuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
+        const user = await User.findByPk(payload.id)
 
 
-      // Refresh token was still valid
-      const accessToken = createAccessToken(user!);
+        // Refresh token was still valid
+        const accessToken = await createAccessToken(user!);
 
-      const newRefreshToken = createRefreshToken(user!);
+        const newRefreshToken = await createRefreshToken(user!);
 
-      // add refresh token to db
-      await RefreshToken
-        .create({
-          token: newRefreshToken,
-          userId: payload.userId
-        })
-        .catch((err: Error) => {
-          logger.error(err);
-        });
+        // add refresh token to db
+        await RefreshToken
+          .create({
+            token: newRefreshToken,
+            userId: payload.id
+          })
+          .catch((err: Error) => {
+            logger.error(err);
+          });
 
-      // Creates Secure Cookie with refresh token
-      res.cookie(
-        config.jwt.refresh_token.cookie_name,
-        newRefreshToken,
-        refreshTokenCookieConfig
-      );
+        // Creates Secure Cookie with refresh token
+        res.cookie(
+          config.jwt.refresh_token.cookie_name,
+          newRefreshToken,
+          refreshTokenCookieConfig
+        );
 
-      return res.json({accessToken});
-    }
-  );
+        return res.json({accessToken});
+  } catch (err) {
+    return res.sendStatus(httpStatus.FORBIDDEN);
+  }
 };

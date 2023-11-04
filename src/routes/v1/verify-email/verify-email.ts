@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import httpStatus from "http-status";
 import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import {User} from "../../../sequelize-models/erd-api/User.model";
+import handleAuthTokens from "../../../utils/handleAuthTokens";
 
 export const verifyEmail = async (req: Request, res: Response) => {
   const { token } = req.params;
@@ -20,15 +21,25 @@ export const verifyEmail = async (req: Request, res: Response) => {
   }
 
   // Update the user's email verification status in the database
-  await User.update({ emailVerified: new Date() },{
+  const user = await User.findOne({
     where: { id: verificationToken.userId },
   });
+
+  if (!user) {
+    return res.sendStatus(httpStatus.NOT_FOUND
+    )
+  }
+
+  await user.update({ emailVerified: new Date() })
+  await user.reload()
 
   // Delete the verification tokens that the user owns form the database
   await EmailVerificationToken.destroy({
     where: { userId: verificationToken.userId }
   });
 
+  const accessToken = await handleAuthTokens(req, res, user)
+
   // Return a success message
-  return res.status(200).json({ message: 'Email verification successful' });
+  return res.status(200).json({ accessToken: accessToken });
 };

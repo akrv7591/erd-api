@@ -2,9 +2,9 @@ import express from "express";
 import list from "./list";
 import get from "./get";
 
-const router = express.Router()
+const userRouter = express.Router()
 
-router.use("/:userId", get)
-router.use("", list)
+userRouter.use("/:userId", get)
+userRouter.use("", list)
 
-export default router
+export default userRouter

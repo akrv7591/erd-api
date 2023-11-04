@@ -56,11 +56,11 @@ const config = {
   },
   jwt: {
     access_token: {
-      secret: validatedEnv.ACCESS_TOKEN_SECRET,
+      secret: new TextEncoder().encode(validatedEnv.ACCESS_TOKEN_SECRET),
       expire: validatedEnv.ACCESS_TOKEN_EXPIRE
     },
     refresh_token: {
-      secret: validatedEnv.REFRESH_TOKEN_SECRET,
+      secret: new TextEncoder().encode(validatedEnv.REFRESH_TOKEN_SECRET),
       expire: validatedEnv.REFRESH_TOKEN_EXPIRE,
       cookie_name: validatedEnv.REFRESH_TOKEN_COOKIE_NAME
     }
