@@ -7,8 +7,10 @@ import {Team} from "../../../sequelize-models/erd-api/Team.model";
 export const list = async (req: express.Request, res: express.Response) => {
   try {
     const data = await Team.findAndCountAll({
+      ...req.pagination,
       include: {
         model: User,
+        required: true,
         where: {
           id: req.authorizationUser?.id
         }

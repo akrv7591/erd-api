@@ -7,16 +7,20 @@ import {RefreshToken} from "./RefreshToken.model";
 import {ResetToken} from "./ResetToken.model";
 import {Team} from "./Team.model";
 import {UserTeam} from "./UserTeam.model";
+import {Erd} from "./Erd.model";
+import {UserErd} from "./UserErd.model";
 
-export const erdSequelize =  new Sequelize({
-    ...config.db.erd,
-    models: [
-      User,
-      Account,
-      EmailVerificationToken,
-      RefreshToken,
-      ResetToken,
-      Team,
-      UserTeam
-    ]
+export const erdSequelize = new Sequelize({
+  ...config.db.erd,
+  models: [
+    User,
+    Account,
+    EmailVerificationToken,
+    RefreshToken,
+    ResetToken,
+    Team,
+    UserTeam,
+    Erd,
+    UserErd
+  ]
 });

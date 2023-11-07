@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
-    "@types/express-validator": "^3.0.0",
     "@types/http-status": "^1.1.2",
     "argon2": "^0.30.3",
     "compression": "^1.7.4",
