@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="api updates plus Erd, UserErd and Table model added">
-      <change afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Column.model.ts" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added Column model">
+      <change afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Relation.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Table.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Table.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" afterDir="false" />
@@ -67,7 +67,7 @@
       <workItem from="1699066934735" duration="1304000" />
       <workItem from="1699223225153" duration="4972000" />
       <workItem from="1699309383526" duration="6041000" />
-      <workItem from="1699325240772" duration="8811000" />
+      <workItem from="1699325240772" duration="9346000" />
     </task>
     <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
       <option name="closed" value="true" />
@@ -117,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699398990661</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added Column model">
+      <option name="closed" value="true" />
+      <created>1699400211661</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699400211661</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +149,7 @@
     <MESSAGE value="Added validations" />
     <MESSAGE value="added Erd and UserErd models" />
     <MESSAGE value="api updates plus Erd, UserErd and Table model added" />
-    <option name="LAST_COMMIT_MESSAGE" value="api updates plus Erd, UserErd and Table model added" />
+    <MESSAGE value="added Column model" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Column model" />
   </component>
 </project>

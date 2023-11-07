@@ -12,6 +12,7 @@ import {
 import {createId} from "@paralleldrive/cuid2";
 import {Erd, IErd} from "./Erd.model";
 import {IColumn, Column as ColumnModel} from "./Column.model";
+import {Relation} from "./Relation.model";
 
 export interface ITable {
   id: string;
@@ -70,4 +71,10 @@ export class Table extends Model<ITable, ICTable> {
     onDelete: "CASCADE"
   })
   declare columns: ColumnModel[]
+
+  @HasMany(() => Relation, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
+  declare relations: Relation[]
 }

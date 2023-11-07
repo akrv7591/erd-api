@@ -11,6 +11,7 @@ import {Erd} from "./Erd.model";
 import {UserErd} from "./UserErd.model";
 import {Table} from "./Table.model";
 import {Column} from "./Column.model";
+import {Relation} from "./Relation.model";
 
 export const erdSequelize = new Sequelize({
   ...config.db.erd,
@@ -25,6 +26,7 @@ export const erdSequelize = new Sequelize({
     Erd,
     UserErd,
     Table,
-    Column
+    Column,
+    Relation
   ]
 });
