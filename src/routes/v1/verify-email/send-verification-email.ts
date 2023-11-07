@@ -39,7 +39,7 @@ export const sendVerificationEmail = async (
       .json({ error: 'Email not found' });
   }
 
-  // Check if the user's email is already verified
+  // Check if the user-router's email is already verified
   if (user.emailVerified) {
     return res
       .status(httpStatus.CONFLICT)

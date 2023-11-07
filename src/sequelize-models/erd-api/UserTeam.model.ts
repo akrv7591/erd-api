@@ -61,8 +61,8 @@ export class UserTeam extends Model<IUserTeam, ICUserTeam> {
 
   // Relations
   // @BelongsTo(() => User)
-  // declare user: User
+  // declare user-router: User
   //
   // @BelongsTo(() => Team)
-  // declare team: Team
+  // declare team-router: Team
 }

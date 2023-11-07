@@ -11,13 +11,13 @@ import handleAuthTokens from "../../../utils/handleAuthTokens";
 /**
  * This function handles the signup process for new users. It expects a request object with the following properties:
  *
- * @param {TypedRequest<UserSignUpCredentials>} req - The request object that includes user's username, email, and password.
+ * @param {TypedRequest<UserSignUpCredentials>} req - The request object that includes user-router's username, email, and password-router.
  * @param {Response} res - The response object that will be used to send the HTTP response.
  *
  * @returns {Response} Returns an HTTP response that includes one of the following:
  *   - A 400 BAD REQUEST status code and an error message if the request body is missing any required parameters.
- *   - A 409 CONFLICT status code if the user email already exists in the database.
- *   - A 201 CREATED status code and a success message if the new user is successfully created and a verification email is sent.
+ *   - A 409 CONFLICT status code if the user-router email already exists in the database.
+ *   - A 201 CREATED status code and a success message if the new user-router is successfully created and a verification email is sent.
  *   - A 500 INTERNAL SERVER ERROR status code if there is an error in the server.
  */
 export const signup = async (
@@ -29,7 +29,7 @@ export const signup = async (
   // check req.body values
   if (!name || !email || !password) {
     return res.status(httpStatus.BAD_REQUEST).json({
-      message: 'Username, email and password are required!'
+      message: 'Username, email and password-router are required!'
     });
   }
 

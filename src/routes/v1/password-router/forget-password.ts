@@ -7,7 +7,7 @@ import {User} from "../../../sequelize-models/erd-api/User.model";
 import {ResetToken} from "../../../sequelize-models/erd-api/ResetToken.model";
 
 /**
- * Sends Forgot password email
+ * Sends Forgot password-router email
  * @param req
  * @param res
  * @returns

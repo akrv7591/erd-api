@@ -1,8 +1,9 @@
 import {Optional} from "sequelize";
-import {BelongsToMany, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {IUser, User} from "./User.model";
 import {UserErd} from "./UserErd.model";
+import {ICTable, Table as TableModel} from "./Table.model";
 
 export interface IErd {
   id: string
@@ -13,6 +14,7 @@ export interface IErd {
 
   //Relations
   users?: IUser[]
+  tables?: ICTable[]
 }
 
 export interface ICErd extends Optional<IErd, 'id' | 'createdAt' | 'description'> {
@@ -49,4 +51,10 @@ export class Erd extends Model<IErd, ICErd> {
   // Relations
   @BelongsToMany(() => User, () => UserErd)
   declare users: User[]
+
+  @HasMany(() => TableModel, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
+  declare tables: TableModel[]
 }

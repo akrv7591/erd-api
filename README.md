@@ -372,7 +372,7 @@ This project uses Yarn as package manager
 Go to the project directory
 
 ```bash
-  cd express-ts-auth-service
+  cd express-ts-auth-router-service
 ```
 
 ```bash
@@ -445,7 +445,7 @@ Start the server in production mode
 Run docker compose
 
 ```bash
-  cd express-ts-auth-service
+  cd express-ts-auth-router-service
   docker-compose up
 ```
 

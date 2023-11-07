@@ -34,7 +34,7 @@ export type ExpressMiddleware<
 ) => Promise<void> | void;
 
 // Example usage from Stackoverflow:
-// type Req = { email: string; password: string };
+// type Req = { email: string; password-router: string };
 
 // type Res = { message: string };
 

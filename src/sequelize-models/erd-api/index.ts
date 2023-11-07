@@ -9,6 +9,7 @@ import {Team} from "./Team.model";
 import {UserTeam} from "./UserTeam.model";
 import {Erd} from "./Erd.model";
 import {UserErd} from "./UserErd.model";
+import {Table} from "./Table.model";
 
 export const erdSequelize = new Sequelize({
   ...config.db.erd,
@@ -21,6 +22,7 @@ export const erdSequelize = new Sequelize({
     Team,
     UserTeam,
     Erd,
-    UserErd
+    UserErd,
+    Table
   ]
 });

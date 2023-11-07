@@ -11,12 +11,12 @@ let transporter: Transporter | null = null;
 //       host: account.smtp.host,
 //       port: account.smtp.port,
 //       secure: account.smtp.secure,
-//       auth: {
-//         user: account.user,
+//       auth-router: {
+//         user-router: account.user-router,
 //         pass: account.pass
 //       }
 //     });
-//     logger.info(`Test account created: ${account.user}`);
+//     logger.info(`Test account created: ${account.user-router}`);
 //     console.log(account);
 //   } catch (error) {
 //     console.error('Failed to create a test account:', error);

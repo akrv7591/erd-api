@@ -20,7 +20,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
       .json({ error: 'Invalid or expired token' });
   }
 
-  // Update the user's email verification status in the database
+  // Update the user-router's email verification status in the database
   const user = await User.findOne({
     where: { id: verificationToken.userId },
   });
@@ -33,7 +33,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
   await user.update({ emailVerified: new Date() })
   await user.reload()
 
-  // Delete the verification tokens that the user owns form the database
+  // Delete the verification tokens that the user-router owns form the database
   await EmailVerificationToken.destroy({
     where: { userId: verificationToken.userId }
   });

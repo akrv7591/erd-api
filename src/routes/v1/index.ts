@@ -1,16 +1,20 @@
 import express from "express";
-import userRouter from "./user";
-import auth from "./auth";
+import userRouter from "./user-router";
+import authRouter from "./auth-router";
 import verifyEmailRouter from "./verify-email";
-import passwordRouter from "./password";
+import passwordRouter from "./password-router";
+import teamRouter from "./team-router";
+import erdRouter from "./erd-router";
 import isAuth from "../../middleware/isAuth";
-import teamRouter from "./team";
+
 
 const router = express.Router()
 
-router.use("/auth", auth)
+router.use("/auth", authRouter)
 router.use("/user", isAuth, userRouter)
 router.use("/team", isAuth, teamRouter)
+router.use("/erd", isAuth, erdRouter)
+
 router.use("", verifyEmailRouter)
 router.use("", passwordRouter)
 

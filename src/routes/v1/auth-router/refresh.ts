@@ -20,7 +20,7 @@ import {User} from "../../../sequelize-models/erd-api/User.model";
  *   - A 403 FORBIDDEN status code if a refresh token reuse was detected but the token wasn't valid
  *   - A 403 FORBIDDEN status code if a refresh token reuse was detected but the token was valid
  *   - A 403 FORBIDDEN status code if the token wasn't valid
- *   - A 200 OK status code if the token was valid and the user was granted a new refresh and access token
+ *   - A 200 OK status code if the token was valid and the user-router was granted a new refresh and access token
  */
 
 
@@ -50,7 +50,7 @@ export const refresh = async (req: Request, res: Response) => {
 
       logger.warn('Attempted refresh token reuse!');
 
-      // Delete all tokens of the user because we detected that a token was stolen from him
+      // Delete all tokens of the user-router because we detected that a token was stolen from him
       await RefreshToken.destroy({
         where: {
           userId: payload.id

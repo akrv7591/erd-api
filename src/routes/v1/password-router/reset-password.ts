@@ -25,7 +25,7 @@ export const resetPassword = async (
   if (!newPassword) {
     return res
       .status(httpStatus.BAD_REQUEST)
-      .json({message: 'New password is required!'});
+      .json({message: 'New password-router is required!'});
   }
 
   // Check if the token exists in the database and is not expired
@@ -43,13 +43,13 @@ export const resetPassword = async (
       .json({error: 'Invalid or expired token'});
   }
 
-  // Update the user's password in the database
+  // Update the user-router's password-router in the database
   const hashedPassword = await argon2.hash(newPassword);
   await User.update({password: hashedPassword}, {
     where: {id: resetToken.userId},
   });
 
-  // Delete the reset and all other reset tokens that the user owns from the database
+  // Delete the reset and all other reset tokens that the user-router owns from the database
   await ResetToken.destroy({
     where: {userId: resetToken.userId}
   });
