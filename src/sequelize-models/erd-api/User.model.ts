@@ -7,6 +7,8 @@ import {IRefreshToken, RefreshToken} from "./RefreshToken.model";
 import {IResetToken, ResetToken} from "./ResetToken.model";
 import {ITeam, Team} from "./Team.model";
 import {UserTeam} from "./UserTeam.model";
+import {Erd} from "./Erd.model";
+import {UserErd} from "./UserErd.model";
 
 export interface IUser {
   id: string
@@ -98,6 +100,9 @@ export class User extends Model<IUser, ICUser> {
 
   @BelongsToMany(() => Team, () => UserTeam)
   declare teams: Team[]
+
+  @BelongsToMany(() => Erd, () => UserErd)
+  declare erds: Erd[]
 
   public toJWTPayload() {
     return {

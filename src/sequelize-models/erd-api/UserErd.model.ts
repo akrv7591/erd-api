@@ -2,32 +2,33 @@ import {Optional} from "sequelize";
 import {Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {IUser, User} from "./User.model";
-import {ITeam, Team} from "./Team.model";
+import {Erd, IErd} from "./Erd.model";
 
-export interface IUserTeam {
+export interface IUserErd {
   id: string
   createdAt: Date
   updatedAt: Date
   isAdmin: boolean
+  canEdit: boolean
 
   //Foreign keys
   userId: string
-  teamId: string
+  erdId: string
 
   //Relations
   user?: IUser
-  team?: ITeam
+  erd?: IErd
 }
 
-export interface ICUserTeam extends Optional<IUserTeam, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICUserErd extends Optional<IUserErd, 'id' | 'createdAt' | 'updatedAt'> {
 }
 
 @Table({
-  modelName: 'UserTeam',
-  tableName: 'UserTeam',
+  modelName: 'UserErd',
+  tableName: 'UserErd',
   timestamps: true,
 })
-export class UserTeam extends Model<IUserTeam, ICUserTeam> {
+export class UserErd extends Model<IUserErd, ICUserErd> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -44,6 +45,13 @@ export class UserTeam extends Model<IUserTeam, ICUserTeam> {
   })
   declare isAdmin: boolean
 
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  })
+  declare canEdit: boolean
+
   //Foreign keys
   @ForeignKey(() => User)
   @Column({
@@ -52,17 +60,11 @@ export class UserTeam extends Model<IUserTeam, ICUserTeam> {
   })
   declare userId: string
 
-  @ForeignKey(() => Team)
+  @ForeignKey(() => Erd)
   @Column({
     type: DataType.STRING,
     allowNull: false
   })
-  declare teamId: string
+  declare erdId: string
 
-  // Relations
-  // @BelongsTo(() => User)
-  // declare user: User
-  //
-  // @BelongsTo(() => Team)
-  // declare team: Team
 }

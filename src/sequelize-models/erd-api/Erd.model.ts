@@ -2,27 +2,28 @@ import {Optional} from "sequelize";
 import {BelongsToMany, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {IUser, User} from "./User.model";
-import {UserTeam} from "./UserTeam.model";
+import {UserErd} from "./UserErd.model";
 
-export interface ITeam {
+export interface IErd {
   id: string
   createdAt: Date
   updatedAt: Date
   name: string
+  description: string | null;
 
   //Relations
   users?: IUser[]
 }
 
-export interface ICTeam extends Optional<ITeam, 'id' | 'createdAt'> {
+export interface ICErd extends Optional<IErd, 'id' | 'createdAt' | 'description'> {
 }
 
 @Table({
-  modelName: 'Team',
-  tableName: 'Team',
+  modelName: 'Erd',
+  tableName: 'Erd',
   timestamps: true,
 })
-export class Team extends Model<ITeam, ICTeam> {
+export class Erd extends Model<IErd, ICErd> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -39,7 +40,13 @@ export class Team extends Model<ITeam, ICTeam> {
   })
   declare name: string
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  declare description: string | null
+
   // Relations
-  @BelongsToMany(() => User, () => UserTeam)
+  @BelongsToMany(() => User, () => UserErd)
   declare users: User[]
 }
