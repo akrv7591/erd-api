@@ -1,7 +1,17 @@
 import {Optional} from "sequelize";
-import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table as  SequelizeTable} from "sequelize-typescript";
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  HasMany,
+  Model,
+  PrimaryKey,
+  Table as SequelizeTable
+} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {Erd, IErd} from "./Erd.model";
+import {IColumn, Column as ColumnModel} from "./Column.model";
 
 export interface ITable {
   id: string;
@@ -14,7 +24,8 @@ export interface ITable {
   erdId: string;
 
   // Relations
-  erd: IErd
+  erd?: IErd
+  columns?: IColumn[]
 }
 
 export interface ICTable extends Optional<ITable, 'id' | 'createdAt' | 'updatedAt'> {
@@ -53,4 +64,10 @@ export class Table extends Model<ITable, ICTable> {
   // Relations
   @BelongsTo(() => Erd)
   declare erd: Erd
+
+  @HasMany(() => ColumnModel, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
+  declare columns: ColumnModel[]
 }
