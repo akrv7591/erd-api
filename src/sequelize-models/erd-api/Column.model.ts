@@ -24,6 +24,7 @@ export interface IColumn {
   unsigned: boolean;
   autoIncrement: boolean;
   comment: string;
+  order: number;
 
   // Foreign key
   tableId: string;
@@ -39,6 +40,9 @@ export interface ICColumn extends Optional<IColumn, 'id' | 'createdAt' | 'update
   modelName: 'Column',
   tableName: 'Column',
   timestamps: true,
+  defaultScope: {
+    order: ['order', 'asc']
+  }
 })
 export class Column extends Model<IColumn, ICColumn> {
   @PrimaryKey
@@ -105,6 +109,11 @@ export class Column extends Model<IColumn, ICColumn> {
   })
   declare comment: string;
 
+  @SequelizeColumn({
+    type: DataType.SMALLINT,
+    defaultValue: false
+  })
+  declare order: number;
 
   // ForeignKey
   @ForeignKey(() => Table)
