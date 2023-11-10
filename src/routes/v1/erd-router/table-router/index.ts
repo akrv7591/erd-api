@@ -7,11 +7,13 @@ import {upsertTable} from "./upsertTable";
 import {validateSchemas} from "../../../../middleware/validateSchemas";
 import {bulkTableValidations, tableValidations} from "../../../../validations/table.validations";
 import {bulkUpdateTable} from "./bulkUpdateTable";
+import {deleteTable} from "./deleteTable";
 
 const tableRouter = express.Router({mergeParams: true})
 
 tableRouter.use("/:tableId/column", columnRouter)
 tableRouter.use("/:tableId/relation", relationRouter)
+tableRouter.delete("/:tableId", deleteTable)
 tableRouter.get("/count", tableCount)
 tableRouter.put("/bulk", validateSchemas(bulkTableValidations), bulkUpdateTable)
 tableRouter.get("", tableList)
