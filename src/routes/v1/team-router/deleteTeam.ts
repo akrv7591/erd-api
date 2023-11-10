@@ -8,7 +8,7 @@ export const deleteTeam: RequestHandler = async (req, res) => {
   try {
     const {teamId} = req.params
 
-    if (!teamId || isCuid(teamId)) return res.sendStatus(httpStatus.BAD_REQUEST)
+    if (!teamId || !isCuid(teamId)) return res.sendStatus(httpStatus.BAD_REQUEST)
 
     const deleted = await Team.destroy({
       where: {
