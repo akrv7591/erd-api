@@ -1,11 +1,11 @@
 import {Optional} from "sequelize";
 import {Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
-import {createId} from "@paralleldrive/cuid2";
+// import {createId} from "@paralleldrive/cuid2";
 import {IUser, User} from "./User.model";
 import {Erd, IErd} from "./Erd.model";
 
 export interface IUserErd {
-  id: string
+  // id: string
   createdAt: Date
   updatedAt: Date
   isAdmin: boolean
@@ -20,7 +20,7 @@ export interface IUserErd {
   erd?: IErd
 }
 
-export interface ICUserErd extends Optional<IUserErd, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICUserErd extends Optional<IUserErd, 'createdAt' | 'updatedAt'> {
 }
 
 @Table({
@@ -29,14 +29,31 @@ export interface ICUserErd extends Optional<IUserErd, 'id' | 'createdAt' | 'upda
   timestamps: true,
 })
 export class UserErd extends Model<IUserErd, ICUserErd> {
+  // @PrimaryKey
+  // @Column({
+  //   type: DataType.STRING,
+  //   allowNull: false,
+  //   unique: true,
+  //   defaultValue: () => createId()
+  // })
+  // declare id: string;
+
+  //Foreign keys
   @PrimaryKey
+  @ForeignKey(() => User)
   @Column({
     type: DataType.STRING,
-    allowNull: false,
-    unique: true,
-    defaultValue: () => createId()
+    allowNull: false
   })
-  declare id: string;
+  declare userId: string
+
+  @PrimaryKey
+  @ForeignKey(() => Erd)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  declare erdId: string
 
   @Column({
     type: DataType.BOOLEAN,
@@ -53,18 +70,18 @@ export class UserErd extends Model<IUserErd, ICUserErd> {
   declare canEdit: boolean
 
   //Foreign keys
-  @ForeignKey(() => User)
-  @Column({
-    type: DataType.STRING,
-    allowNull: false
-  })
-  declare userId: string
-
-  @ForeignKey(() => Erd)
-  @Column({
-    type: DataType.STRING,
-    allowNull: false
-  })
-  declare erdId: string
+  // @ForeignKey(() => User)
+  // @Column({
+  //   type: DataType.STRING,
+  //   allowNull: false
+  // })
+  // declare userId: string
+  //
+  // @ForeignKey(() => Erd)
+  // @Column({
+  //   type: DataType.STRING,
+  //   allowNull: false
+  // })
+  // declare erdId: string
 
 }
