@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added auth enums">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enums/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/auth.ts" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed cookies issue">
       <change beforePath="$PROJECT_DIR$/src/middleware/isAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/isAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/signin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/signin.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +89,7 @@
       <workItem from="1701644989263" duration="9264000" />
       <workItem from="1701733056475" duration="6932000" />
       <workItem from="1701936174063" duration="15313000" />
-      <workItem from="1702264652966" duration="40796000" />
+      <workItem from="1702264652966" duration="41064000" />
     </task>
     <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
       <option name="closed" value="true" />
@@ -312,7 +307,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702536647489</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="fixed cookies issue">
+      <option name="closed" value="true" />
+      <created>1702544363313</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1702544363313</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,7 +333,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added user and team list apis" />
     <MESSAGE value="Added validations" />
     <MESSAGE value="added Erd and UserErd models" />
     <MESSAGE value="api updates plus Erd, UserErd and Table model added" />
@@ -355,6 +357,7 @@
     <MESSAGE value="added deleteTable api to tableRouter" />
     <MESSAGE value="alpha push" />
     <MESSAGE value="added auth enums" />
-    <option name="LAST_COMMIT_MESSAGE" value="added auth enums" />
+    <MESSAGE value="fixed cookies issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed cookies issue" />
   </component>
 </project>
