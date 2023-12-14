@@ -4,49 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added deleteTable api to tableRouter">
-      <change afterPath="$PROJECT_DIR$/src/constants/multiplayer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/detail.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/addRelation.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/deleteRelation.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/TeamErd.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/MultiplayerSocket.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/TableSocket.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/playground.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/email/sendUserInvitation.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/validations/relation.validation.ts" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="Error generating commit message">
+      <change afterPath="$PROJECT_DIR$/src/enums/auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/errorHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/errorHandler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/isAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/isAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/signin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/signin.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/list.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/list.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/column-router/upsertColumn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/column-router/upsertColumn.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/list.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/list.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/relation-router/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/relation-router/relationList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/relationList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Account.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Account.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Relation.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Relation.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Table.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Table.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Team.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Team.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserErd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserErd.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/sendEmail.util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/sendEmail.util.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/erd.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/erd.validation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/team.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/team.validation.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +94,7 @@
       <workItem from="1701644989263" duration="9264000" />
       <workItem from="1701733056475" duration="6932000" />
       <workItem from="1701936174063" duration="15313000" />
-      <workItem from="1702264652966" duration="28484000" />
+      <workItem from="1702264652966" duration="35698000" />
     </task>
     <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
       <option name="closed" value="true" />
@@ -332,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699600609128</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="alpha push">
+      <option name="closed" value="true" />
+      <created>1702517989555</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1702517989555</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -350,7 +322,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="migrated from prisma to sequelize" />
     <MESSAGE value="migrated from jsonwebtoken to jose" />
     <MESSAGE value="Added user and team list apis" />
     <MESSAGE value="Added validations" />
@@ -375,6 +346,7 @@
     <MESSAGE value="UserTeam removed id and added composite primary key" />
     <MESSAGE value="added deleteTable api" />
     <MESSAGE value="added deleteTable api to tableRouter" />
-    <option name="LAST_COMMIT_MESSAGE" value="added deleteTable api to tableRouter" />
+    <MESSAGE value="alpha push" />
+    <option name="LAST_COMMIT_MESSAGE" value="alpha push" />
   </component>
 </project>

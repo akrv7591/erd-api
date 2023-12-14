@@ -8,6 +8,7 @@ import {jwtVerify} from "jose";
 import {IAuthorizedUser} from "../../../types/express";
 import {createAccessToken, createRefreshToken} from "../../../utils/generateTokens.util";
 import {User} from "../../../sequelize-models/erd-api/User.model";
+import {AUTH} from "../../../enums/auth";
 
 /**
  * This function handles the refresh process for users. It expects a request object with the following properties:
@@ -21,6 +22,7 @@ import {User} from "../../../sequelize-models/erd-api/User.model";
  *   - A 403 FORBIDDEN status code if a refresh token reuse was detected but the token was valid
  *   - A 403 FORBIDDEN status code if the token wasn't valid
  *   - A 200 OK status code if the token was valid and the user-router was granted a new refresh and access token
+ *   - A 500 INTERNAL SERVER ERROR
  */
 
 
@@ -28,7 +30,7 @@ export const refresh = async (req: Request, res: Response) => {
   const refreshToken: string | undefined =
     req.cookies[config.jwt.refresh_token.cookie_name];
 
-  if (!refreshToken) return res.sendStatus(httpStatus.UNAUTHORIZED);
+  if (!refreshToken) return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.NO_REFRESH_TOKEN_IN_COOKIES});
 
   // clear refresh cookie
   res.clearCookie(
@@ -58,11 +60,11 @@ export const refresh = async (req: Request, res: Response) => {
       });
 
     } catch (err) {
-      if (err) return res.sendStatus(httpStatus.FORBIDDEN);
+      if (err) return res.status(httpStatus.FORBIDDEN).json({code: AUTH.REFRESH_TOKEN_INVALID});
 
     }
     console.log("REFRESH TOKEN FAILED")
-    return res.status(httpStatus.FORBIDDEN);
+    return res.status(httpStatus.FORBIDDEN).json({code: AUTH.REFRESH_TOKEN_INVALID});
   }
 
   // delete from db
@@ -90,9 +92,6 @@ export const refresh = async (req: Request, res: Response) => {
             token: newRefreshToken,
             userId: payload.id
           })
-          .catch((err: Error) => {
-            logger.error(err);
-          });
 
         // Creates Secure Cookie with refresh token
         res.cookie(
@@ -103,6 +102,6 @@ export const refresh = async (req: Request, res: Response) => {
 
         return res.json({accessToken});
   } catch (err) {
-    return res.sendStatus(httpStatus.FORBIDDEN);
+    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 };

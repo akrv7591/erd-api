@@ -9,6 +9,7 @@ import {Account} from "../../../sequelize-models/erd-api/Account.model";
 import dayjs from "dayjs";
 import {SocialLogin} from "../../../constants/auth";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
+import {AUTH} from "../../../enums/auth";
 
 interface GoogleOauthData {
   access_token: string;
@@ -42,54 +43,52 @@ export const google: express.RequestHandler = async (req, res) => {
 
 
     let transaction: Transaction | null = null
+    let googleData: GoogleUserInfo
     try {
-      const {data} = await googleApi.get<GoogleUserInfo>("/oauth2/v1/userinfo?alt=json")
-      transaction = await erdSequelize.transaction()
-
-        // Check if user exists
-        let user = await User.findOne({
-          where: {
-            email: data.email
-          }
-        })
-
-        // If user doesn't exist create user and continue
-        if (!user) {
-          user = await User.create({
-            email: data.email,
-            name: data.name,
-            emailVerified: data.verified_email? new Date(): null
-          }, { transaction })
-        }
-
-        if (!user.emailVerified) {
-          user.emailVerified = data.verified_email? new Date(): null
-        }
-
-        await Account.upsert({
-          userId: user.id,
-          type: SocialLogin.GOOGLE,
-          provider: SocialLogin.GOOGLE,
-          accessToken: oathData.access_token,
-          providerAccountId: data.id,
-          expiresAt: dayjs().add(oathData.expires_in, 'seconds').toDate(),
-          scope: oathData.scope,
-          tokenType: oathData.token_type
-        }, {
-          transaction
-        })
-
-        const accessToken = await handleAuthTokens(req, res, user, transaction)
-
-        await transaction.commit()
-        return res.json({accessToken});
-
-
+      const res = await googleApi.get<GoogleUserInfo>("/oauth2/v1/userinfo?alt=json")
+      googleData = res.data
     } catch (e) {
-      await transaction?.rollback()
-      console.warn("Google login error\n ", e)
-      res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
+      return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.GOOGLE_LOGIN_UNAUTHORIZED})
     }
+    transaction = await erdSequelize.transaction()
+
+    // Check if user exists
+    let user = await User.findOne({
+      where: {
+        email: googleData.email
+      }
+    })
+
+    // If user doesn't exist create user and continue
+    if (!user) {
+      user = await User.create({
+        email: googleData.email,
+        name: googleData.name,
+        emailVerified: googleData.verified_email ? new Date() : null
+      }, {transaction})
+    }
+
+    if (!user.emailVerified) {
+      user.emailVerified = googleData.verified_email ? new Date() : null
+    }
+
+    await Account.upsert({
+      userId: user.id,
+      type: SocialLogin.GOOGLE,
+      provider: SocialLogin.GOOGLE,
+      accessToken: oathData.access_token,
+      providerAccountId: googleData.id,
+      expiresAt: dayjs().add(oathData.expires_in, 'seconds').toDate(),
+      scope: oathData.scope,
+      tokenType: oathData.token_type
+    }, {
+      transaction
+    })
+
+    const accessToken = await handleAuthTokens(req, res, user, transaction)
+
+    await transaction.commit()
+    return res.json({accessToken});
 
   } catch (e) {
     errorHandler(e, req, res)
