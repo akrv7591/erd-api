@@ -27,7 +27,7 @@ export const signin = async (
   if (!email || !password) {
     return res
       .status(httpStatus.BAD_REQUEST)
-      .json({message: 'Email and password-router are required!'});
+      .json({message: 'Email and password are required!'});
   }
 
   const user = await User.unscoped().findOne({
@@ -37,6 +37,7 @@ export const signin = async (
   });
   if (!user) return res.sendStatus(httpStatus.UNAUTHORIZED);
 
+  if (!user.password) return res.sendStatus(httpStatus.UNAUTHORIZED)
   // check password-router
   try {
     if (await argon2.verify(user.password, password)) {

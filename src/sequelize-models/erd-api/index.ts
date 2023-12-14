@@ -12,9 +12,11 @@ import {UserErd} from "./UserErd.model";
 import {Table} from "./Table.model";
 import {Column} from "./Column.model";
 import {Relation} from "./Relation.model";
+import {TeamErd} from "./TeamErd.model";
 
 export const erdSequelize = new Sequelize({
   ...config.db.erd,
+  logging: false,
   models: [
     User,
     Account,
@@ -27,6 +29,7 @@ export const erdSequelize = new Sequelize({
     UserErd,
     Table,
     Column,
-    Relation
+    Relation,
+    TeamErd
   ]
 });

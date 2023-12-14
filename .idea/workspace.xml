@@ -4,16 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added Column model">
-      <change afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Relation.model.ts" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added deleteTable api to tableRouter">
+      <change afterPath="$PROJECT_DIR$/src/constants/multiplayer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/detail.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/addRelation.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/deleteRelation.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/TeamErd.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/MultiplayerSocket.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/TableSocket.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/playground.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/email/sendUserInvitation.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/validations/relation.validation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/errorHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/errorHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/isAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/isAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/signin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/signin.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/list.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/list.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/column-router/upsertColumn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/column-router/upsertColumn.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/list.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/list.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/relation-router/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/relation-router/relationList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/relation-router/relationList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Account.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Account.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Relation.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Relation.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Table.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Table.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Team.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Team.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserErd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserErd.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/sendEmail.util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/sendEmail.util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/erd.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/erd.validation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/team.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/team.validation.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -26,30 +69,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erd-api/src/sequelize-models/erd-api",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/Users/akrv/Dev/Nodejs/personal/erd-api/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erd-api/src/routes/v1/erd-router&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erd-api/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
       <recent name="$PROJECT_DIR$/src/sequelize-models/erd-api" />
+      <recent name="$PROJECT_DIR$/src/routes/v1/erd-router/table-router/column-router" />
+      <recent name="$PROJECT_DIR$/src/routes/v1/erd-router/table-router" />
       <recent name="$PROJECT_DIR$/src/validations" />
-      <recent name="$PROJECT_DIR$/src/routes/v1/team" />
-      <recent name="$PROJECT_DIR$/src/routes/v1/auth" />
-      <recent name="$PROJECT_DIR$/src/routes/v1/user" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
+      <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -67,7 +114,23 @@
       <workItem from="1699066934735" duration="1304000" />
       <workItem from="1699223225153" duration="4972000" />
       <workItem from="1699309383526" duration="6041000" />
-      <workItem from="1699325240772" duration="9346000" />
+      <workItem from="1699325240772" duration="41543000" />
+      <workItem from="1699569920357" duration="19163000" />
+      <workItem from="1700003410337" duration="3861000" />
+      <workItem from="1700016499294" duration="4293000" />
+      <workItem from="1700088897501" duration="12432000" />
+      <workItem from="1700175917069" duration="14051000" />
+      <workItem from="1700306941471" duration="3796000" />
+      <workItem from="1700470262605" duration="27398000" />
+      <workItem from="1700698197568" duration="7729000" />
+      <workItem from="1701050956918" duration="11585000" />
+      <workItem from="1701301444791" duration="4923000" />
+      <workItem from="1701308773546" duration="13315000" />
+      <workItem from="1701417366798" duration="2027000" />
+      <workItem from="1701644989263" duration="9264000" />
+      <workItem from="1701733056475" duration="6932000" />
+      <workItem from="1701936174063" duration="15313000" />
+      <workItem from="1702264652966" duration="28484000" />
     </task>
     <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
       <option name="closed" value="true" />
@@ -125,7 +188,151 @@
       <option name="project" value="LOCAL" />
       <updated>1699400211661</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added Relation model">
+      <option name="closed" value="true" />
+      <created>1699400786920</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1699400786920</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added table validator">
+      <option name="closed" value="true" />
+      <created>1699515591187</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515591187</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added column put api validator">
+      <option name="closed" value="true" />
+      <created>1699515603297</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515603297</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added position and type column to Table.model.ts">
+      <option name="closed" value="true" />
+      <created>1699515648454</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515648454</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added order column to Column.model.ts">
+      <option name="closed" value="true" />
+      <created>1699515671722</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515671722</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added deleteErd api">
+      <option name="closed" value="true" />
+      <created>1699515840785</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515840785</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added count api for table">
+      <option name="closed" value="true" />
+      <created>1699515873854</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515873854</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added list api for table">
+      <option name="closed" value="true" />
+      <created>1699515888514</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515888514</updated>
+    </task>
+    <task id="LOCAL-00016" summary="added update api for table">
+      <option name="closed" value="true" />
+      <created>1699515895095</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515895095</updated>
+    </task>
+    <task id="LOCAL-00017" summary="added bulkUpdate api for table">
+      <option name="closed" value="true" />
+      <created>1699515905794</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515905794</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added list api for relation-router">
+      <option name="closed" value="true" />
+      <created>1699516616209</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1699516616209</updated>
+    </task>
+    <task id="LOCAL-00019" summary="added crud apis for column-router">
+      <option name="closed" value="true" />
+      <created>1699516655251</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1699516655251</updated>
+    </task>
+    <task id="LOCAL-00020" summary="added deleteTeam api to team-router">
+      <option name="closed" value="true" />
+      <created>1699521512359</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1699521512359</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fixed deleteTeam api to team-router">
+      <option name="closed" value="true" />
+      <created>1699582019933</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1699582019933</updated>
+    </task>
+    <task id="LOCAL-00022" summary="USerErd removed id and added composite primary key">
+      <option name="closed" value="true" />
+      <created>1699600574457</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1699600574457</updated>
+    </task>
+    <task id="LOCAL-00023" summary="UserTeam removed id and added composite primary key">
+      <option name="closed" value="true" />
+      <created>1699600582557</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1699600582557</updated>
+    </task>
+    <task id="LOCAL-00024" summary="added deleteTable api">
+      <option name="closed" value="true" />
+      <created>1699600595059</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1699600595059</updated>
+    </task>
+    <task id="LOCAL-00025" summary="added deleteTable api to tableRouter">
+      <option name="closed" value="true" />
+      <created>1699600609128</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1699600609128</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +357,24 @@
     <MESSAGE value="added Erd and UserErd models" />
     <MESSAGE value="api updates plus Erd, UserErd and Table model added" />
     <MESSAGE value="added Column model" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Column model" />
+    <MESSAGE value="added Relation model" />
+    <MESSAGE value="added table validator" />
+    <MESSAGE value="added column put api validator" />
+    <MESSAGE value="added position and type column to Table.model.ts" />
+    <MESSAGE value="added order column to Column.model.ts" />
+    <MESSAGE value="added deleteErd api" />
+    <MESSAGE value="added count api for table" />
+    <MESSAGE value="added list api for table" />
+    <MESSAGE value="added update api for table" />
+    <MESSAGE value="added bulkUpdate api for table" />
+    <MESSAGE value="added list api for relation-router" />
+    <MESSAGE value="added crud apis for column-router" />
+    <MESSAGE value="added deleteTeam api to team-router" />
+    <MESSAGE value="fixed deleteTeam api to team-router" />
+    <MESSAGE value="USerErd removed id and added composite primary key" />
+    <MESSAGE value="UserTeam removed id and added composite primary key" />
+    <MESSAGE value="added deleteTable api" />
+    <MESSAGE value="added deleteTable api to tableRouter" />
+    <option name="LAST_COMMIT_MESSAGE" value="added deleteTable api to tableRouter" />
   </component>
 </project>

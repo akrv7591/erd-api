@@ -1,6 +1,7 @@
 import {Optional} from "sequelize";
 import {
   BelongsTo,
+  Column as SequelizeColumn,
   Column,
   DataType,
   ForeignKey,
@@ -8,48 +9,39 @@ import {
   PrimaryKey,
   Table as SequelizeTable
 } from "sequelize-typescript";
-import {createId} from "@paralleldrive/cuid2";
-import {ITable, Table} from "./Table.model";
+import {Erd, IErd} from "./Erd.model";
 
 export interface IRelation {
   id: string;
-  createdAt: string;
-  updatedAt: string;
-  type: string;
   source: string;
   target: string;
+  createdAt: string;
+  markerEnd: string;
 
   // Foreign key
-  tableId: string;
+  erdId: string;
 
   // Relations
-  table?: ITable
+  erd?: IErd
 }
 
-export interface ICRelation extends Optional<IRelation, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICRelation extends Optional<IRelation, 'createdAt'> {
 }
 
 @SequelizeTable({
   modelName: 'Relation',
   tableName: 'Relation',
   timestamps: true,
+  updatedAt: false
 })
 export class Relation extends Model<IRelation, ICRelation> {
   @PrimaryKey
-  @Column({
+  @SequelizeColumn({
     type: DataType.STRING,
-    primaryKey: true,
     allowNull: false,
     unique: true,
-    defaultValue: () => createId()
   })
   declare id: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false
-  })
-  declare type: string
 
   @Column({
     type: DataType.STRING,
@@ -63,15 +55,21 @@ export class Relation extends Model<IRelation, ICRelation> {
   })
   declare target: string
 
-  // ForeignKey
-  @ForeignKey(() => Table)
   @Column({
     type: DataType.STRING,
     allowNull: false
   })
-  declare tableId: string
+  declare markerEnd: string
+
+  // ForeignKey
+  @ForeignKey(() => Erd)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  declare erdId: string
 
   // Relations
-  @BelongsTo(() => Table)
-  declare table: Table
+  @BelongsTo(() => Erd)
+  declare erd: Erd
 }

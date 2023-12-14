@@ -1,15 +1,17 @@
 import {Optional} from "sequelize";
-import {Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
-// import {createId} from "@paralleldrive/cuid2";
+import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {IUser, User} from "./User.model";
 import {Erd, IErd} from "./Erd.model";
+import {sendUserInvitationEmail} from "../../utils/email/sendUserInvitation";
 
 export interface IUserErd {
   // id: string
   createdAt: Date
   updatedAt: Date
+  canRead: boolean
+  canWrite: boolean
+  canDelete: boolean
   isAdmin: boolean
-  canEdit: boolean
 
   //Foreign keys
   userId: string
@@ -20,25 +22,38 @@ export interface IUserErd {
   erd?: IErd
 }
 
-export interface ICUserErd extends Optional<IUserErd, 'createdAt' | 'updatedAt'> {
+export interface ICUserErd extends Optional<IUserErd, 'createdAt' | 'updatedAt' | 'canRead' | 'canWrite' | 'canDelete'> {
 }
+
 
 @Table({
   modelName: 'UserErd',
   tableName: 'UserErd',
   timestamps: true,
+  hooks: {
+    afterUpsert: async ([attributes, created]: [UserErd, boolean], options) => {
+
+      if (!created) return
+      const user = await User.findByPk(attributes.userId)
+
+      if (!user) return
+
+      if (options.transaction) {
+        options.transaction.afterCommit(async () => {
+          const user = await User.findByPk(attributes.userId)
+          console.log({user})
+
+          if (!user) return
+          sendUserInvitationEmail(user.toJSON())
+        })
+      } else {
+        console.log({user})
+        sendUserInvitationEmail(user.toJSON())
+      }
+    }
+  }
 })
 export class UserErd extends Model<IUserErd, ICUserErd> {
-  // @PrimaryKey
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false,
-  //   unique: true,
-  //   defaultValue: () => createId()
-  // })
-  // declare id: string;
-
-  //Foreign keys
   @PrimaryKey
   @ForeignKey(() => User)
   @Column({
@@ -60,28 +75,33 @@ export class UserErd extends Model<IUserErd, ICUserErd> {
     defaultValue: false,
     allowNull: false
   })
-  declare isAdmin: boolean
+  declare canRead: boolean
 
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
     allowNull: false
   })
-  declare canEdit: boolean
+  declare canWrite: boolean
 
-  //Foreign keys
-  // @ForeignKey(() => User)
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false
-  // })
-  // declare userId: string
-  //
-  // @ForeignKey(() => Erd)
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false
-  // })
-  // declare erdId: string
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  })
+  declare canDelete: boolean
+
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  })
+  declare isAdmin: boolean
+
+  @BelongsTo(() => Erd)
+  declare erd: Erd
+
+  @BelongsTo(() => User)
+  declare user: User
 
 }

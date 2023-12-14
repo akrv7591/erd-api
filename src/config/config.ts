@@ -84,7 +84,8 @@ const config = {
       database: validatedEnv.DB_NAME,
       dialect: validatedEnv.DB_DIALECT,
       port: validatedEnv.DB_PORT
-    }
+    },
+    logging: true,
   }
 } as const;
 

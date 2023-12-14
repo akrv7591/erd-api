@@ -7,12 +7,12 @@ import httpStatus from "http-status";
 export const upsertColumn: RequestHandler = async (req, res) => {
   try {
 
-    const tableId = req.params['tableId']
-    if (!tableId) return res.status(httpStatus.BAD_REQUEST)
+    // const tableId = req.params['tableId']
+    // if (!tableId) return res.status(httpStatus.BAD_REQUEST)
 
 
     const columnData = matchedData(req) as ICColumn
-    columnData['tableId'] = tableId
+    // columnData['tableId'] = tableId
 
     const [, created] = await Column.upsert(columnData)
 

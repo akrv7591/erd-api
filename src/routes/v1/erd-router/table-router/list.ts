@@ -2,7 +2,6 @@ import {RequestHandler} from "express";
 import {errorHandler} from "../../../../middleware/errorHandler";
 import {Table} from "../../../../sequelize-models/erd-api/Table.model";
 import {Column} from "../../../../sequelize-models/erd-api/Column.model";
-import {Relation} from "../../../../sequelize-models/erd-api/Relation.model";
 import {erdSequelize} from "../../../../sequelize-models/erd-api";
 
 export const tableList: RequestHandler = async (req, res) => {
@@ -11,7 +10,7 @@ export const tableList: RequestHandler = async (req, res) => {
       where: {
         erdId: req.params['erdId']
       },
-      include: [Column, Relation],
+      include: [Column],
       order: [
         [erdSequelize.col('order'), 'ASC']
       ]

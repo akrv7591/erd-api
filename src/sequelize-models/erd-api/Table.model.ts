@@ -11,8 +11,7 @@ import {
 } from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {Erd, IErd} from "./Erd.model";
-import {IColumn, Column as ColumnModel} from "./Column.model";
-import {Relation} from "./Relation.model";
+import {Column as ColumnModel, IColumn} from "./Column.model";
 
 export interface INodePosition {
   x: number,
@@ -38,8 +37,7 @@ export interface ITable {
   columns?: IColumn[]
 }
 
-export interface ICTable extends Omit<Optional<ITable, 'id' | 'createdAt' | 'updatedAt'>, 'position'> {
-  position: string
+export interface ICTable extends Optional<ITable, 'id' | 'createdAt' | 'updatedAt'> {
 }
 
 @SequelizeTable({
@@ -64,6 +62,11 @@ export class Table extends Model<ITable, ICTable> {
   })
   declare name: string
 
+  @Column({
+    type: DataType.STRING,
+  })
+  declare color: string | null
+
 
   @Column({
     type: DataType.STRING,
@@ -73,11 +76,8 @@ export class Table extends Model<ITable, ICTable> {
 
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.JSON,
     allowNull: false,
-    get() {
-      return JSON.parse(this.getDataValue("position"))
-    }
   })
   declare position: string
 
@@ -99,14 +99,8 @@ export class Table extends Model<ITable, ICTable> {
   })
   declare columns: ColumnModel[]
 
-  @HasMany(() => Relation, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE"
-  })
-  declare relations: Relation[]
-
   @Column(DataType.VIRTUAL)
-  get data () {
+  get data() {
     return {
       name: this.getDataValue('name'),
       color: this.getDataValue('color'),

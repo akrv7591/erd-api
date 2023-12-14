@@ -3,6 +3,8 @@ import {BelongsToMany, Column, DataType, Model, PrimaryKey, Table} from "sequeli
 import {createId} from "@paralleldrive/cuid2";
 import {IUser, User} from "./User.model";
 import {UserTeam} from "./UserTeam.model";
+import {Erd, IErd} from "./Erd.model";
+import {TeamErd} from "./TeamErd.model";
 
 export interface ITeam {
   id: string
@@ -12,6 +14,7 @@ export interface ITeam {
 
   //Relations
   users?: IUser[]
+  erds?: IErd[]
 }
 
 export interface ICTeam extends Optional<ITeam, 'id' | 'createdAt'> {
@@ -42,4 +45,7 @@ export class Team extends Model<ITeam, ICTeam> {
   // Relations
   @BelongsToMany(() => User, () => UserTeam)
   declare users: User[]
+
+  @BelongsToMany(() => Erd, () => TeamErd)
+  declare erds: Erd[]
 }

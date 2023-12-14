@@ -71,7 +71,7 @@ export class Account extends Model<IAccount, ICAccount> {
   declare accessToken: string | null
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.DATE,
     allowNull: false
   })
   declare expiresAt: Date
@@ -100,7 +100,8 @@ export class Account extends Model<IAccount, ICAccount> {
   @ForeignKey(() => User)
   @Column({
     type: DataType.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   })
   declare userId: string
 

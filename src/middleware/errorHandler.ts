@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import logger from './logger';
 
 export const errorHandler = (
-  err: Error,
+  err: Error | any,
   _req: Request,
   res: Response
 ): void => {

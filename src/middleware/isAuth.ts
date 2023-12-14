@@ -1,13 +1,10 @@
 import type { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-
 import {jwtVerify, errors} from "jose";
 import config from '../config/config';
 import {IAuthorizedUser} from "../types/express";
 
 const isAuth = async (req: Request, res: Response, next: NextFunction) => {
-  // token looks like 'Bearer vnjaknvijdaknvikbnvreiudfnvriengviewjkdsbnvierj'
-
   const authHeader = req.headers?.authorization;
 
   if (!authHeader || !authHeader?.startsWith('Bearer ')) {
@@ -24,7 +21,6 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
 
     next()
   } catch(err) {
-
 
     if (err instanceof errors.JWTExpired) {
       return res.status(httpStatus.FORBIDDEN).json({

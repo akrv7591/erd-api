@@ -14,7 +14,7 @@ export interface IUser {
   id: string
   name: string
   email: string
-  password: string
+  password: string | null
   emailVerified?: Date | null
   createdAt: Date
   updatedAt: Date
@@ -64,9 +64,8 @@ export class User extends Model<IUser, ICUser> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false
   })
-  declare password: string
+  declare password: string | null
 
   @Column({
     type: DataType.DATE

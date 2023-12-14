@@ -49,3 +49,4 @@ export const sendVerifyEmail = (email: string, token: string) => {
     }
   });
 };
+

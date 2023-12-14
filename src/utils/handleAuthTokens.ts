@@ -4,8 +4,9 @@ import {RefreshToken} from "../sequelize-models/erd-api/RefreshToken.model";
 import {User} from "../sequelize-models/erd-api/User.model";
 import {clearRefreshTokenCookieConfig, refreshTokenCookieConfig} from "../config/cookieConfig";
 import {createAccessToken, createRefreshToken} from "./generateTokens.util";
+import {Transaction} from "sequelize";
 
-export default async function handleAuthTokens(req: any, res: express.Response, user: User) {
+export default async function handleAuthTokens(req: any, res: express.Response, user: User, transaction: Transaction | null = null) {
   const cookies = req.cookies;
 
   // if there is a refresh token in the req.cookie, then we need to check if this
@@ -28,14 +29,17 @@ export default async function handleAuthTokens(req: any, res: express.Response, 
       await RefreshToken.destroy({
         where: {
           userId: user.id
-        }
+        },
+        transaction,
       });
     } else {
       // else everything is fine and we just need to delete the one token
       await RefreshToken.destroy({
         where: {
           token: cookies[config.jwt.refresh_token.cookie_name]
-        }
+        },
+        transaction,
+
       });
     }
 
@@ -58,6 +62,8 @@ export default async function handleAuthTokens(req: any, res: express.Response, 
   await RefreshToken.create({
     token: newRefreshToken,
     userId: user.id
+  }, {
+    transaction
   }).catch(e => console.log(e));
 
 
