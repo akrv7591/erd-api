@@ -64,7 +64,7 @@ export default async function handleAuthTokens(req: any, res: express.Response, 
     userId: user.id
   }, {
     transaction
-  }).catch(e => console.log(e));
+  });
 
 
   // save refresh token in cookie

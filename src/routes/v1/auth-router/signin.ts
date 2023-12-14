@@ -26,9 +26,7 @@ export const signin = async (
   const {email, password} = req.body;
 
   if (!email || !password) {
-    return res
-      .status(httpStatus.BAD_REQUEST)
-      .json({code: AUTH.EMAIL_AND_PASSWORD_REQUIRED});
+    return res.status(httpStatus.BAD_REQUEST).json({code: AUTH.EMAIL_AND_PASSWORD_REQUIRED});
   }
 
   const user = await User.unscoped().findOne({

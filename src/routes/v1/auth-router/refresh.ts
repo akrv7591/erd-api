@@ -30,7 +30,10 @@ export const refresh = async (req: Request, res: Response) => {
   const refreshToken: string | undefined =
     req.cookies[config.jwt.refresh_token.cookie_name];
 
-  if (!refreshToken) return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.NO_REFRESH_TOKEN_IN_COOKIES});
+  if (!refreshToken) {
+    logger.warn('There are no refresh token in cookies');
+    return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.NO_REFRESH_TOKEN_IN_COOKIES});
+  }
 
   // clear refresh cookie
   res.clearCookie(
@@ -78,29 +81,29 @@ export const refresh = async (req: Request, res: Response) => {
   // evaluate jwt
   try {
     const {payload} = await jwtVerify<IAuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
-        const user = await User.findByPk(payload.id)
+    const user = await User.findByPk(payload.id)
 
 
-        // Refresh token was still valid
-        const accessToken = await createAccessToken(user!);
+    // Refresh token was still valid
+    const accessToken = await createAccessToken(user!);
 
-        const newRefreshToken = await createRefreshToken(user!);
+    const newRefreshToken = await createRefreshToken(user!);
 
-        // add refresh token to db
-        await RefreshToken
-          .create({
-            token: newRefreshToken,
-            userId: payload.id
-          })
+    // add refresh token to db
+    await RefreshToken
+      .create({
+        token: newRefreshToken,
+        userId: payload.id
+      })
 
-        // Creates Secure Cookie with refresh token
-        res.cookie(
-          config.jwt.refresh_token.cookie_name,
-          newRefreshToken,
-          refreshTokenCookieConfig
-        );
+    // Creates Secure Cookie with refresh token
+    res.cookie(
+      config.jwt.refresh_token.cookie_name,
+      newRefreshToken,
+      refreshTokenCookieConfig
+    );
 
-        return res.json({accessToken});
+    return res.json({accessToken});
   } catch (err) {
     return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
