@@ -32,23 +32,20 @@ export interface ICUserErd extends Optional<IUserErd, 'createdAt' | 'updatedAt' 
   timestamps: true,
   hooks: {
     afterUpsert: async ([attributes, created]: [UserErd, boolean], options) => {
-
       if (!created) return
-      const user = await User.findByPk(attributes.userId)
-
-      if (!user) return
 
       if (options.transaction) {
         options.transaction.afterCommit(async () => {
           const user = await User.findByPk(attributes.userId)
-          console.log({user})
 
           if (!user) return
           sendUserInvitationEmail(user.toJSON())
         })
       } else {
-        console.log({user})
-        sendUserInvitationEmail(user.toJSON())
+        const user = await User.findByPk(attributes.userId)
+        if (user) {
+          sendUserInvitationEmail(user.toJSON())
+        }
       }
     }
   }

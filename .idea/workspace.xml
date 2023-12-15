@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="test jenkins" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="Workspace updated">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserErd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserErd.model.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,6 +93,7 @@
       <workItem from="1701733056475" duration="6932000" />
       <workItem from="1701936174063" duration="15313000" />
       <workItem from="1702264652966" duration="41893000" />
+      <workItem from="1702619964775" duration="1046000" />
     </task>
     <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
       <option name="closed" value="true" />
@@ -329,7 +335,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702544744455</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Workspace updated">
+      <option name="closed" value="true" />
+      <created>1702620053373</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1702620053373</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,7 +361,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added Erd and UserErd models" />
     <MESSAGE value="api updates plus Erd, UserErd and Table model added" />
     <MESSAGE value="added Column model" />
     <MESSAGE value="added Relation model" />
@@ -372,6 +385,7 @@
     <MESSAGE value="added auth enums" />
     <MESSAGE value="fixed cookies issue" />
     <MESSAGE value="test jenkins" />
-    <option name="LAST_COMMIT_MESSAGE" value="test jenkins" />
+    <MESSAGE value="Workspace updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Workspace updated" />
   </component>
 </project>

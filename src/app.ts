@@ -28,7 +28,6 @@ app.use(cookieParser());
 // Compression is used to reduce the size of the response body
 app.use(compression({ filter: compressFilter }));
 
-console.log(String(config.cors.cors_origin).split('|'))
 
 app.use(
   cors({

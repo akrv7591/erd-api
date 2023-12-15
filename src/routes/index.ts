@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 const routes = express.Router()
 
 routes.use((req, _, next) => {
-  console.log(dayjs().toISOString(), req.url)
+  console.log(`${dayjs().toISOString()} ${req.method.toUpperCase()}: ${req.url}`)
   next()
 })
 routes.use("/v1", v1)
