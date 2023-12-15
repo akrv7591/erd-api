@@ -28,28 +28,37 @@ export class MultiplayerSocket {
       }
     })
     io.on("connection", (socket) => {
-      socket.on(MULTIPLAYER_SOCKET.ADD_PLAYER, async (erdId, userId, callback) => {
-        const playgroundKey = `${KEYS.erd}:${erdId}`
-        const playgroundExists = await this.checkIfPlaygroundExist(playgroundKey)
+      socket.on(MULTIPLAYER_SOCKET.ADD_PLAYER, async (erdId, userId, callback, onError) => {
+        try {
+          const playgroundKey = `${KEYS.erd}:${erdId}`
+          const playgroundExists = await this.checkIfPlaygroundExist(playgroundKey)
 
-        if (!playgroundExists) {
-          await this.addPlayground(playgroundKey)
+          if (!playgroundExists) {
+            await this.addPlayground(playgroundKey)
+          }
+
+          const user = await this.addUserToPlayground(playgroundKey, userId)
+          const playground = await this.getPlayground(playgroundKey)
+          socket.join(playgroundKey)
+          socket.to(playgroundKey).emit(MULTIPLAYER_SOCKET.ADD_PLAYER, user)
+          new TableSocket(playgroundKey, socket, this.redis, io)
+          callback(playground)
+        } catch (e) {
+          console.error(e)
+          onError(e)
         }
-
-        const user = await this.addUserToPlayground(playgroundKey, userId)
-        const playground = await this.getPlayground(playgroundKey)
-        socket.join(playgroundKey)
-        socket.to(playgroundKey).emit(MULTIPLAYER_SOCKET.ADD_PLAYER, user)
-        new TableSocket(playgroundKey, socket, this.redis, io)
-        callback(playground)
       })
-      socket.on(MULTIPLAYER_SOCKET.REMOVE_PLAYER, async (erdId, userId, callback) => {
-        const roomKey = `${KEYS.erd}:${erdId}`
-        await this.redis.json.del(roomKey, `$.players[?(@.id=='${userId}')]`).catch(e => console.error("DELETE_PLAYER_ERROR: ", e))
-        socket.to(roomKey).emit(MULTIPLAYER_SOCKET.REMOVE_PLAYER, userId)
-        await this.checkAndHandleIfPlaygroundEmpty(roomKey)
-        await this.savePlaygroundToDb(roomKey)
-        callback()
+      socket.on(MULTIPLAYER_SOCKET.REMOVE_PLAYER, async (erdId, userId, callback, onError) => {
+        try {
+          const roomKey = `${KEYS.erd}:${erdId}`
+          await this.redis.json.del(roomKey, `$.players[?(@.id=='${userId}')]`).catch(e => console.error("DELETE_PLAYER_ERROR: ", e))
+          socket.to(roomKey).emit(MULTIPLAYER_SOCKET.REMOVE_PLAYER, userId)
+          await this.checkAndHandleIfPlaygroundEmpty(roomKey)
+          await this.savePlaygroundToDb(roomKey)
+          callback()
+        } catch (e) {
+          onError(e)
+        }
       })
     })
 
@@ -61,34 +70,34 @@ export class MultiplayerSocket {
   }
 
   addPlayground = async (playgroundKey: string) => {
-    const erdId = playgroundKey.split(":")[1]
+      const erdId = playgroundKey.split(":")[1]
 
-    const [erd, relations] = await Promise.all([
-      Erd.findByPk(erdId, {
-        include: [{
-          model: Table,
+      const [erd, relations] = await Promise.all([
+        Erd.findByPk(erdId, {
           include: [{
-            model: Column
+            model: Table,
+            include: [{
+              model: Column
+            }]
+          }, {
+            model: Relation
           }]
-        }, {
-          model: Relation
-        }]
-      }),
-      Relation.findAll({
-        where: {
-          erdId
-        }
-      })
-    ])
+        }),
+        Relation.findAll({
+          where: {
+            erdId
+          }
+        })
+      ])
 
-    if (erd) {
-      const erdJson = {
-        ...erd.toJSON(),
-        relations: relations.map(r => r.toJSON()),
-        players: []
+      if (erd) {
+        const erdJson = {
+          ...erd.toJSON(),
+          relations: relations.map(r => r.toJSON()),
+          players: []
+        }
+        await this.redis.json.set(playgroundKey, "$", erdJson as any)
       }
-      await this.redis.json.set(playgroundKey, "$", erdJson as any)
-    }
   }
 
   addUserToPlayground = async (playgroundKey: string, userId: string) => {
@@ -146,10 +155,6 @@ export class MultiplayerSocket {
       console.error(e)
       return "failed"
     }
-  }
-
-  disconnectAll = () => {
-    this.io.disconnectSockets()
   }
 
 }

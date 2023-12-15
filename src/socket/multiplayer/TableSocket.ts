@@ -38,107 +38,156 @@ export class TableSocket {
   }
 
   // Table actions
-  addTable: IMultiplayerListeners['addTable'] = async (tableData, callback) => {
-    await this.redis.json.arrAppend(this.roomKey, '.tables', tableData as any)
-    this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE, tableData)
+  addTable: IMultiplayerListeners['addTable'] = async (tableData, callback, onError) => {
+    try {
+      await this.redis.json.arrAppend(this.roomKey, '.tables', tableData as any)
+      this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE, tableData)
 
-    const {data, ...icTable} = tableData
-    await Table.create({
-      ...icTable,
-      name: data.name,
-      color: data.color,
-      erdId: this.erdId
-    })
-    callback()
-  }
-  updateTable: IMultiplayerListeners['updateTable'] = async (tableData, callback) => {
-    if (tableData.position) {
-      await this.redis.json.set(this.roomKey, `.tables[?(@.id=='${tableData.id}')].position`, tableData.position as any)
-      this.socket.to(this.roomKey).emit(MULTIPLAYER_SOCKET.UPDATE_TABLE, tableData)
+      const {data, ...icTable} = tableData
+      await Table.create({
+        ...icTable,
+        name: data.name,
+        color: data.color,
+        erdId: this.erdId
+      })
       callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
     }
   }
-  deleteTable: IMultiplayerListeners['deleteTable'] = async (tableId, callback) => {
-    await this.redis.json.del(this.roomKey, `.tables[?(@.id=='${tableId}')]`)
-    this.socket.in(this.roomKey).emit(MULTIPLAYER_SOCKET.DELETE_TABLE, tableId)
-    await Table.destroy({
-      where: {
-        id: tableId
+  updateTable: IMultiplayerListeners['updateTable'] = async (tableData, callback, onError) => {
+    try {
+      if (tableData.position) {
+        await this.redis.json.set(this.roomKey, `.tables[?(@.id=='${tableData.id}')].position`, tableData.position as any)
+        this.socket.to(this.roomKey).emit(MULTIPLAYER_SOCKET.UPDATE_TABLE, tableData)
+        callback()
       }
-    })
-    callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
+  }
+  deleteTable: IMultiplayerListeners['deleteTable'] = async (tableId, callback, onError) => {
+    try {
+      await this.redis.json.del(this.roomKey, `.tables[?(@.id=='${tableId}')]`)
+      this.socket.in(this.roomKey).emit(MULTIPLAYER_SOCKET.DELETE_TABLE, tableId)
+      await Table.destroy({
+        where: {
+          id: tableId
+        }
+      })
+      callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
   }
 
-  subscribeToTableData: IMultiplayerListeners['subscribeToTableData'] = async (tableId, callback) => {
-    this.socket.join(tableId)
-    callback()
+  subscribeToTableData: IMultiplayerListeners['subscribeToTableData'] = async (tableId, callback, onError) => {
+    try {
+      this.socket.join(tableId)
+      callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
   }
 
   // Table column actions
-  addTableColumn: IMultiplayerListeners['addTableColumn'] = async (tableId, columnData, callback) => {
-    await this.redis.json.arrAppend(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns`, columnData as any)
-    this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE_COLUMN, tableId, columnData)
-    await Column.create({
-      ...columnData,
-      tableId
-    })
-    callback()
+  addTableColumn: IMultiplayerListeners['addTableColumn'] = async (tableId, columnData, callback, onError) => {
+    try {
+      await this.redis.json.arrAppend(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns`, columnData as any)
+      this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE_COLUMN, tableId, columnData)
+      await Column.create({
+        ...columnData,
+        tableId
+      })
+      callback()
+    } catch (e) {
+      onError()
+    }
   }
-  updateTableColumn: IMultiplayerListeners['updateTableColumn'] = async (tableId, columnData, callback) => {
-    await this.redis.json.set(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns[?(@.id=='${columnData.id}')]`, columnData as any)
-    this.io.in(tableId).emit(MULTIPLAYER_SOCKET.UPDATED_TABLE_COLUMN, tableId, columnData)
-    await Column.update(columnData, {
-      where: {
-        id: columnData.id
-      }
-    })
-    callback()
+  updateTableColumn: IMultiplayerListeners['updateTableColumn'] = async (tableId, columnData, callback, onError) => {
+    try {
+      await this.redis.json.set(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns[?(@.id=='${columnData.id}')]`, columnData as any)
+      this.io.in(tableId).emit(MULTIPLAYER_SOCKET.UPDATED_TABLE_COLUMN, tableId, columnData)
+      await Column.update(columnData, {
+        where: {
+          id: columnData.id
+        }
+      })
+      callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
   }
-  deleteTableColumn: IMultiplayerListeners['deleteTableColumn'] = async (tableId, columnId, callback) => {
-    await this.redis.json.del(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns[?(@.id=='${columnId}')]`)
-    this.io.in(tableId).emit(MULTIPLAYER_SOCKET.DELETE_TABLE_COLUMN, tableId, columnId)
-    await Column.destroy({
-      where: {
-        id: columnId
-      }
-    })
-    callback()
+  deleteTableColumn: IMultiplayerListeners['deleteTableColumn'] = async (tableId, columnId, callback, onError) => {
+    try {
+      await this.redis.json.del(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns[?(@.id=='${columnId}')]`)
+      this.io.in(tableId).emit(MULTIPLAYER_SOCKET.DELETE_TABLE_COLUMN, tableId, columnId)
+      await Column.destroy({
+        where: {
+          id: columnId
+        }
+      })
+      callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
   }
 
   // Table data actions
-  setTableData: IMultiplayerListeners['setTableData'] = async (tableId, key, value, callback) => {
-    await this.redis.json.set(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.${key}`, value)
-    this.io.in(tableId).emit(MULTIPLAYER_SOCKET.SET_TABLE_DATA, tableId, key, value)
-    await Table.update({
-      [key]: value
-    }, {
-      where: {
-        id: tableId
-      }
-    })
+  setTableData: IMultiplayerListeners['setTableData'] = async (tableId, key, value, callback, onError) => {
+    try {
+      await this.redis.json.set(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.${key}`, value)
+      this.io.in(tableId).emit(MULTIPLAYER_SOCKET.SET_TABLE_DATA, tableId, key, value)
+      await Table.update({
+        [key]: value
+      }, {
+        where: {
+          id: tableId
+        }
+      })
 
-    callback()
+      callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
   }
 
   // Table relation actions
-  addRelation: IMultiplayerListeners['addRelation'] = async (relation, callback) => {
-    await this.redis.json.arrAppend(this.roomKey, '.relations', relation as any)
-    this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_RELATION, relation)
-    await Relation.create({
-      ...relation,
-      erdId: this.roomKey.split(":")[1] as string
-    })
-    callback()
+  addRelation: IMultiplayerListeners['addRelation'] = async (relation, callback, onError) => {
+    try {
+      await this.redis.json.arrAppend(this.roomKey, '.relations', relation as any)
+      this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_RELATION, relation)
+      await Relation.create({
+        ...relation,
+        erdId: this.roomKey.split(":")[1] as string
+      })
+      callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
   }
-  deleteRelation: IMultiplayerListeners['deleteRelation'] = async (relationId, callback) => {
-    await this.redis.json.del(this.roomKey, `$.relations[?(@.id=='${relationId}')]`)
-    this.io.to(this.roomKey).emit(MULTIPLAYER_SOCKET.DELETE_RELATION, relationId)
-    await Relation.destroy({
-      where: {
-        id: relationId
-      }
-    })
-    callback()
+  deleteRelation: IMultiplayerListeners['deleteRelation'] = async (relationId, callback, onError) => {
+    try {
+      await this.redis.json.del(this.roomKey, `$.relations[?(@.id=='${relationId}')]`)
+      this.io.to(this.roomKey).emit(MULTIPLAYER_SOCKET.DELETE_RELATION, relationId)
+      await Relation.destroy({
+        where: {
+          id: relationId
+        }
+      })
+      callback()
+    } catch (e) {
+      onError(e)
+      console.error(e)
+    }
   }
 
 }

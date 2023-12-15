@@ -23,26 +23,26 @@ export enum MULTIPLAYER_SOCKET {
 
 export interface IMultiplayerListeners {
   // User
-  joinRoom: (erdId: string, userId: string, callback: Function) => Promise<void>
-  leaveRoom: (erdId: string, userId: string, callback: Function) => Promise<void>
+  joinRoom: (erdId: string, userId: string, callback: Function, onError: Function) => Promise<void>
+  leaveRoom: (erdId: string, userId: string, callback: Function, onError: Function) => Promise<void>
 
   // Table
-  addTable: (tableData: any, callback: Function) => Promise<void>
-  updateTable: (tableData: ITable, callback: Function) => Promise<void>
-  deleteTable: (tableData: string, callback: Function) => Promise<void>
+  addTable: (tableData: any, callback: Function, onError: Function) => Promise<void>
+  updateTable: (tableData: ITable, callback: Function, onError: Function) => Promise<void>
+  deleteTable: (tableData: string, callback: Function, onError: Function) => Promise<void>
 
-  subscribeToTableData: (tableId: string, callback: Function) => Promise<void>
+  subscribeToTableData: (tableId: string, callback: Function, onError: Function) => Promise<void>
 
   // Table column
-  addTableColumn: (tableId: string, columnData: IColumn, callback: Function) => Promise<void>
-  updateTableColumn: (tableId: string, columnData: IColumn, callback: Function) => Promise<void>
-  deleteTableColumn: (tableId: string, columnId: string, callback: Function) => Promise<void>
+  addTableColumn: (tableId: string, columnData: IColumn, callback: Function, onError: Function) => Promise<void>
+  updateTableColumn: (tableId: string, columnData: IColumn, callback: Function, onError: Function) => Promise<void>
+  deleteTableColumn: (tableId: string, columnId: string, callback: Function, onError: Function) => Promise<void>
 
   // Table data
-  setTableData: (tableId: string, key: keyof Table, value: string, callback: Function) => Promise<void>
+  setTableData: (tableId: string, key: keyof Table, value: string, callback: Function, onError: Function) => Promise<void>
 
   // Relations
-  addRelation: (relation: IRelation, callback: Function) => Promise<void>
-  deleteRelation: (relation: string, callback: Function) => Promise<void>
+  addRelation: (relation: IRelation, callback: Function, onError: Function) => Promise<void>
+  deleteRelation: (relation: string, callback: Function, onError: Function) => Promise<void>
 
 }
