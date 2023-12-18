@@ -40,7 +40,6 @@ export class MultiplayerSocket {
           const user = await this.addUserToPlayground(playgroundKey, userId)
           const playground = await this.getPlayground(playgroundKey)
           socket.join(playgroundKey)
-          console.log(socket.rooms)
           socket.to(playgroundKey).emit(MULTIPLAYER_SOCKET.ADD_PLAYER, user)
           new TableSocket(playgroundKey, socket, this.redis, io)
           callback(playground)
@@ -52,19 +51,27 @@ export class MultiplayerSocket {
       socket.on(MULTIPLAYER_SOCKET.REMOVE_PLAYER, async (erdId, userId, callback, onError) => {
         try {
           const roomKey = `${KEYS.erd}:${erdId}`
-          await this.redis.json.del(roomKey, `$.players[?(@.id=='${userId}')]`).catch(e => console.error("DELETE_PLAYER_ERROR: ", e))
-          socket.to(roomKey).emit(MULTIPLAYER_SOCKET.REMOVE_PLAYER, userId)
-          await this.checkAndHandleIfPlaygroundEmpty(roomKey)
-          await this.savePlaygroundToDb(roomKey)
-          callback()
+          const playerExists = await this.redis.json.type(roomKey, `$.players[?(@.id=='${userId}')]`)
+
+          if (Array.isArray(playerExists) && playerExists.length > 0) {
+            await this.redis.json.del(roomKey, `$.players[?(@.id=='${userId}')]`)
+            await this.savePlaygroundToDb(roomKey)
+            await this.checkAndHandleIfPlaygroundEmpty(roomKey)
+            socket.to(roomKey).emit(MULTIPLAYER_SOCKET.REMOVE_PLAYER, userId)
+            console.log("PLAYER LEFT WITH ID: ", userId)
+            callback()
+          } else {
+            console.log("PLAYER DOES NOT EXIST: ", userId)
+          }
+
+
         } catch (e) {
+          console.error("PLAYER_REMOVE_ERROR:", e)
           onError(e)
         }
       })
 
       socket.on("disconnect", () => {
-        console.log(socket.rooms)
-        console.log("SOCKET DISCONNECTED")
       })
     })
 
@@ -73,38 +80,40 @@ export class MultiplayerSocket {
   }
 
   checkIfPlaygroundExist = async (playgroundKey: string) => {
-    return await this.redis.json.type(playgroundKey)
+    const list = await this.redis.json.type(playgroundKey)
+
+    return Array.isArray(list) && list.length > 0;
   }
 
   addPlayground = async (playgroundKey: string) => {
-      const erdId = playgroundKey.split(":")[1]
+    const erdId = playgroundKey.split(":")[1]
 
-      const [erd, relations] = await Promise.all([
-        Erd.findByPk(erdId, {
+    const [erd, relations] = await Promise.all([
+      Erd.findByPk(erdId, {
+        include: [{
+          model: Table,
           include: [{
-            model: Table,
-            include: [{
-              model: Column
-            }]
-          }, {
-            model: Relation
+            model: Column
           }]
-        }),
-        Relation.findAll({
-          where: {
-            erdId
-          }
-        })
-      ])
-
-      if (erd) {
-        const erdJson = {
-          ...erd.toJSON(),
-          relations: relations.map(r => r.toJSON()),
-          players: []
+        }, {
+          model: Relation
+        }]
+      }),
+      Relation.findAll({
+        where: {
+          erdId
         }
-        await this.redis.json.set(playgroundKey, "$", erdJson as any)
+      })
+    ])
+
+    if (erd) {
+      const erdJson = {
+        ...erd.toJSON(),
+        relations: relations.map(r => r.toJSON()),
+        players: []
       }
+      await this.redis.json.set(playgroundKey, "$", erdJson as any)
+    }
   }
 
   addUserToPlayground = async (playgroundKey: string, userId: string) => {
@@ -126,14 +135,14 @@ export class MultiplayerSocket {
   }
 
   checkAndHandleIfPlaygroundEmpty = async (playgroundKey: string) => {
-    const playersLeft = await this.redis.json.arrLen(playgroundKey, "$.players").catch(e => console.error(e))
+    const playersLeft = await this.redis.json.arrLen(playgroundKey, "$.players")
 
     if (Array.isArray(playersLeft) && !playersLeft[0]) {
-      await this.redis.json.del(playgroundKey).catch(e => console.error("DELETE_PLAYGROUND_ERROR: ", e))
+      await this.redis.json.del(playgroundKey)
     }
   }
 
-  savePlaygroundToDb = async (playgroundKey: string) =>{
+  savePlaygroundToDb = async (playgroundKey: string) => {
     let transaction: Transaction | null = null
 
     try {
@@ -149,11 +158,16 @@ export class MultiplayerSocket {
         })
 
         await Promise.all([
-          Erd.upsert(erd, { transaction }),
-          Table.bulkCreate(icTables, { updateOnDuplicate: ["id", "erdId", "name", "color", "position", "type"], transaction }),
+          Erd.upsert(erd, {transaction}),
+          Table.bulkCreate(icTables, {
+            updateOnDuplicate: ["id", "erdId", "name", "color", "position", "type"],
+            transaction
+          }),
         ])
 
         await transaction.commit()
+
+        console.log("PLAYGROUND SAVED TO DB SUCCESSFULLY")
         return "success"
       }
 

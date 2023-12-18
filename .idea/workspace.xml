@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added try catch to sockets">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed M:N table add function">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/MultiplayerSocket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/MultiplayerSocket.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/TableSocket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/TableSocket.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +92,8 @@
       <workItem from="1701936174063" duration="15313000" />
       <workItem from="1702264652966" duration="41893000" />
       <workItem from="1702619964775" duration="6927000" />
-      <workItem from="1702859868965" duration="3620000" />
+      <workItem from="1702859868965" duration="10931000" />
+      <workItem from="1702941997563" duration="192000" />
     </task>
     <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
       <option name="closed" value="true" />
@@ -359,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702625102282</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="fixed M:N table add function">
+      <option name="closed" value="true" />
+      <created>1702865198651</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1702865198651</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,7 +385,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added Relation model" />
     <MESSAGE value="added table validator" />
     <MESSAGE value="added column put api validator" />
     <MESSAGE value="added position and type column to Table.model.ts" />
@@ -402,6 +409,7 @@
     <MESSAGE value="Workspace updated" />
     <MESSAGE value="Erd invitation email send function" />
     <MESSAGE value="added try catch to sockets" />
-    <option name="LAST_COMMIT_MESSAGE" value="added try catch to sockets" />
+    <MESSAGE value="fixed M:N table add function" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed M:N table add function" />
   </component>
 </project>
