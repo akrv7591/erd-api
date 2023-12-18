@@ -40,6 +40,7 @@ export class MultiplayerSocket {
           const user = await this.addUserToPlayground(playgroundKey, userId)
           const playground = await this.getPlayground(playgroundKey)
           socket.join(playgroundKey)
+          console.log(socket.rooms)
           socket.to(playgroundKey).emit(MULTIPLAYER_SOCKET.ADD_PLAYER, user)
           new TableSocket(playgroundKey, socket, this.redis, io)
           callback(playground)
@@ -60,7 +61,13 @@ export class MultiplayerSocket {
           onError(e)
         }
       })
+
+      socket.on("disconnect", () => {
+        console.log(socket.rooms)
+        console.log("SOCKET DISCONNECTED")
+      })
     })
+
 
     this.io = io
   }

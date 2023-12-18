@@ -4,6 +4,8 @@ import {RedisClientType} from "redis";
 import {Column} from "../../sequelize-models/erd-api/Column.model";
 import {Relation} from "../../sequelize-models/erd-api/Relation.model";
 import {Table} from "../../sequelize-models/erd-api/Table.model";
+import {erdSequelize} from "../../sequelize-models/erd-api";
+import {Transaction} from "sequelize";
 
 export class TableSocket {
   roomKey: string
@@ -39,21 +41,27 @@ export class TableSocket {
 
   // Table actions
   addTable: IMultiplayerListeners['addTable'] = async (tableData, callback, onError) => {
+    let transaction: Transaction | null = null
     try {
-      await this.redis.json.arrAppend(this.roomKey, '.tables', tableData as any)
-      this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE, tableData)
-
+      transaction = await erdSequelize.transaction()
       const {data, ...icTable} = tableData
+
       await Table.create({
         ...icTable,
         name: data.name,
         color: data.color,
         erdId: this.erdId
-      })
+      }, {transaction})
+      await Column.bulkCreate(data.columns, {transaction})
+      await transaction.commit()
+      await this.redis.json.arrAppend(this.roomKey, '.tables', tableData as any)
+      this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE, tableData)
+
       callback()
     } catch (e) {
-      onError(e)
+      await transaction?.rollback()
       console.error(e)
+      onError(e)
     }
   }
   updateTable: IMultiplayerListeners['updateTable'] = async (tableData, callback, onError) => {
