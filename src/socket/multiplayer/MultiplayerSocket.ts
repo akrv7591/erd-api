@@ -50,13 +50,20 @@ export class MultiplayerSocket {
           const playgroundExists = await this.checkIfPlaygroundExist(playgroundKey)
 
           if (!playgroundExists) {
+            console.log("CREATING NEW PLAYGROUND")
             await this.addPlayground(playgroundKey)
           }
 
-          const user = await this.addUserToPlayground(playgroundKey, userId)
+          const [user, added] = await this.addUserToPlayground(playgroundKey, userId)
           const playground = await this.getPlayground(playgroundKey)
+          //@ts-ignore
+          console.log("PLAYERS: ", playground.players.length)
           socket.join(playgroundKey)
-          socket.to(playgroundKey).emit(MULTIPLAYER_SOCKET.ADD_PLAYER, user)
+
+          if (added) {
+            console.log("PLAYER JOINED")
+            socket.to(playgroundKey).emit(MULTIPLAYER_SOCKET.ADD_PLAYER, user)
+          }
           new TableSocket(playgroundKey, socket, this.redis, io)
           callbackData.status = CallbackDataStatus.OK
           callbackData.data = playground
@@ -68,7 +75,7 @@ export class MultiplayerSocket {
       })
       socket.on(MULTIPLAYER_SOCKET.REMOVE_PLAYER, async (erdId, userId, callback) => {
         const callbackData: CallbackDataType = {
-          type: MULTIPLAYER_SOCKET.ADD_PLAYER,
+          type: MULTIPLAYER_SOCKET.REMOVE_PLAYER,
           status: CallbackDataStatus.FAILED,
           data: null
         }
@@ -86,7 +93,7 @@ export class MultiplayerSocket {
             callbackData.data = userId
             callback(callbackData)
           } else {
-            console.log("PLAYER DOES NOT EXIST: ", userId)
+            console.warn("PLAYER DOES NOT EXIST: ", userId)
             callback(callbackData)
           }
 
@@ -95,8 +102,72 @@ export class MultiplayerSocket {
           callback(callbackData)
         }
       })
-    })
+      socket.on(MULTIPLAYER_SOCKET.SUBSCRIBE_TO_PLAYER, async (playerId, targetPlayerId, callback) => {
+        const callbackData: CallbackDataType = {
+          type: MULTIPLAYER_SOCKET.SUBSCRIBE_TO_PLAYER,
+          status: CallbackDataStatus.FAILED,
+          data: null
+        }
+        try {
+          console.log(`Player ${playerId} subscribed to ${targetPlayerId}`)
+          callbackData.status = CallbackDataStatus.OK
+          socket.join(targetPlayerId)
+          callback(callbackData)
+        } catch (e) {
+          console.error(e)
+          callback(callbackData)
+        }
+      })
+      socket.on(MULTIPLAYER_SOCKET.UNSUBSCRIBE_TO_PLAYER, async (playerId, targetPlayerId, callback) => {
+        const callbackData: CallbackDataType = {
+          type: MULTIPLAYER_SOCKET.UNSUBSCRIBE_TO_PLAYER,
+          status: CallbackDataStatus.FAILED,
+          data: null
+        }
 
+        try {
+          socket.leave(targetPlayerId)
+          callbackData.status = CallbackDataStatus.OK
+          console.log(`Player ${playerId} unsubscribed from ${targetPlayerId}`)
+          callback(callbackData)
+        } catch (e) {
+          console.error(e)
+          callback(callbackData)
+        }
+      })
+      socket.on(MULTIPLAYER_SOCKET.ON_USER_VIEWPORT_CHANGE, async (playerId, data, callback) => {
+        const callbackData: CallbackDataType = {
+          type: MULTIPLAYER_SOCKET.ON_USER_VIEWPORT_CHANGE,
+          status: CallbackDataStatus.FAILED,
+          data: null
+        }
+
+        try {
+          socket.to(playerId).emit(MULTIPLAYER_SOCKET.ON_USER_VIEWPORT_CHANGE, data)
+          callbackData.status = CallbackDataStatus.OK
+          callback(callbackData)
+        } catch (e) {
+          console.error(e)
+          callback(callbackData)
+        }
+      })
+      socket.on(MULTIPLAYER_SOCKET.ON_USER_MOUSE_CHANGE, async (playerId, data, callback) => {
+        const callbackData: CallbackDataType = {
+          type: MULTIPLAYER_SOCKET.ON_USER_MOUSE_CHANGE,
+          status: CallbackDataStatus.FAILED,
+          data: null
+        }
+
+        try {
+          socket.to(playerId).emit(data)
+          callbackData.status = CallbackDataStatus.OK
+          callback(callbackData)
+        } catch (e) {
+          console.error(e)
+          callback(callbackData)
+        }
+      })
+    })
 
     this.io = io
   }
@@ -104,7 +175,7 @@ export class MultiplayerSocket {
   checkIfPlaygroundExist = async (playgroundKey: string) => {
     const list = await this.redis.json.type(playgroundKey)
 
-    return Array.isArray(list) && list.length > 0;
+    return !!list
   }
 
   addPlayground = async (playgroundKey: string) => {
@@ -140,16 +211,18 @@ export class MultiplayerSocket {
 
   addUserToPlayground = async (playgroundKey: string, userId: string) => {
     const user = await User.findByPk(userId)
+    let userAdded = false
 
     if (user) {
       const isUserAlreadyInRoom = await this.redis.json.type(playgroundKey, `$.players[?(@.id=='${user.id}')]`)
 
       if (Array.isArray(isUserAlreadyInRoom) && isUserAlreadyInRoom?.length === 0) {
         await this.redis.json.arrAppend(playgroundKey, '$.players', user.toJSON() as any)
+        userAdded = true
       }
     }
 
-    return user
+    return [user, userAdded]
   }
 
   getPlayground = async (playgroundKey: string) => {
@@ -160,6 +233,7 @@ export class MultiplayerSocket {
     const playersLeft = await this.redis.json.arrLen(playgroundKey, "$.players")
 
     if (Array.isArray(playersLeft) && !playersLeft[0]) {
+      console.log("DELETING PLAYGROUND")
       await this.redis.json.del(playgroundKey)
     }
   }
