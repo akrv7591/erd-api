@@ -14,6 +14,16 @@ import {IPlayground} from "../../types/playground";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 
+export enum CallbackDataStatus {
+  OK="ok",
+  FAILED="failed"
+}
+
+export interface CallbackDataType {
+  type: MULTIPLAYER_SOCKET;
+  status: CallbackDataStatus
+  data: any
+}
 
 export class MultiplayerSocket {
   io: Server
@@ -28,7 +38,13 @@ export class MultiplayerSocket {
       }
     })
     io.on("connection", (socket) => {
-      socket.on(MULTIPLAYER_SOCKET.ADD_PLAYER, async (erdId, userId, callback, onError) => {
+      socket.on(MULTIPLAYER_SOCKET.ADD_PLAYER, async (erdId, userId, callback) => {
+        const callbackData: CallbackDataType = {
+          type: MULTIPLAYER_SOCKET.ADD_PLAYER,
+          status: CallbackDataStatus.FAILED,
+          data: null
+        }
+
         try {
           const playgroundKey = `${KEYS.erd}:${erdId}`
           const playgroundExists = await this.checkIfPlaygroundExist(playgroundKey)
@@ -42,13 +58,20 @@ export class MultiplayerSocket {
           socket.join(playgroundKey)
           socket.to(playgroundKey).emit(MULTIPLAYER_SOCKET.ADD_PLAYER, user)
           new TableSocket(playgroundKey, socket, this.redis, io)
-          callback(playground)
+          callbackData.status = CallbackDataStatus.OK
+          callbackData.data = playground
+          callback(callbackData)
         } catch (e) {
           console.error(e)
-          onError(e)
+          callback(callbackData)
         }
       })
-      socket.on(MULTIPLAYER_SOCKET.REMOVE_PLAYER, async (erdId, userId, callback, onError) => {
+      socket.on(MULTIPLAYER_SOCKET.REMOVE_PLAYER, async (erdId, userId, callback) => {
+        const callbackData: CallbackDataType = {
+          type: MULTIPLAYER_SOCKET.ADD_PLAYER,
+          status: CallbackDataStatus.FAILED,
+          data: null
+        }
         try {
           const roomKey = `${KEYS.erd}:${erdId}`
           const playerExists = await this.redis.json.type(roomKey, `$.players[?(@.id=='${userId}')]`)
@@ -59,19 +82,18 @@ export class MultiplayerSocket {
             await this.checkAndHandleIfPlaygroundEmpty(roomKey)
             socket.to(roomKey).emit(MULTIPLAYER_SOCKET.REMOVE_PLAYER, userId)
             console.log("PLAYER LEFT WITH ID: ", userId)
-            callback()
+            callbackData.status = CallbackDataStatus.OK
+            callbackData.data = userId
+            callback(callbackData)
           } else {
             console.log("PLAYER DOES NOT EXIST: ", userId)
+            callback(callbackData)
           }
-
 
         } catch (e) {
           console.error("PLAYER_REMOVE_ERROR:", e)
-          onError(e)
+          callback(callbackData)
         }
-      })
-
-      socket.on("disconnect", () => {
       })
     })
 

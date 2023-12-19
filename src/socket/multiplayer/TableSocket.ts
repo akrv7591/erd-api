@@ -6,6 +6,7 @@ import {Relation} from "../../sequelize-models/erd-api/Relation.model";
 import {Table} from "../../sequelize-models/erd-api/Table.model";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 import {Transaction} from "sequelize";
+import {CallbackDataStatus, CallbackDataType} from "./MultiplayerSocket";
 
 export class TableSocket {
   roomKey: string
@@ -40,8 +41,13 @@ export class TableSocket {
   }
 
   // Table actions
-  addTable: IMultiplayerListeners['addTable'] = async (tableData, callback, onError) => {
+  addTable: IMultiplayerListeners['addTable'] = async (tableData, callback) => {
     let transaction: Transaction | null = null
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       transaction = await erdSequelize.transaction()
       const {data, ...icTable} = tableData
@@ -56,27 +62,38 @@ export class TableSocket {
       await transaction.commit()
       await this.redis.json.arrAppend(this.roomKey, '.tables', tableData as any)
       this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE, tableData)
-
-      callback()
+      callbackData.status= CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
       await transaction?.rollback()
       console.error(e)
-      onError(e)
+      callback(callbackData)
     }
   }
-  updateTable: IMultiplayerListeners['updateTable'] = async (tableData, callback, onError) => {
+  updateTable: IMultiplayerListeners['updateTable'] = async (tableData, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       if (tableData.position) {
         await this.redis.json.set(this.roomKey, `.tables[?(@.id=='${tableData.id}')].position`, tableData.position as any)
         this.socket.to(this.roomKey).emit(MULTIPLAYER_SOCKET.UPDATE_TABLE, tableData)
-        callback()
+        callbackData.status = CallbackDataStatus.OK
+        callback(callbackData)
       }
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
-  deleteTable: IMultiplayerListeners['deleteTable'] = async (tableId, callback, onError) => {
+  deleteTable: IMultiplayerListeners['deleteTable'] = async (tableId, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       await this.redis.json.del(this.roomKey, `.tables[?(@.id=='${tableId}')]`)
       this.socket.in(this.roomKey).emit(MULTIPLAYER_SOCKET.DELETE_TABLE, tableId)
@@ -85,38 +102,58 @@ export class TableSocket {
           id: tableId
         }
       })
-      callback()
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
 
-  subscribeToTableData: IMultiplayerListeners['subscribeToTableData'] = async (tableId, callback, onError) => {
+  subscribeToTableData: IMultiplayerListeners['subscribeToTableData'] = async (tableId, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       this.socket.join(tableId)
-      callback()
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
 
   // Table column actions
-  addTableColumn: IMultiplayerListeners['addTableColumn'] = async (tableId, columnData, callback, onError) => {
+  addTableColumn: IMultiplayerListeners['addTableColumn'] = async (tableId, columnData, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       await this.redis.json.arrAppend(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns`, columnData as any)
-      this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE_COLUMN, tableId, columnData)
-      await Column.create({
+      const column = await Column.create({
         ...columnData,
         tableId
       })
-      callback()
+      this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_TABLE_COLUMN, tableId, column)
+
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError()
+      console.error(e)
+      callback(callbackData)
     }
   }
-  updateTableColumn: IMultiplayerListeners['updateTableColumn'] = async (tableId, columnData, callback, onError) => {
+  updateTableColumn: IMultiplayerListeners['updateTableColumn'] = async (tableId, columnData, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       await this.redis.json.set(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns[?(@.id=='${columnData.id}')]`, columnData as any)
       this.io.in(tableId).emit(MULTIPLAYER_SOCKET.UPDATED_TABLE_COLUMN, tableId, columnData)
@@ -125,13 +162,19 @@ export class TableSocket {
           id: columnData.id
         }
       })
-      callback()
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
-  deleteTableColumn: IMultiplayerListeners['deleteTableColumn'] = async (tableId, columnId, callback, onError) => {
+  deleteTableColumn: IMultiplayerListeners['deleteTableColumn'] = async (tableId, columnId, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       await this.redis.json.del(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.columns[?(@.id=='${columnId}')]`)
       this.io.in(tableId).emit(MULTIPLAYER_SOCKET.DELETE_TABLE_COLUMN, tableId, columnId)
@@ -140,15 +183,21 @@ export class TableSocket {
           id: columnId
         }
       })
-      callback()
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
 
   // Table data actions
-  setTableData: IMultiplayerListeners['setTableData'] = async (tableId, key, value, callback, onError) => {
+  setTableData: IMultiplayerListeners['setTableData'] = async (tableId, key, value, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       await this.redis.json.set(this.roomKey, `$.tables[?(@.id=='${tableId}')].data.${key}`, value)
       this.io.in(tableId).emit(MULTIPLAYER_SOCKET.SET_TABLE_DATA, tableId, key, value)
@@ -159,16 +208,21 @@ export class TableSocket {
           id: tableId
         }
       })
-
-      callback()
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
 
   // Table relation actions
-  addRelation: IMultiplayerListeners['addRelation'] = async (relation, callback, onError) => {
+  addRelation: IMultiplayerListeners['addRelation'] = async (relation, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       await this.redis.json.arrAppend(this.roomKey, '.relations', relation as any)
       this.io.in(this.roomKey).emit(MULTIPLAYER_SOCKET.ADD_RELATION, relation)
@@ -176,13 +230,19 @@ export class TableSocket {
         ...relation,
         erdId: this.roomKey.split(":")[1] as string
       })
-      callback()
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
-  deleteRelation: IMultiplayerListeners['deleteRelation'] = async (relationId, callback, onError) => {
+  deleteRelation: IMultiplayerListeners['deleteRelation'] = async (relationId, callback) => {
+    const callbackData: CallbackDataType = {
+      type: MULTIPLAYER_SOCKET.ADD_TABLE,
+      status: CallbackDataStatus.FAILED,
+      data: null
+    }
     try {
       await this.redis.json.del(this.roomKey, `$.relations[?(@.id=='${relationId}')]`)
       this.io.to(this.roomKey).emit(MULTIPLAYER_SOCKET.DELETE_RELATION, relationId)
@@ -191,9 +251,10 @@ export class TableSocket {
           id: relationId
         }
       })
-      callback()
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
     } catch (e) {
-      onError(e)
+      callback(callbackData)
       console.error(e)
     }
   }
