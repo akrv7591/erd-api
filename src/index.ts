@@ -3,7 +3,7 @@ import config from './config/config';
 import logger from './middleware/logger';
 import {erdSequelize} from "./sequelize-models/erd-api";
 import * as http from "http";
-import {MultiplayerSocket} from "./socket/multiplayer/MultiplayerSocket";
+import {MultiplayerSocket} from "./socket/multiplayer/multiplayer-socket";
 import {MultiplayerRedisClient} from "./redis/multiplayerRedisClient";
 
 const initDb = async () => {
