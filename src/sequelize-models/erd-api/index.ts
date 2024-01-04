@@ -8,7 +8,6 @@ import {ResetToken} from "./ResetToken.model";
 import {Team} from "./Team.model";
 import {UserTeam} from "./UserTeam.model";
 import {Erd} from "./Erd.model";
-import {UserErd} from "./UserErd.model";
 import {Table} from "./Table.model";
 import {Column} from "./Column.model";
 import {Relation} from "./Relation.model";
@@ -26,10 +25,9 @@ export const erdSequelize = new Sequelize({
     Team,
     UserTeam,
     Erd,
-    UserErd,
     Table,
     Column,
     Relation,
-    TeamErd
+    TeamErd,
   ]
 });

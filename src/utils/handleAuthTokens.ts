@@ -53,11 +53,6 @@ export default async function handleAuthTokens(req: any, res: express.Response, 
   const accessToken = await createAccessToken(user);
   const newRefreshToken = await createRefreshToken(user);
 
-  console.log({
-    accessToken,
-    newRefreshToken
-  })
-
   // store new refresh token in db
   await RefreshToken.create({
     token: newRefreshToken,

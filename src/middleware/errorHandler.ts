@@ -3,7 +3,7 @@ import logger from './logger';
 
 export const errorHandler = (
   err: Error | any,
-  _req: Request,
+  _req: Request<any>,
   res: Response
 ): void => {
   logger.error(err);

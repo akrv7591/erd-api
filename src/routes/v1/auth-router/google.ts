@@ -64,12 +64,16 @@ export const google: express.RequestHandler = async (req, res) => {
       user = await User.create({
         email: googleData.email,
         name: googleData.name,
-        emailVerified: googleData.verified_email ? new Date() : null
+        emailVerified: new Date()
       }, {transaction})
     }
 
     if (!user.emailVerified) {
-      user.emailVerified = googleData.verified_email ? new Date() : null
+      user.emailVerified = new Date()
+    }
+
+    if (!user.name) {
+      user.name = googleData.name
     }
 
     await Account.upsert({
@@ -85,6 +89,8 @@ export const google: express.RequestHandler = async (req, res) => {
       transaction
     })
 
+    await user.save({transaction})
+
     const accessToken = await handleAuthTokens(req, res, user, transaction)
 
     await transaction.commit()
@@ -93,7 +99,5 @@ export const google: express.RequestHandler = async (req, res) => {
   } catch (e) {
     errorHandler(e, req, res)
     console.warn("Google login error\n ", e)
-    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
-
   }
 }

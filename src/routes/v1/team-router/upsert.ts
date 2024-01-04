@@ -1,54 +1,73 @@
 import express from "express";
-import logger from "../../../middleware/logger";
 import httpStatus from "http-status";
 import {matchedData} from "express-validator"
 import {ICTeam, Team} from "../../../sequelize-models/erd-api/Team.model";
 import {User} from "../../../sequelize-models/erd-api/User.model";
-import {Op} from "sequelize";
 import {UserTeam} from "../../../sequelize-models/erd-api/UserTeam.model";
+import {ROLE} from "../../../enums/role";
+import {erdSequelize} from "../../../sequelize-models/erd-api";
+import {Transaction} from "sequelize";
+import logger from "../../../middleware/logger";
 
 export const upsert = async (req: express.Request, res: express.Response) => {
+  let transaction: Transaction | null = null
   try {
-    const {users, ...data} = matchedData(req) as ICTeam
+    transaction = await erdSequelize.transaction()
+    let {users, ...data} = matchedData(req) as ICTeam
+    const [team, created] = await Team.upsert(data, {transaction})
 
-
-    const [team, created] = await Team.upsert(data)
+    const user = await User.findByPk(req.authorizationUser?.id, {transaction})
 
     if (created) {
-      const user = await User.findByPk(req.authorizationUser?.id)
-
       if (user) await UserTeam.create({
-        isAdmin: true,
         teamId: team.id,
-        userId: user.id
-      })
+        userId: user.id,
+        role: ROLE.ADMIN,
+        pending: false,
+      }, {transaction, hooks: false})
     }
 
-    const usersToInvite = await User.findAll({
-      where: {
-        email: users as unknown as string[]
-      },
-      include: [
-        {
-          model: Team,
+    if (user) {
+      const invitedUsers = await Promise.all((users || []).filter(user => user.id !== req.authorizationUser?.id).map(user => User.upsert({email: user.email}, {transaction})))//
+
+      await Promise.all(invitedUsers.map(async ([u]) => {
+        const user = await User.findOne({where: { email: u.email}, transaction})
+
+        const userTeam = await UserTeam.findOne({
           where: {
-            id: {
-              [Op.not]: team.id
-            }
-          },
-          required: true
+            userId: user?.id,
+            teamId: team.id
+          }
+        })
+
+        const role = users!.find(u => u.email === user!.email)?.UserTeam?.role!
+
+        console.log(role)
+
+        if (!userTeam) {
+          return UserTeam.create({
+            teamId: team.id,
+            userId: user!.id,
+            role,
+            pending: true
+          }, {transaction})
+        } else {
+          userTeam.role = role
+
+          return userTeam.update({role}, {transaction})
         }
-      ]
-    })
 
-    console.log("\nUSERS TO INVITE")
-    console.table(usersToInvite.map(user => user.toJSON()))
+      }))
+    }
 
-    res.status(created? httpStatus.CREATED: httpStatus.OK).json(team)
 
+    await transaction.commit()
+
+    res.status(created ? httpStatus.CREATED : httpStatus.OK).json(team)
 
   } catch (e) {
     logger.error(e)
+    await transaction?.rollback()
     res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
   }
 }

@@ -6,16 +6,25 @@ import {Team} from "../../../sequelize-models/erd-api/Team.model";
 
 export const list = async (req: express.Request, res: express.Response) => {
   try {
-    const data = await Team.findAndCountAll({
-      ...req.pagination,
-      include: {
-        model: User,
+    const data = {
+      count: 0,
+      rows: [] as Team[]
+    }
+
+    const user = await User.findByPk(req.authorizationUser?.id, {
+      logging: true,
+      include: [{
+        model: Team,
         required: true,
-        where: {
-          id: req.authorizationUser?.id
-        }
-      }
+      }]
     })
+
+    if (user) {
+      data.count = user.teams.length
+      // @ts-ignore
+      data.rows = user.teams.filter(team => !team.UserTeam.pending)
+    }
+
 
     res.json(data)
   } catch (e) {

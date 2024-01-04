@@ -139,11 +139,14 @@ export class MultiplayerSocket {
         include: [{
           model: TableModel,
           include: [{
-            model: ColumnModel
-          }]
+            model: ColumnModel,
+          }],
         }, {
           model: RelationModel
-        }]
+        }],
+        order: [
+          ['tables', 'columns', 'order', 'asc']
+        ],
       }),
       RelationModel.findAll({
         where: {

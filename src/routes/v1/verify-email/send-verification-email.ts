@@ -6,6 +6,7 @@ import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVer
 import {Op} from "sequelize";
 import {randomUUID} from "crypto";
 import {sendVerifyEmail} from "../../../utils/sendEmail.util";
+import {VERIFICATION_TOKEN} from "../../../enums/verification-token";
 
 /**
 * Sends Verification email
@@ -66,6 +67,7 @@ export const sendVerificationEmail = async (
   const token = randomUUID();
   const expiresAt = new Date(Date.now() + 3600000); // Token expires in 1 hour
   await EmailVerificationToken.create({
+    type: VERIFICATION_TOKEN.EMAIL,
     token,
     expiresAt,
     userId: user.id

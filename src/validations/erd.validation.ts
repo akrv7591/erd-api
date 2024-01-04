@@ -5,5 +5,5 @@ export const erdSchema = [
   body("name").exists().isString(),
   body("description").optional().isString(),
   body("isPublic").toBoolean().isBoolean(),
-  body("users").optional().isArray()
+  body("teamId").exists().isString(),
 ]

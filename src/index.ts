@@ -9,7 +9,6 @@ import {MultiplayerRedisClient} from "./redis/multiplayerRedisClient";
 const initDb = async () => {
   try {
     await erdSequelize.authenticate()
-    // await Relation.sync({force: true})
     // await erdSequelize.sync({alter: true})
   } catch (e) {
     console.error(e)

@@ -7,11 +7,12 @@
 import config from "../../config/config";
 import transporter from "../../config/nodemailer";
 import logger from "../../middleware/logger";
-import {IUser} from "../../sequelize-models/erd-api/User.model";
+import { User } from "../../sequelize-models/erd-api/User.model";
+import {Team} from "../../sequelize-models/erd-api/Team.model";
 
 
-export const sendUserInvitationEmail = (user: IUser) => {
-  const verifyLink = `${config.client.url}/library`;
+export const sendUserInvitationEmail = (user: User, team: Team) => {
+  const verifyLink = `${config.client.url}/team/${team.id}/join`;
   const mailOptions = {
     from: config.email.from,
     to: user.email,
@@ -369,7 +370,7 @@ export const sendUserInvitationEmail = (user: IUser) => {
                     <tr>
                       <td>
                         <p>Dear ${user.email}</p>
-                        <p>We hope this message finds you well. You've been invited by a fellow user to join Erdiagramly's ERD Diagram Web App, a powerful tool for simplifying data modeling and enhancing collaboration.</p>
+                        <p>We hope this message finds you well. You've been invited by a fellow user to join ${team.name} team on ERD Diagram Web App, a powerful tool for simplifying data modeling and enhancing collaboration.</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>

@@ -1,21 +1,27 @@
 import {Optional} from "sequelize";
-import {Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {IUser, User} from "./User.model";
 import {ITeam, Team} from "./Team.model";
+import {ROLE} from "../../enums/role";
+import {EmailVerificationToken} from "./EmailVerificationToken.model";
+import {VERIFICATION_TOKEN} from "../../enums/verification-token";
+import {sendUserInvitationEmail} from "../../utils/email/sendUserInvitation";
 
 export interface IUserTeam {
   //Composite primary keys
   userId: string
   teamId: string
+  role: ROLE
+  pending: boolean
 
   createdAt: Date
   updatedAt: Date
-  isAdmin: boolean
 
   //Relations
   user?: IUser
   team?: ITeam
 }
+
 
 export interface ICUserTeam extends Optional<IUserTeam, 'createdAt' | 'updatedAt'> {
 }
@@ -24,6 +30,32 @@ export interface ICUserTeam extends Optional<IUserTeam, 'createdAt' | 'updatedAt
   modelName: 'UserTeam',
   tableName: 'UserTeam',
   timestamps: true,
+  hooks: {
+    async afterCreate(attributes: UserTeam, options) {
+      const createUserTeamInvitation = async () => {
+        await EmailVerificationToken.create({
+          type: VERIFICATION_TOKEN.TEAM_INVITATION,
+          userId: attributes.userId,
+          token: attributes.teamId,
+          expiresAt: new Date(Date.now() + 86400000) // Token expires in 1 day
+        })
+        const [user, team] = await Promise.all([
+          User.findByPk(attributes.userId),
+          Team.findByPk(attributes.teamId)
+        ])
+        if (user && team) {
+          sendUserInvitationEmail(user, team)
+        }
+      }
+      if (options.transaction) {
+        options.transaction.afterCommit(async () => {
+          await createUserTeamInvitation()
+        })
+      } else {
+        await createUserTeamInvitation()
+      }
+    }
+  }
 })
 export class UserTeam extends Model<IUserTeam, ICUserTeam> {
   //Composite primary keys
@@ -44,18 +76,19 @@ export class UserTeam extends Model<IUserTeam, ICUserTeam> {
   declare teamId: string
 
   @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-    allowNull: false
+    type: DataType.ENUM(ROLE.READ, ROLE.WRITE, ROLE.ADMIN),
+    allowNull: false,
+    defaultValue: ROLE.READ
   })
-  declare isAdmin: boolean
+  declare role: ROLE
 
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  })
+  declare pending: boolean
 
-
-  // Relations
-  // @BelongsTo(() => User)
-  // declare user-router: User
-  //
-  // @BelongsTo(() => Team)
-  // declare team-router: Team
+  @BelongsTo(() => Team)
+  declare team: Team
 }

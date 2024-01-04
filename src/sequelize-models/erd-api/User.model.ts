@@ -1,14 +1,14 @@
-import {Optional} from "sequelize";
+import {CreateOptions, Optional} from "sequelize";
 import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {Account, IAccount} from "./Account.model";
 import {EmailVerificationToken, IEmailVerificationToken} from "./EmailVerificationToken.model";
 import {IRefreshToken, RefreshToken} from "./RefreshToken.model";
 import {IResetToken, ResetToken} from "./ResetToken.model";
-import {ITeam, Team} from "./Team.model";
-import {UserTeam} from "./UserTeam.model";
-import {Erd} from "./Erd.model";
-import {UserErd} from "./UserErd.model";
+import {ICTeam, ITeam, Team} from "./Team.model";
+import {ICUserTeam, UserTeam} from "./UserTeam.model";
+import {ROLE} from "../../enums/role";
+
 
 export interface IUser {
   id: string
@@ -25,9 +25,10 @@ export interface IUser {
   refreshTokens?: IRefreshToken[]
   resetTokens?: IResetToken[]
   teams?: ITeam[]
+  UserTeam?: UserTeam
 }
 
-export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt' | 'emailVerified'>{}
+export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt' | 'emailVerified' | 'name'>{}
 
 @Table({
   modelName: 'User',
@@ -36,6 +37,30 @@ export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt'
   defaultScope: {
     attributes: {
       exclude: ['password']
+    }
+  },
+  hooks: {
+    async afterCreate(user: User, options) {
+      const teamCreateOptions: CreateOptions<ICTeam> = {}
+      const userTeamCreateOptions: CreateOptions<ICUserTeam> = {
+        hooks: false
+      }
+
+      if (options.transaction) {
+        teamCreateOptions.transaction = options.transaction
+        userTeamCreateOptions.transaction = options.transaction
+      }
+
+      const team = await Team.create({
+        name: "Private",
+      }, teamCreateOptions)
+
+      await UserTeam.create({
+        userId: user.id,
+        teamId: team.id,
+        role: ROLE.ADMIN,
+        pending: false
+      }, userTeamCreateOptions)
     }
   }
 })
@@ -51,7 +76,8 @@ export class User extends Model<IUser, ICUser> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false
+    allowNull: false,
+    defaultValue: ""
   })
   declare name: string;
 
@@ -83,7 +109,7 @@ export class User extends Model<IUser, ICUser> {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   })
-  declare emailVerificationToken: EmailVerificationToken[]
+  declare emailVerificationTokens: EmailVerificationToken[]
 
   @HasMany(() => RefreshToken, {
     onUpdate: 'CASCADE',
@@ -99,9 +125,6 @@ export class User extends Model<IUser, ICUser> {
 
   @BelongsToMany(() => Team, () => UserTeam)
   declare teams: Team[]
-
-  @BelongsToMany(() => Erd, () => UserErd)
-  declare erds: Erd[]
 
   public toJWTPayload() {
     return {

@@ -1,10 +1,9 @@
 import {Optional} from "sequelize";
-import {BelongsToMany, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {IUser, User} from "./User.model";
 import {UserTeam} from "./UserTeam.model";
 import {Erd, IErd} from "./Erd.model";
-import {TeamErd} from "./TeamErd.model";
 
 export interface ITeam {
   id: string
@@ -17,7 +16,7 @@ export interface ITeam {
   erds?: IErd[]
 }
 
-export interface ICTeam extends Optional<ITeam, 'id' | 'createdAt'> {
+export interface ICTeam extends Optional<ITeam, 'id' | 'createdAt' | 'updatedAt'> {
 }
 
 @Table({
@@ -46,6 +45,9 @@ export class Team extends Model<ITeam, ICTeam> {
   @BelongsToMany(() => User, () => UserTeam)
   declare users: User[]
 
-  @BelongsToMany(() => Erd, () => TeamErd)
+  @HasMany(() => Erd)
   declare erds: Erd[]
+
+  @HasMany(() => UserTeam)
+  declare userTeams: UserTeam[]
 }

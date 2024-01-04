@@ -40,7 +40,7 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
 
   async function onUpdate(column: any, callback: Function) {
     const callbackData = getCallbackData(Column.update)
-
+    
     try {
       await redis.json.set(playgroundKey, `$.tables[?(@.id=='${column.tableId}')].data.columns[?(@.id=='${column.id}')]`, column as any)
       socket.to(playgroundKey).emit(Column.update, {column})

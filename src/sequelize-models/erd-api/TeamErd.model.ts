@@ -7,11 +7,6 @@ export interface ITeamErd {
   createdAt: Date
   updatedAt: Date
 
-  // Permissions
-  canRead: boolean
-  canWrite: boolean
-  canDelete: boolean
-
   //Foreign keys
   teamId: string
   erdId: string
@@ -45,26 +40,5 @@ export class TeamErd extends Model<ITeamErd, ICTeamErd> {
     allowNull: false
   })
   declare erdId: string
-
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-    allowNull: false
-  })
-  declare canRead: boolean
-
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-    allowNull: false
-  })
-  declare canWrite: boolean
-
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-    allowNull: false
-  })
-  declare canDelete: boolean
 
 }

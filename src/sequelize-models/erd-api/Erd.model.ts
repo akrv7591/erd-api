@@ -1,12 +1,9 @@
 import {Optional} from "sequelize";
-import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IUser, User} from "./User.model";
-import {UserErd} from "./UserErd.model";
 import {ITable, Table as TableModel} from "./Table.model";
 import {IRelation, Relation} from "./Relation.model";
 import {ITeam, Team} from "./Team.model";
-import {TeamErd} from "./TeamErd.model";
 
 export interface IErd {
   id: string
@@ -16,9 +13,10 @@ export interface IErd {
   description: string | null;
   isPublic: boolean;
 
+  teamId: string
+
   //Relations
-  users?: IUser[]
-  teams?: ITeam[]
+  team?: ITeam
   tables?: ITable[]
   relations?: IRelation[]
 }
@@ -61,12 +59,17 @@ export class Erd extends Model<IErd, ICErd> {
   })
   declare isPublic: boolean
 
-  // Relations
-  @BelongsToMany(() => User, () => UserErd)
-  declare users: User[]
+  @ForeignKey(() => Team)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  declare teamId: string;
 
-  @BelongsToMany(() => Team, () => TeamErd)
-  declare teams: Team[]
+  // Relations
+
+  @BelongsTo(() => Team)
+  declare team: Team
 
   @HasMany(() => TableModel, {
     onUpdate: "CASCADE",
@@ -80,9 +83,4 @@ export class Erd extends Model<IErd, ICErd> {
   })
   declare relations: Relation[]
 
-  @HasMany(() => UserErd, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE"
-  })
-  declare userErds: UserErd[]
 }

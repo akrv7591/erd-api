@@ -1,4 +1,3 @@
-import {Optional} from "sequelize";
 import {
   BelongsTo,
   Column as SequelizeColumn,
@@ -10,6 +9,7 @@ import {
 } from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {ITable, Table} from "./Table.model";
+import {Optional} from "sequelize";
 
 export interface IColumn {
   id: string;
@@ -41,7 +41,7 @@ export interface ICColumn extends Optional<IColumn, 'id' | 'createdAt' | 'update
   tableName: 'Column',
   timestamps: true,
   defaultScope: {
-    order: ['order', 'asc']
+    order: [['order', 'asc']]
   }
 })
 export class Column extends Model<IColumn, ICColumn> {

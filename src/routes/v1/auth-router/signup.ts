@@ -7,6 +7,7 @@ import {randomUUID} from "crypto";
 import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import {sendVerifyEmail} from "../../../utils/sendEmail.util";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
+import {VERIFICATION_TOKEN} from "../../../enums/verification-token";
 
 /**
  * This function handles the signup process for new users. It expects a request object with the following properties:
@@ -54,6 +55,7 @@ export const signup = async (
     const expiresAt = new Date(Date.now() + 3600000); // Token expires in 1 hour
 
     await EmailVerificationToken.create({
+      type: VERIFICATION_TOKEN.EMAIL,
       token,
       expiresAt,
       userId: newUser.id
