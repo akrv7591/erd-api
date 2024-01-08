@@ -43,22 +43,24 @@ export class MultiplayerSocket {
     const playerId = socket.handshake.auth['playerId']
     const playgroundKey = `${Key.playground}:${playgroundId}`
 
-    console.log("CONNECTION: ", socket.handshake.auth)
+    console.log("CONNECTION: ", playerId)
 
     try {
       socket.join(playgroundKey)
       socket.join(playerId)
+
+
       let playground = await this.redisClient.json.get(playgroundKey)
 
       if (!playground) {
-        await this.addPlayground(playgroundKey)
+        await this.createPlayground(playgroundKey)
       }
 
       const [player] = await this.addUserToPlayground(playgroundKey, playerId)
       playground = await this.getPlayground(playgroundKey)
 
       this.io.to(socket.id).emit("data", playground)
-      socket.to(playgroundKey).emit(Player.join, player)
+      this.io.to(playgroundKey).emit(Player.join, player)
 
     } catch (e) {
       console.error(e)
@@ -71,6 +73,7 @@ export class MultiplayerSocket {
     this.initColumnListeners(socket)
 
     socket.on("disconnect", () => this.onDisconnect(socket))
+
 
   }
 
@@ -131,7 +134,8 @@ export class MultiplayerSocket {
   }
 
   // Util functions
-  private addPlayground = async (playgroundKey: string) => {
+  private createPlayground = async (playgroundKey: string) => {
+    console.log("CREATING PLAYGROUND: ", playgroundKey)
     const erdId = playgroundKey.split(":")[1] as string
 
     const [erd, relations] = await Promise.all([
@@ -186,11 +190,26 @@ export class MultiplayerSocket {
   }
 
   private checkAndHandleIfPlaygroundEmpty = async (playgroundKey: string) => {
-    const playersLeft = await this.redisClient.json.arrLen(playgroundKey, "$.players")
+    try {
+      const players = await this.redisClient.json.arrLen(playgroundKey, "$.players")
 
-    if (Array.isArray(playersLeft) && !playersLeft[0]) {
-      console.log("DELETING PLAYGROUND")
-      await this.redisClient.json.del(playgroundKey)
+      console.log(players)
+
+      if (Array.isArray(players) && players[0] === 0) {
+        try {
+          await this.redisClient.json.del(playgroundKey)
+          console.log("PLAYGROUND DELETED: ", playgroundKey)
+
+        } catch (e) {
+          console.log("ERROR DELETING PLAYGROUND: ", playgroundKey)
+          console.log(e)
+        }
+      } else {
+        console.log("THERE ARE STILL PLAYERS LEFT")
+      }
+    } catch (e) {
+      console.log("ERROR ON GETTING PLAYERS FROM REDIS")
+      console.log(e)
     }
   }
 
@@ -199,7 +218,9 @@ export class MultiplayerSocket {
 
     try {
       transaction = await erdSequelize.transaction()
+
       const playground = await this.getPlayground(playgroundKey) as unknown as IPlayground | null
+
       if (playground) {
         const {tables, relations, players, ...erd} = playground
         const columns: IColumn[] = []
@@ -219,7 +240,7 @@ export class MultiplayerSocket {
 
         await transaction.commit()
 
-        console.log("PLAYGROUND SAVED TO DB SUCCESSFULLY")
+        console.log("PLAYGROUND SAVED TO DB SUCCESSFULLY: ", playgroundKey)
         return "success"
       }
 

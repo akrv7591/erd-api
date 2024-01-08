@@ -14,7 +14,6 @@ export const teamDetail: RequestHandler = async (req, res) => {
 
     if (!team) return res.sendStatus(httpStatus.NOT_FOUND)
 
-
     res.json(team)
 
   } catch (e: any) {

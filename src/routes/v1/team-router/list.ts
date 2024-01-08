@@ -12,7 +12,6 @@ export const list = async (req: express.Request, res: express.Response) => {
     }
 
     const user = await User.findByPk(req.authorizationUser?.id, {
-      logging: true,
       include: [{
         model: Team,
         required: true,

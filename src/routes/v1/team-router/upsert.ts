@@ -42,8 +42,6 @@ export const upsert = async (req: express.Request, res: express.Response) => {
 
         const role = users!.find(u => u.email === user!.email)?.UserTeam?.role!
 
-        console.log(role)
-
         if (!userTeam) {
           return UserTeam.create({
             teamId: team.id,

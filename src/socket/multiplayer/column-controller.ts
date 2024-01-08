@@ -40,18 +40,26 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
 
   async function onUpdate(column: any, callback: Function) {
     const callbackData = getCallbackData(Column.update)
-    
+
+    console.log(column)
+
     try {
-      await redis.json.set(playgroundKey, `$.tables[?(@.id=='${column.tableId}')].data.columns[?(@.id=='${column.id}')]`, column as any)
-      socket.to(playgroundKey).emit(Column.update, {column})
-      await ColumnModel.update(column, {
-        where: {
-          id: column.id
-        }
-      })
-      callbackData.status = CallbackDataStatus.OK
-      callbackData.data = { column}
-      callback(callbackData)
+      const result = await redis.json.set(playgroundKey, `$.tables[?(@.id=='${column.tableId}')].data.columns[?(@.id=='${column.id}')]`, column as any)
+
+      if (result !== "OK") {
+        callback(callbackData)
+      } else {
+        socket.to(playgroundKey).emit(Column.update, {column})
+        await ColumnModel.update(column, {
+          where: {
+            id: column.id
+          }
+        })
+        callbackData.status = CallbackDataStatus.OK
+        callbackData.data = {column}
+        callback(callbackData)
+      }
+
     } catch (e) {
       callback(callbackData)
       console.error(e)
