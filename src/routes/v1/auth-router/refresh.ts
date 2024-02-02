@@ -27,6 +27,7 @@ import {AUTH} from "../../../enums/auth";
 
 
 export const refresh = async (req: Request, res: Response) => {
+  console.log("REFRESH IS CALLED")
   const refreshToken: string | undefined =
     req.cookies[config.jwt.refresh_token.cookie_name];
 
