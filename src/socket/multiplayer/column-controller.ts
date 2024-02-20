@@ -41,8 +41,6 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
   async function onUpdate(column: any, callback: Function) {
     const callbackData = getCallbackData(Column.update)
 
-    console.log(column)
-
     try {
       const result = await redis.json.set(playgroundKey, `$.tables[?(@.id=='${column.tableId}')].data.columns[?(@.id=='${column.id}')]`, column as any)
 

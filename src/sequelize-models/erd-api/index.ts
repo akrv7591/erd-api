@@ -15,7 +15,8 @@ import {TeamErd} from "./TeamErd.model";
 
 export const erdSequelize = new Sequelize({
   ...config.db.erd,
-  logging: false,
+  dialectModule: require("mysql2"),
+  // logging: true,
   models: [
     User,
     Account,

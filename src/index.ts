@@ -9,7 +9,7 @@ import {MultiplayerRedisClient} from "./redis/multiplayerRedisClient";
 const initDb = async () => {
   try {
     await erdSequelize.authenticate()
-    // await erdSequelize.sync({alter: true})
+    // await erdSequelize.sync()
   } catch (e) {
     console.error(e)
     throw new Error("DB CONNECTION FAILED")
@@ -41,3 +41,4 @@ process.on('SIGTERM', () => {
     process.exit(err ? 1 : 0);
   });
 });
+

@@ -27,7 +27,8 @@ const envSchema = Joi.object().keys({
   SMTP_PORT: Joi.string().default('587'),
   SMTP_USERNAME: Joi.string().required(),
   SMTP_PASSWORD: Joi.string().required(),
-  EMAIL_FROM: Joi.string().email().required()
+  EMAIL_FROM: Joi.string().email().required(),
+  REDIS_URL: Joi.string().required(),
 });
 
 const { value: validatedEnv, error } = envSchema
@@ -86,6 +87,9 @@ const config = {
       port: validatedEnv.DB_PORT
     },
     logging: true,
+  },
+  redis: {
+    url: validatedEnv.REDIS_URL
   }
 } as const;
 

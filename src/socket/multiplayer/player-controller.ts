@@ -92,6 +92,4 @@ export const playerController = (io: Server, socket: Socket, redis: RedisClientT
     onViewportChange,
     onMouseChange
   }
-
-
 }

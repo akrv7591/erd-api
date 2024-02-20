@@ -4,9 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="reformatting">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="removed unused space">
+      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/nodemailer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/nodemailer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/player-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/player-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/sendEmail.util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/sendEmail.util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,23 +40,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erd-api/src/routes/v1/team-router&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erd-api/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erd-api/src/routes/v1/team-router",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/routes/v1/team-router" />
@@ -105,7 +115,10 @@
       <workItem from="1704244668773" duration="43282000" />
       <workItem from="1705046066315" duration="1552000" />
       <workItem from="1706665559078" duration="1694000" />
-      <workItem from="1706772477561" duration="4927000" />
+      <workItem from="1706772477561" duration="8315000" />
+      <workItem from="1707120937842" duration="280000" />
+      <workItem from="1707196613794" duration="1923000" />
+      <workItem from="1707881565951" duration="3539000" />
     </task>
     <task id="LOCAL-00001" summary="migrated from prisma to sequelize">
       <option name="closed" value="true" />
@@ -443,7 +456,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704693745136</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="removed unused space">
+      <option name="closed" value="true" />
+      <created>1706863771474</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1706863771474</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -461,7 +482,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added bulkUpdate api for table" />
     <MESSAGE value="added list api for relation-router" />
     <MESSAGE value="added crud apis for column-router" />
     <MESSAGE value="added deleteTeam api to team-router" />
@@ -486,6 +506,7 @@
     <MESSAGE value="allow unused parameters on websocket controllers" />
     <MESSAGE value="big changes" />
     <MESSAGE value="reformatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="reformatting" />
+    <MESSAGE value="removed unused space" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed unused space" />
   </component>
 </project>
