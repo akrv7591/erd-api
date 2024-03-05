@@ -1,15 +1,14 @@
 FROM node:alpine as builder
 
-WORKDIR /home/api
+WORKDIR /app
 
 # Wildcard used to copy to container "package.json" AND "package-lock.json"
 COPY ./ ./
 
 RUN yarn install
-RUN yarn global add @vercel/ncc
-RUN ncc build src/index.ts -o dist
+RUN yarn build
 
 FROM node:alpine
-WORKDIR /home/api
-COPY --from=builder /home/api/dist ./
-CMD ["node", "index.js"]
+WORKDIR /app
+COPY --from=builder /app/ ./
+CMD ["node", "dist/index.js"]
