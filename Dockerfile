@@ -7,6 +7,7 @@ COPY ./ ./
 
 RUN yarn install
 RUN yarn build
+EXPOSE 3002
 
 #CMD ["node", "dist/index.js"]
 
