@@ -23,6 +23,8 @@ const envSchema = Joi.object().keys({
   DB_PORT: Joi.number().required(),
   DB_NAME: Joi.string().required(),
   DB_DIALECT: Joi.string().required(),
+  DB_LOGGING: Joi.boolean().required(),
+  DB_SYNC: Joi.boolean().required(),
   SMTP_HOST: Joi.string().required(),
   SMTP_PORT: Joi.string().default('587'),
   SMTP_USERNAME: Joi.string().required(),
@@ -86,7 +88,8 @@ const config = {
       dialect: validatedEnv.DB_DIALECT,
       port: validatedEnv.DB_PORT
     },
-    logging: true,
+    logging: validatedEnv.DB_LOGGING,
+    sync: validatedEnv.DB_SYNC,
   },
   redis: {
     url: validatedEnv.REDIS_URL
