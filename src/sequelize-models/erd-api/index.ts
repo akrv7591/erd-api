@@ -15,6 +15,9 @@ import {TeamErd} from "./TeamErd.model";
 
 export const erdSequelize = new Sequelize({
   ...config.db.erd,
+  dialectOptions: {
+
+  },
   // logging: true,
   models: [
     User,
