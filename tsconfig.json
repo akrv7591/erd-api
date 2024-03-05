@@ -17,6 +17,7 @@
     "lib": ["es2022", "dom"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "esModuleInterop": true,
 
     // strict settings
     "strict": true,
