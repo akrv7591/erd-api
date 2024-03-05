@@ -48,7 +48,7 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
         callback(callbackData)
       } else {
         socket.to(playgroundKey).emit(Column.update, {column})
-        await ColumnModel.update(column, {
+        await ColumnModel.update({[column.key]: column.value}, {
           where: {
             id: column.id
           }
