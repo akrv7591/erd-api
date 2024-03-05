@@ -53,9 +53,7 @@
     "utility-types": "^3.10.0",
     "uuid": "^9.0.0",
     "winston": "^3.8.2",
-    "xss": "^1.0.14"
-  },
-  "devDependencies": {
+    "xss": "^1.0.14",
     "@types/argon2": "^0.15.0",
     "@types/compression": "^1.7.2",
     "@types/cookie-parser": "^1.4.3",
