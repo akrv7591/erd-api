@@ -15,7 +15,6 @@ import {TeamErd} from "./TeamErd.model";
 
 export const erdSequelize = new Sequelize({
   ...config.db.erd,
-  dialectModule: require("mariadb"),
   // logging: true,
   models: [
     User,
