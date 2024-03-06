@@ -9,7 +9,10 @@ import {MultiplayerRedisClient} from "./redis/multiplayerRedisClient";
 const initDb = async () => {
   try {
     await erdSequelize.authenticate()
-    await erdSequelize.sync()
+
+    if (config.db.sync) {
+      await erdSequelize.sync()
+    }
   } catch (e) {
     console.error(e)
     throw new Error("DB CONNECTION FAILED")
@@ -19,9 +22,8 @@ const initDb = async () => {
 let server: http.Server
 
 (async () => {
-  if (config.db.sync) {
-    await initDb()
-  }
+
+  await initDb()
   server = http.createServer(app)
   const redisClient = await MultiplayerRedisClient.getRedisClient()
   new MultiplayerSocket(server, redisClient)
