@@ -11,7 +11,7 @@ const initDb = async () => {
     await erdSequelize.authenticate()
 
     if (config.db.sync) {
-      await erdSequelize.sync()
+      await erdSequelize.sync({alter: true})
     }
   } catch (e) {
     console.error(e)

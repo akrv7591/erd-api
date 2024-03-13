@@ -25,7 +25,7 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
   async function onAdd(column: any, callback: Function) {
     const callbackData = getCallbackData(Column.add)
     try {
-      await redis.json.arrAppend(playgroundKey, `$.tables[?(@.id=='${column.tableId}')].data.columns`, column as any)
+      await redis.json.arrAppend(playgroundKey, `$.entities[?(@.id=='${column.entityId}')].data.columns`, column as any)
       await ColumnModel.create(column)
       socket.to(playgroundKey).emit(Column.add, {column})
 
@@ -42,7 +42,7 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
     const callbackData = getCallbackData(Column.update)
 
     try {
-      const result = await redis.json.set(playgroundKey, `$.tables[?(@.id=='${column.tableId}')].data.columns[?(@.id=='${column.id}')].${column.key}`, column.value)
+      const result = await redis.json.set(playgroundKey, `$.entities[?(@.id=='${column.entityId}')].data.columns[?(@.id=='${column.id}')].${column.key}`, column.value)
 
       if (result !== "OK") {
         callback(callbackData)
@@ -68,7 +68,7 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
     const callbackData = getCallbackData(Column.delete)
 
     try {
-      await redis.json.del(playgroundKey, `$.tables[?(@.id=='${column.tableId}')].data.columns[?(@.id=='${column.id}')]`)
+      await redis.json.del(playgroundKey, `$.entities[?(@.id=='${column.entityId}')].data.columns[?(@.id=='${column.id}')]`)
       socket.to(playgroundKey).emit(Column.delete, {column})
       await ColumnModel.destroy({
         where: {

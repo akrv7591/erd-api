@@ -4,15 +4,15 @@ import {createAdapter} from "@socket.io/redis-streams-adapter";
 import config from "../../config/config";
 import * as http from "http";
 import {playerController} from "./player-controller";
-import {Column, Key, Player, Relation, Table} from "../../enums/multiplayer";
-import {tableControllers} from "./table-controllers";
+import {Column, Key, Player, Relation, EntityEnum} from "../../enums/multiplayer";
+import {entityControllers} from "./entity-controllers";
 import {relationController} from "./relation-controller";
 import {columnController} from "./column-controller";
 import {Erd} from "../../sequelize-models/erd-api/Erd.model";
 import {User} from "../../sequelize-models/erd-api/User.model";
 import {Relation as RelationModel} from "../../sequelize-models/erd-api/Relation.model";
-import {Column as ColumnModel, IColumn} from "../../sequelize-models/erd-api/Column.model";
-import {ITable, Table as TableModel} from "../../sequelize-models/erd-api/Table.model";
+import {Column as ColumnModel} from "../../sequelize-models/erd-api/Column.model";
+import {Entity, IEntity} from "../../sequelize-models/erd-api/Entity.model";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 import {IPlayground} from "../../types/playground";
@@ -46,11 +46,9 @@ export class MultiplayerSocket {
     console.log("CONNECTION: ", playerId)
 
     try {
-      socket.join(playgroundKey)
-      socket.join(playerId)
+      socket.join([playgroundKey, playerId])
 
-
-      let playground = await this.redisClient.json.get(playgroundKey)
+      let playground = await this.getPlayground(playgroundKey)
 
       if (!playground) {
         await this.createPlayground(playgroundKey)
@@ -63,7 +61,7 @@ export class MultiplayerSocket {
       this.io.to(playgroundKey).emit(Player.join, player)
 
     } catch (e) {
-      console.error(e)
+      console.error("GET PLAYGROUND ERROR: ", e)
     }
 
 
@@ -106,12 +104,12 @@ export class MultiplayerSocket {
 
   // Initiating Table listeners
   private initTableListeners(socket: Socket) {
-    const table = tableControllers(this.io, socket, this.redisClient)
+    const table = entityControllers(this.io, socket, this.redisClient)
 
-    socket.on(Table.add, table.onAdd)
-    socket.on(Table.update, table.onUpdate)
-    socket.on(Table.delete, table.onDelete)
-    socket.on(Table.set, table.onSet)
+    socket.on(EntityEnum.add, table.onAdd)
+    socket.on(EntityEnum.update, table.onUpdate)
+    socket.on(EntityEnum.delete, table.onDelete)
+    socket.on(EntityEnum.set, table.onSet)
   }
 
   // Initiating Relation listeners
@@ -138,34 +136,33 @@ export class MultiplayerSocket {
     console.log("CREATING PLAYGROUND: ", playgroundKey)
     const erdId = playgroundKey.split(":")[1] as string
 
-    const [erd, relations] = await Promise.all([
-      Erd.findByPk(erdId, {
+    const [erd, entites, relations] = await Promise.all([
+
+      Erd.findByPk(erdId).then(erd => erd?.toJSON()),
+      Entity.findAll({
+        where: {
+          erdId
+        },
         include: [{
-          model: TableModel,
-          include: [{
-            model: ColumnModel,
-          }],
-        }, {
-          model: RelationModel
+          model: ColumnModel,
         }],
         order: [
-          ['tables', 'columns', 'order', 'asc']
+          ['columns', 'order', 'asc']
         ],
-      }),
+      }).then(entities => entities.map(entity => entity.toJSON())),
       RelationModel.findAll({
         where: {
           erdId
         }
-      })
+      }).then(relations => relations.map(r => r.toJSON()))
     ])
 
     if (erd) {
-      const erdJson = {
-        ...erd.toJSON(),
-        relations: relations.map(r => r.toJSON()),
-        players: []
-      }
-      await this.redisClient.json.set(playgroundKey, "$", erdJson as any)
+      erd.entities = entites
+      erd.relations = relations
+      // @ts-ignore
+      erd.players = []
+      await this.redisClient.json.set(playgroundKey, "$", erd as any)
     }
   }
 
@@ -222,17 +219,14 @@ export class MultiplayerSocket {
       const playground = await this.getPlayground(playgroundKey) as unknown as IPlayground | null
 
       if (playground) {
-        const {tables, relations, players, ...erd} = playground
-        const columns: IColumn[] = []
-        const icTables: ITable[] = tables.map(({data, ...table}) => {
-          data.columns.forEach(column => columns.push({...column, tableId: table.id}))
-
+        const {entities, relations, players, ...erd} = playground
+        const icEntities: IEntity[] = entities.map(({data, ...table}) => {
           return {...table, erdId: erd.id, color: data.color, name: data.name}
         })
 
         await Promise.all([
           Erd.upsert(erd, {transaction}),
-          TableModel.bulkCreate(icTables, {
+          Entity.bulkCreate(icEntities, {
             updateOnDuplicate: ["id", "erdId", "name", "color", "position", "type"],
             transaction
           }),

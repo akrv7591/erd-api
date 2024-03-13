@@ -6,4 +6,6 @@ export const erdSchema = [
   body("description").optional().isString(),
   body("isPublic").toBoolean().isBoolean(),
   body("teamId").exists().isString(),
+  body("tableNameCase").exists().isString().custom(v => ['pascal', 'snake', 'camel'].includes(v)),
+  body("columnNameCase").exists().isString().custom(v => ['snake', 'camel'].includes(v)),
 ]

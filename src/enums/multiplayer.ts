@@ -16,11 +16,11 @@ export enum Player {
   mouseChange = "player:mouseChange",
 }
 
-export enum Table {
-  add = "table:add",
-  update = "table:update",
-  delete = "table:delete",
-  set = "table:set",
+export enum EntityEnum {
+  add = "entity:add",
+  update = "entity:update",
+  delete = "entity:delete",
+  set = "entity:set",
 }
 
 export enum Relation {

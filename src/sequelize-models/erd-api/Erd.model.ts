@@ -1,7 +1,7 @@
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {ITable, Table as TableModel} from "./Table.model";
+import {Entity, IEntity,} from "./Entity.model";
 import {IRelation, Relation} from "./Relation.model";
 import {ITeam, Team} from "./Team.model";
 
@@ -12,12 +12,14 @@ export interface IErd {
   name: string
   description: string | null;
   isPublic: boolean;
+  tableNameCase: "snake" | "pascal" | "camel";
+  columnNameCase: "snake" | "camel";
 
   teamId: string
 
   //Relations
   team?: ITeam
-  tables?: ITable[]
+  entities?: IEntity[]
   relations?: IRelation[]
 }
 
@@ -59,6 +61,20 @@ export class Erd extends Model<IErd, ICErd> {
   })
   declare isPublic: boolean
 
+  @Column({
+    type: DataType.ENUM("snake", "pascal", "camel"),
+    defaultValue: "pascal",
+    allowNull: false,
+  })
+  declare tableNameCase: "snake" | "pascal" | "camel";
+
+  @Column({
+    type: DataType.ENUM("snake", "camel"),
+    defaultValue: "camel",
+    allowNull: false,
+  })
+  declare columnNameCase: "snake" | "camel";
+
   @ForeignKey(() => Team)
   @Column({
     type: DataType.STRING,
@@ -71,11 +87,11 @@ export class Erd extends Model<IErd, ICErd> {
   @BelongsTo(() => Team)
   declare team: Team
 
-  @HasMany(() => TableModel, {
+  @HasMany(() => Entity, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  declare tables: TableModel[]
+  declare entities: Entity[]
 
   @HasMany(() => Relation, {
     onUpdate: "CASCADE",

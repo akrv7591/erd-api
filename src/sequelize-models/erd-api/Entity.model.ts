@@ -19,7 +19,7 @@ export interface INodePosition {
 }
 
 
-export interface ITable {
+export interface IEntity {
   id: string;
   createdAt: string;
   updatedAt: string;
@@ -37,15 +37,15 @@ export interface ITable {
   columns?: IColumn[]
 }
 
-export interface ICTable extends Optional<ITable, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICEntity extends Optional<IEntity, 'id' | 'createdAt' | 'updatedAt'> {
 }
 
 @SequelizeTable({
-  modelName: 'Table',
-  tableName: 'Table',
+  modelName: 'Entity',
+  tableName: 'Entity',
   timestamps: true,
 })
-export class Table extends Model<ITable, ICTable> {
+export class Entity extends Model<IEntity, ICEntity> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,

@@ -8,7 +8,7 @@ import {ResetToken} from "./ResetToken.model";
 import {Team} from "./Team.model";
 import {UserTeam} from "./UserTeam.model";
 import {Erd} from "./Erd.model";
-import {Table} from "./Table.model";
+import {Entity} from "./Entity.model";
 import {Column} from "./Column.model";
 import {Relation} from "./Relation.model";
 import {TeamErd} from "./TeamErd.model";
@@ -29,7 +29,7 @@ export const erdSequelize = new Sequelize({
     Team,
     UserTeam,
     Erd,
-    Table,
+    Entity,
     Column,
     Relation,
     TeamErd,

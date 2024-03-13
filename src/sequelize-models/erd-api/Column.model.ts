@@ -8,7 +8,7 @@ import {
   Table as SequelizeTable
 } from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {ITable, Table} from "./Table.model";
+import {Entity, IEntity} from "./Entity.model";
 import {Optional} from "sequelize";
 
 export interface IColumn {
@@ -27,10 +27,10 @@ export interface IColumn {
   order: number;
 
   // Foreign key
-  tableId: string;
+  entityId: string;
 
   // Relations
-  table?: ITable
+  entity?: IEntity
 }
 
 export interface ICColumn extends Optional<IColumn, 'id' | 'createdAt' | 'updatedAt'> {
@@ -116,14 +116,14 @@ export class Column extends Model<IColumn, ICColumn> {
   declare order: number;
 
   // ForeignKey
-  @ForeignKey(() => Table)
+  @ForeignKey(() => Entity)
   @SequelizeColumn({
     type: DataType.STRING,
     allowNull: false
   })
-  declare tableId: string
+  declare entityId: string
 
   // Relations
-  @BelongsTo(() => Table)
-  declare table: Table
+  @BelongsTo(() => Entity)
+  declare entity: Entity
 }
