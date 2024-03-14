@@ -3,6 +3,6 @@ import entityCount from "./count";
 
 const entityRouter = express.Router({mergeParams: true})
 
-entityRouter.get("/count", entityCount)
+entityRouter.use("/count", entityCount)
 
 export default entityRouter
