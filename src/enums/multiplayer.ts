@@ -5,6 +5,7 @@ export enum Key {
   table = "table",
 }
 
+
 export enum Player {
   join = "player:join",
   leave = "player:leave",
@@ -14,6 +15,10 @@ export enum Player {
   unsubscribe = "player:unsubscribe",
   viewpointChange = "player:viewpointChange",
   mouseChange = "player:mouseChange",
+}
+
+export enum ErdEnum {
+  patch = "erd:patch",
 }
 
 export enum EntityEnum {
