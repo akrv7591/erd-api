@@ -4,7 +4,7 @@ import {createId} from "@paralleldrive/cuid2";
 import {Entity, IEntity,} from "./Entity.model";
 import {IRelation, Relation} from "./Relation.model";
 import {ITeam, Team} from "./Team.model";
-import {Memo} from "./Memo.mode";
+import {IMemo, Memo} from "./Memo.mode";
 
 export interface IErd {
   id: string
@@ -22,7 +22,7 @@ export interface IErd {
   team?: ITeam
   entities?: IEntity[]
   relations?: IRelation[]
-  memos?: Memo[]
+  memos?: IMemo[]
 }
 
 export interface ICErd extends Optional<IErd, 'id' | 'createdAt' | 'description'> {
