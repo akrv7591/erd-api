@@ -47,7 +47,6 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
       socket.to(playgroundKey).emit(ErdEnum.put, data)
       callback(callbackData)
 
-
     } catch (e) {
       console.error(e)
       callback(callbackData)
@@ -55,7 +54,7 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
   }
 
 
-  const onPatch = async ({key, value}: { erdId: string, key: string, value: any }, callback: Function) => {
+  const onPatch = async ({key, value}: { key: string, value: any }, callback: Function) => {
     const callbackData = getCallbackData(ErdEnum.patch)
 
     try {
