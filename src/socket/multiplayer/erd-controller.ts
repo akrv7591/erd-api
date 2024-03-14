@@ -25,7 +25,7 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
   const playgroundKey = `${Key.playground}:${playgroundId}`
 
   const onPut = async (data: Partial<IErd>, callback: Function) => {
-    const callbackData = getCallbackData(ErdEnum.patch)
+    const callbackData = getCallbackData(ErdEnum.put)
 
     try {
       const erdRedisData: any[] = []
@@ -44,7 +44,7 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
       ])
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = data
-      socket.to(playgroundKey).emit(ErdEnum.patch, data)
+      socket.to(playgroundKey).emit(ErdEnum.put, data)
       callback(callbackData)
 
 
