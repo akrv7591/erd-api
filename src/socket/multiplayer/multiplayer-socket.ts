@@ -4,7 +4,7 @@ import {createAdapter} from "@socket.io/redis-streams-adapter";
 import config from "../../config/config";
 import * as http from "http";
 import {playerController} from "./player-controller";
-import {Column, Key, Player, Relation, EntityEnum, ErdEnum} from "../../enums/multiplayer";
+import {Column, Key, Player, Relation, EntityEnum, ErdEnum, MemoEnum} from "../../enums/multiplayer";
 import {entityControllers} from "./entity-controllers";
 import {relationController} from "./relation-controller";
 import {columnController} from "./column-controller";
@@ -17,6 +17,8 @@ import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 import {IPlayground} from "../../types/playground";
 import {erdController} from "./erd-controller";
+import {Memo} from "../../sequelize-models/erd-api/Memo.mode";
+import {memoController} from "./memo-controller";
 
 export class MultiplayerSocket {
   io: Server
@@ -71,6 +73,7 @@ export class MultiplayerSocket {
     this.initTableListeners(socket)
     this.initRelationListeners(socket)
     this.initColumnListeners(socket)
+    this.initMemoListeners(socket)
 
     socket.on("disconnect", () => this.onDisconnect(socket))
 
@@ -140,12 +143,22 @@ export class MultiplayerSocket {
 
   }
 
+  // Initiating Memo listeners
+  private initMemoListeners(socket: Socket) {
+    const memo = memoController(this.io, socket, this.redisClient)
+
+    socket.on(MemoEnum.add, memo.onAdd)
+    socket.on(MemoEnum.put, memo.onPut)
+    socket.on(MemoEnum.patch, memo.onPatch)
+    socket.on(MemoEnum.delete, memo.onDelete)
+  }
+
   // Util functions
   private createPlayground = async (playgroundKey: string) => {
     console.log("CREATING PLAYGROUND: ", playgroundKey)
     const erdId = playgroundKey.split(":")[1] as string
 
-    const [erd, entites, relations] = await Promise.all([
+    const [erd, entities, memos, relations] = await Promise.all([
 
       Erd.findByPk(erdId).then(erd => erd?.toJSON()),
       Entity.findAll({
@@ -159,6 +172,11 @@ export class MultiplayerSocket {
           ['columns', 'order', 'asc']
         ],
       }).then(entities => entities.map(entity => entity.toJSON())),
+      Memo.findAll({
+        where: {
+          erdId
+        }
+      }).then(memos => memos.map(memo => memo.toJSON())),
       RelationModel.findAll({
         where: {
           erdId
@@ -167,8 +185,9 @@ export class MultiplayerSocket {
     ])
 
     if (erd) {
-      erd.entities = entites
+      erd.entities = entities
       erd.relations = relations
+      erd.memos = memos
       // @ts-ignore
       erd.players = []
       await this.redisClient.json.set(playgroundKey, "$", erd as any)
@@ -234,9 +253,8 @@ export class MultiplayerSocket {
         })
 
         await Promise.all([
-          Erd.upsert(erd, {transaction}),
           Entity.bulkCreate(icEntities, {
-            updateOnDuplicate: ["id", "erdId", "name", "color", "position", "type"],
+            updateOnDuplicate: ["id", "position"],
             transaction
           }),
         ])
