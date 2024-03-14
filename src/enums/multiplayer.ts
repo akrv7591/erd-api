@@ -6,7 +6,7 @@ export enum Key {
 }
 
 
-export enum Player {
+export enum PlayerEnum {
   join = "player:join",
   leave = "player:leave",
   connection = 'connection',
@@ -30,12 +30,12 @@ export enum EntityEnum {
   set = "entity:set",
 }
 
-export enum Relation {
+export enum RelationEnum {
   add = "relation:add",
   delete = "relation:delete",
 }
 
-export enum Column {
+export enum ColumnEnum {
   add = "column:add",
   update = "column:update",
   delete = "column:delete",
