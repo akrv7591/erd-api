@@ -13,7 +13,7 @@ export interface IMemo {
 
   // Foreign Key
   erdId: string;
-  userId: string;
+  userId: string | null;
 
   // Relations
   erd?: IErd;
