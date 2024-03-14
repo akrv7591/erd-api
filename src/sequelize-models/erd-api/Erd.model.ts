@@ -4,6 +4,7 @@ import {createId} from "@paralleldrive/cuid2";
 import {Entity, IEntity,} from "./Entity.model";
 import {IRelation, Relation} from "./Relation.model";
 import {ITeam, Team} from "./Team.model";
+import {Memo} from "./Memo.mode";
 
 export interface IErd {
   id: string
@@ -21,6 +22,7 @@ export interface IErd {
   team?: ITeam
   entities?: IEntity[]
   relations?: IRelation[]
+  memos?: Memo[]
 }
 
 export interface ICErd extends Optional<IErd, 'id' | 'createdAt' | 'description'> {
@@ -83,7 +85,6 @@ export class Erd extends Model<IErd, ICErd> {
   declare teamId: string;
 
   // Relations
-
   @BelongsTo(() => Team)
   declare team: Team
 
@@ -99,4 +100,9 @@ export class Erd extends Model<IErd, ICErd> {
   })
   declare relations: Relation[]
 
+  @HasMany(() => Memo, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
+  declare memos: Memo[]
 }
