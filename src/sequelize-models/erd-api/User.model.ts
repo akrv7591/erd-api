@@ -6,9 +6,9 @@ import {EmailVerificationToken, IEmailVerificationToken} from "./EmailVerificati
 import {IRefreshToken, RefreshToken} from "./RefreshToken.model";
 import {IResetToken, ResetToken} from "./ResetToken.model";
 import {ICTeam, ITeam, Team} from "./Team.model";
-import {ICUserTeam, UserTeam} from "./UserTeam.model";
+import {ICUserTeam, IUserTeam, UserTeam} from "./UserTeam.model";
 import {ROLE} from "../../enums/role";
-import {Memo} from "./Memo.mode";
+import {IMemo, Memo} from "./Memo.mode";
 
 
 export interface IUser {
@@ -26,8 +26,8 @@ export interface IUser {
   refreshTokens?: IRefreshToken[]
   resetTokens?: IResetToken[]
   teams?: ITeam[]
-  memos?: Memo[]
-  UserTeam?: UserTeam
+  memos?: IMemo[]
+  UserTeam?: IUserTeam
 }
 
 export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt' | 'emailVerified' | 'name'>{}
