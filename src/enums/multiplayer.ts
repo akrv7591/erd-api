@@ -41,6 +41,13 @@ export enum Column {
   delete = "column:delete",
 }
 
+export enum MemoEnum {
+  add = "memo:add",
+  put = "memo:put",
+  patch = "memo:patch",
+  delete = "memo:delete",
+}
+
 export enum CallbackDataStatus {
   OK="ok",
   FAILED="failed",
