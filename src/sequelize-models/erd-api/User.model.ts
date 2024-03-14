@@ -26,7 +26,7 @@ export interface IUser {
   refreshTokens?: IRefreshToken[]
   resetTokens?: IResetToken[]
   teams?: ITeam[]
-  memoes?: Memo[]
+  memos?: Memo[]
   UserTeam?: UserTeam
 }
 
