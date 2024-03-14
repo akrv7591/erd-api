@@ -12,6 +12,7 @@ import {Entity} from "./Entity.model";
 import {Column} from "./Column.model";
 import {Relation} from "./Relation.model";
 import {TeamErd} from "./TeamErd.model";
+import {Memo} from "./Memo.mode";
 
 const logFunction: SequelizeOptions['logging'] = (sql, timing) => {
   console.log(sql);
@@ -33,5 +34,6 @@ export const erdSequelize = new Sequelize({
     Column,
     Relation,
     TeamErd,
+    Memo
   ]
 });
