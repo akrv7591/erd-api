@@ -1,16 +1,16 @@
-import {CallbackDataStatus, Key, Relation} from "../../enums/multiplayer";
+import {CallbackDataStatus, Key, RelationEnum} from "../../enums/multiplayer";
 import {Server, Socket} from "socket.io";
 import {RedisClientType} from "redis";
 import {Relation as RelationModel} from "../../sequelize-models/erd-api/Relation.model"
 
 export interface CallbackDataType {
-  type: Relation;
+  type: RelationEnum;
   status: CallbackDataStatus
   data: any
 }
 
 // Helper functions
-function getCallbackData(type: Relation): CallbackDataType {
+function getCallbackData(type: RelationEnum): CallbackDataType {
   return {
     type,
     status: CallbackDataStatus.FAILED,
@@ -23,11 +23,11 @@ export function relationController(io: Server, socket: Socket, redis: RedisClien
   const playgroundKey = `${Key.playground}:${playgroundId}`
 
   async function onAdd(relation: any, callback: Function) {
-    const callbackData = getCallbackData(Relation.add)
+    const callbackData = getCallbackData(RelationEnum.add)
 
     try {
       await redis.json.arrAppend(playgroundKey, '.relations', relation as any)
-      socket.to(playgroundKey).emit(Relation.add, relation)
+      socket.to(playgroundKey).emit(RelationEnum.add, relation)
       await RelationModel.create({
         ...relation,
         erdId: playgroundId
@@ -45,11 +45,11 @@ export function relationController(io: Server, socket: Socket, redis: RedisClien
   }
 
   async function onDelete(relation: any, callback: Function) {
-    const callbackData = getCallbackData(Relation.delete)
+    const callbackData = getCallbackData(RelationEnum.delete)
 
     try {
       await redis.json.del(playgroundKey, `$.relations[?(@.id=='${relation.id}')]`)
-      socket.to(playgroundKey).emit(Relation.delete, relation.id)
+      socket.to(playgroundKey).emit(RelationEnum.delete, relation.id)
       await RelationModel.destroy({
         where: {
           id: relation.id

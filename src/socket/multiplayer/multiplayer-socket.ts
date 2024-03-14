@@ -4,7 +4,7 @@ import {createAdapter} from "@socket.io/redis-streams-adapter";
 import config from "../../config/config";
 import * as http from "http";
 import {playerController} from "./player-controller";
-import {Column, Key, Player, Relation, EntityEnum, ErdEnum, MemoEnum} from "../../enums/multiplayer";
+import {ColumnEnum, Key, PlayerEnum, RelationEnum, EntityEnum, ErdEnum, MemoEnum} from "../../enums/multiplayer";
 import {entityControllers} from "./entity-controllers";
 import {relationController} from "./relation-controller";
 import {columnController} from "./column-controller";
@@ -61,7 +61,7 @@ export class MultiplayerSocket {
       playground = await this.getPlayground(playgroundKey)
 
       this.io.to(socket.id).emit("data", playground)
-      this.io.to(playgroundKey).emit(Player.join, player)
+      this.io.to(playgroundKey).emit(PlayerEnum.join, player)
 
     } catch (e) {
       console.error("GET PLAYGROUND ERROR: ", e)
@@ -90,7 +90,7 @@ export class MultiplayerSocket {
       await this.redisClient.json.del(playgroundKey, `$.players[?(@.id=='${playerId}')]`)
       await this.savePlaygroundToDb(playgroundKey)
       await this.checkAndHandleIfPlaygroundEmpty(playgroundKey)
-      socket.to(playgroundKey).emit(Player.leave, playerId)
+      socket.to(playgroundKey).emit(PlayerEnum.leave, playerId)
     } catch (e) {
       console.error(e)
     }
@@ -108,10 +108,10 @@ export class MultiplayerSocket {
   private initPlayerListeners(socket: Socket) {
     const player = playerController(this.io, socket, this.redisClient)
 
-    socket.on(Player.subscribe, player.onSubscribe)
-    socket.on(Player.unsubscribe, player.onUnsubscribe)
-    socket.on(Player.viewpointChange, player.onViewportChange)
-    socket.on(Player.mouseChange, player.onMouseChange)
+    socket.on(PlayerEnum.subscribe, player.onSubscribe)
+    socket.on(PlayerEnum.unsubscribe, player.onUnsubscribe)
+    socket.on(PlayerEnum.viewpointChange, player.onViewportChange)
+    socket.on(PlayerEnum.mouseChange, player.onMouseChange)
   }
 
   // Initiating Table listeners
@@ -128,8 +128,8 @@ export class MultiplayerSocket {
   private initRelationListeners(socket: Socket) {
     const relation = relationController(this.io, socket, this.redisClient)
 
-    socket.on(Relation.add, relation.onAdd)
-    socket.on(Relation.delete, relation.onDelete)
+    socket.on(RelationEnum.add, relation.onAdd)
+    socket.on(RelationEnum.delete, relation.onDelete)
 
   }
 
@@ -137,9 +137,9 @@ export class MultiplayerSocket {
   private initColumnListeners(socket: Socket) {
     const column = columnController(this.io, socket, this.redisClient)
 
-    socket.on(Column.add, column.onAdd)
-    socket.on(Column.update, column.onUpdate)
-    socket.on(Column.delete, column.onDelete)
+    socket.on(ColumnEnum.add, column.onAdd)
+    socket.on(ColumnEnum.update, column.onUpdate)
+    socket.on(ColumnEnum.delete, column.onDelete)
 
   }
 

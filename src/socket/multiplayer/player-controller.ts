@@ -1,16 +1,16 @@
 import {Server, Socket} from "socket.io";
 import {RedisClientType} from "redis";
-import {CallbackDataStatus, Key, Player} from "../../enums/multiplayer";
+import {CallbackDataStatus, Key, PlayerEnum} from "../../enums/multiplayer";
 
 export interface CallbackDataType {
-  type: Player;
+  type: PlayerEnum;
   status: CallbackDataStatus
   data: any
 }
 
 // Helper functions
 
-function getCallbackData(type: Player): CallbackDataType {
+function getCallbackData(type: PlayerEnum): CallbackDataType {
   return {
     type,
     status: CallbackDataStatus.FAILED,
@@ -24,14 +24,14 @@ export const playerController = (io: Server, socket: Socket, redis: RedisClientT
   const playgroundId = socket.handshake.auth['playgroundId']
 
   async function onSubscribe(targetPlayer: any, callback: Function) {
-    const callbackData = getCallbackData(Player.subscribe)
+    const callbackData = getCallbackData(PlayerEnum.subscribe)
     const subscribeKey = `${Key.subscribe}:${targetPlayer.id}`
 
     try {
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = targetPlayer
       socket.join(subscribeKey)
-      socket.to(targetPlayer.id).emit(Player.subscribe, playerId)
+      socket.to(targetPlayer.id).emit(PlayerEnum.subscribe, playerId)
       callback(callbackData)
       console.log(`Player ${playerId} subscribed to `, subscribeKey)
     } catch (e) {
@@ -41,12 +41,12 @@ export const playerController = (io: Server, socket: Socket, redis: RedisClientT
   }
 
   async function onUnsubscribe(targetPlayer: any, callback: Function) {
-    const callbackData = getCallbackData(Player.unsubscribe)
+    const callbackData = getCallbackData(PlayerEnum.unsubscribe)
     const subscribeKey = `${Key.subscribe}:${targetPlayer.id}`
 
     try {
       socket.leave(subscribeKey)
-      socket.to(targetPlayer.id as string).emit(Player.unsubscribe, playerId)
+      socket.to(targetPlayer.id as string).emit(PlayerEnum.unsubscribe, playerId)
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = targetPlayer
       callback(callbackData)
@@ -58,11 +58,11 @@ export const playerController = (io: Server, socket: Socket, redis: RedisClientT
   }
 
   async function onViewportChange(data: any, callback: Function) {
-    const callbackData = getCallbackData(Player.viewpointChange)
+    const callbackData = getCallbackData(PlayerEnum.viewpointChange)
     const subscribeKey = [Key.subscribe, playerId].join(":")
 
     try {
-      socket.to(subscribeKey).emit(Player.viewpointChange, data)
+      socket.to(subscribeKey).emit(PlayerEnum.viewpointChange, data)
       callbackData.status = CallbackDataStatus.OK
       callback(callbackData)
     } catch (e) {
@@ -72,11 +72,11 @@ export const playerController = (io: Server, socket: Socket, redis: RedisClientT
   }
 
   async function onMouseChange(data: any, callback: Function) {
-    const callbackData = getCallbackData(Player.mouseChange)
+    const callbackData = getCallbackData(PlayerEnum.mouseChange)
     const playgroundKey = [Key.playground, playgroundId].join(":")
 
     try {
-      socket.to(playgroundKey).emit(Player.mouseChange, {playerId, cursorPosition: data})
+      socket.to(playgroundKey).emit(PlayerEnum.mouseChange, {playerId, cursorPosition: data})
       callbackData.status = CallbackDataStatus.OK
       callback(callbackData)
     } catch (e) {
