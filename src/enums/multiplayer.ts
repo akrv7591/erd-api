@@ -19,6 +19,8 @@ export enum Player {
 
 export enum ErdEnum {
   patch = "erd:patch",
+  put = "erd:put",
+  delete = "erd:delete",
 }
 
 export enum EntityEnum {
