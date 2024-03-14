@@ -1,11 +1,9 @@
 import {RequestHandler} from "express";
 import httpStatus from "http-status";
 import {Erd} from "../../../sequelize-models/erd-api/Erd.model";
-import {Includeable} from "sequelize";
 
 export const list: RequestHandler = async (req, res) => {
   const teamId = req.query['teamId'] as string[]
-  const include: Includeable[] = []
 
   if (!teamId || !Array.isArray(teamId)) return res.sendStatus(httpStatus.BAD_REQUEST)
 
@@ -17,7 +15,6 @@ export const list: RequestHandler = async (req, res) => {
         ...req.pagination?.where,
         teamId
       },
-      include,
     })
 
     res.json(data)
