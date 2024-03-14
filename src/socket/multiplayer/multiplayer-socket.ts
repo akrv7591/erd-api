@@ -4,7 +4,7 @@ import {createAdapter} from "@socket.io/redis-streams-adapter";
 import config from "../../config/config";
 import * as http from "http";
 import {playerController} from "./player-controller";
-import {Column, Key, Player, Relation, EntityEnum} from "../../enums/multiplayer";
+import {Column, Key, Player, Relation, EntityEnum, ErdEnum} from "../../enums/multiplayer";
 import {entityControllers} from "./entity-controllers";
 import {relationController} from "./relation-controller";
 import {columnController} from "./column-controller";
@@ -16,6 +16,7 @@ import {Entity, IEntity} from "../../sequelize-models/erd-api/Entity.model";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 import {IPlayground} from "../../types/playground";
+import {erdController} from "./erd-controller";
 
 export class MultiplayerSocket {
   io: Server
@@ -65,13 +66,13 @@ export class MultiplayerSocket {
     }
 
 
+    this.initErdListeners(socket)
     this.initPlayerListeners(socket)
     this.initTableListeners(socket)
     this.initRelationListeners(socket)
     this.initColumnListeners(socket)
 
     socket.on("disconnect", () => this.onDisconnect(socket))
-
 
   }
 
@@ -90,6 +91,14 @@ export class MultiplayerSocket {
     } catch (e) {
       console.error(e)
     }
+  }
+
+  // Initiating Erd listeners
+  private initErdListeners(socket: Socket) {
+    const erd = erdController(this.io, socket, this.redisClient)
+
+    socket.on(ErdEnum.put, erd.onPut)
+    socket.on(ErdEnum.patch, erd.onPatch)
   }
 
   // Initiating Player listeners
