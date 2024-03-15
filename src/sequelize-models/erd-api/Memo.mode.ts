@@ -3,11 +3,13 @@ import {IUser, User} from "./User.model";
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
+import {INodePosition} from "./Entity.model";
 
 export interface IMemo {
   id: string;
   content: string;
   color: string;
+  position: INodePosition;
   createdAt: string;
   updatedAt: string;
 
@@ -47,6 +49,12 @@ export class Memo extends Model<IMemo, ICMemo> {
   })
   declare color: string;
 
+  @Column({
+    type: DataType.JSON,
+    allowNull: false,
+  })
+  declare position: string
+
   @ForeignKey(() => Erd)
   @Column({
     type: DataType.STRING,
@@ -65,4 +73,17 @@ export class Memo extends Model<IMemo, ICMemo> {
 
   @BelongsTo(() => User)
   declare user: IUser;
+
+  @Column(DataType.VIRTUAL)
+  get type() {
+    return "memoNode"
+  }
+
+  @Column(DataType.VIRTUAL)
+  get data() {
+    return {
+      content: this.getDataValue('content'),
+      color: this.getDataValue('color'),
+    }
+  }
 }
