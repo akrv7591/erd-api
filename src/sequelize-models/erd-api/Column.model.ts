@@ -123,6 +123,12 @@ export class Column extends Model<IColumn, ICColumn> {
   })
   declare entityId: string
 
+  // Virtual
+  @SequelizeColumn(DataType.VIRTUAL)
+  get selected() {
+    return false
+  }
+
   // Relations
   @BelongsTo(() => Entity)
   declare entity: Entity
