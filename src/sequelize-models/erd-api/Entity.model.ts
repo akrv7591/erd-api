@@ -12,6 +12,7 @@ import {
 import {createId} from "@paralleldrive/cuid2";
 import {Erd, IErd} from "./Erd.model";
 import {Column as ColumnModel, IColumn} from "./Column.model";
+import {NODE_TYPES} from "../../enums/node-type";
 
 export interface INodePosition {
   x: number,
@@ -67,14 +68,6 @@ export class Entity extends Model<IEntity, ICEntity> {
   })
   declare color: string | null
 
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false
-  })
-  declare type: string
-
-
   @Column({
     type: DataType.JSON,
     allowNull: false,
@@ -106,5 +99,10 @@ export class Entity extends Model<IEntity, ICEntity> {
       color: this.getDataValue('color'),
       columns: this.getDataValue('columns' as any),
     }
+  }
+
+  @Column(DataType.VIRTUAL)
+  get type() {
+    return NODE_TYPES.ENTITY
   }
 }

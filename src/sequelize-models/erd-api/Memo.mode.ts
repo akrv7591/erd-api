@@ -4,6 +4,7 @@ import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {INodePosition} from "./Entity.model";
+import {NODE_TYPES} from "../../enums/node-type";
 
 export interface IMemo {
   id: string;
@@ -75,15 +76,15 @@ export class Memo extends Model<IMemo, ICMemo> {
   declare user: IUser;
 
   @Column(DataType.VIRTUAL)
-  get type() {
-    return "memoNode"
-  }
-
-  @Column(DataType.VIRTUAL)
   get data() {
     return {
       content: this.getDataValue('content'),
       color: this.getDataValue('color'),
     }
+  }
+
+  @Column(DataType.VIRTUAL)
+  get type() {
+    return NODE_TYPES.MEMO
   }
 }
