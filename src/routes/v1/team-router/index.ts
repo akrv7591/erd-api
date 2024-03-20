@@ -11,11 +11,12 @@ import {deleteUserFromTeamValidator} from "../../../validations/deleteUserFromTe
 
 const teamRouter = express.Router()
 
-teamRouter.delete("/:teamId", deleteTeam)
-teamRouter.get("/:teamId", teamDetail)
 teamRouter.get("/:teamId/user-list", TeamController.userList)
 teamRouter.get("/:teamId/user-permission", TeamController.userPermission)
 teamRouter.delete("/:teamId/delete-user/:userId", validateSchemas(deleteUserFromTeamValidator), TeamController.deleteUserFromTeam)
+teamRouter.get("/:teamId/user-team", teamDetail)
+teamRouter.delete("/:teamId", deleteTeam)
+teamRouter.get("/:teamId", teamDetail)
 teamRouter.get("", pagination({searchFields: ['name'], like: true}), list)
 teamRouter.put("", validateSchemas(teamSchema), upsert)
 

@@ -2,8 +2,6 @@ import {RequestHandler} from "express";
 import {Team} from "../sequelize-models/erd-api/Team.model";
 import {User} from "../sequelize-models/erd-api/User.model";
 import httpStatus from "http-status";
-import {EmailVerificationToken} from "../sequelize-models/erd-api/EmailVerificationToken.model";
-import {VERIFICATION_TOKEN} from "../enums/verification-token";
 import {errorHandler} from "../middleware/errorHandler";
 import {UserTeam} from "../sequelize-models/erd-api/UserTeam.model";
 import {matchedData} from "express-validator";
@@ -19,25 +17,19 @@ interface IPermissionParams {
 export default class TeamController {
   public static userList: RequestHandler<IUserListParams> = async (req, res) => {
     try {
-      const data = await Team.findOne({
-        where: {
-          id: req.params.teamId
-        },
+      const data = await User.findAll({
         include: [{
-          model: User,
-          include: [{
-            model: EmailVerificationToken,
-            where: {
-              type: VERIFICATION_TOKEN.TEAM_INVITATION,
-            },
-            required: false
-          }]
+          model: Team,
+          where: {
+            id: req.params.teamId
+          },
+          required: true,
         }]
       })
 
       if (!data) return res.sendStatus(httpStatus.NOT_FOUND)
 
-      res.json(data.users)
+      res.json(data)
 
     } catch (e) {
       errorHandler(e, req, res)
