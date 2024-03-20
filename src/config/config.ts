@@ -31,6 +31,9 @@ const envSchema = Joi.object().keys({
   SMTP_PASSWORD: Joi.string().required(),
   EMAIL_FROM: Joi.string().email().required(),
   REDIS_URL: Joi.string().required(),
+  S3_ACCESS_KEY: Joi.string().required(),
+  S3_SECRET_KEY: Joi.string().required(),
+  S3_BUCKET: Joi.string().required(),
 });
 
 const { value: validatedEnv, error } = envSchema
@@ -93,6 +96,11 @@ const config = {
   },
   redis: {
     url: validatedEnv.REDIS_URL
+  },
+  s3: {
+    access_key: validatedEnv.S3_ACCESS_KEY,
+    secret_key: validatedEnv.S3_SECRET_KEY,
+    bucket: validatedEnv.S3_BUCKET
   }
 } as const;
 
