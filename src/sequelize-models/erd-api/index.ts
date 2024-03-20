@@ -37,3 +37,18 @@ export const erdSequelize = new Sequelize({
     Memo
   ]
 });
+
+export class ErdiagramlySequelize {
+  static async initSequelize() {
+    try {
+      await erdSequelize.authenticate()
+
+      if (config.db.sync) {
+        await erdSequelize.sync({alter: true})
+      }
+    } catch (e) {
+      console.error(e)
+      throw new Error("DB CONNECTION FAILED")
+    }
+  }
+}

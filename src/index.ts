@@ -1,31 +1,23 @@
 import app from './app';
 import config from './config/config';
 import logger from './middleware/logger';
-import {erdSequelize} from "./sequelize-models/erd-api";
+import {ErdiagramlySequelize} from "./sequelize-models/erd-api";
 import * as http from "http";
 import {MultiplayerSocket} from "./socket/multiplayer/multiplayer-socket";
 import {MultiplayerRedisClient} from "./redis/multiplayerRedisClient";
+import {S3Util} from "./utils/s3Util";
 
-const initDb = async () => {
-  try {
-    await erdSequelize.authenticate()
-
-    if (config.db.sync) {
-      await erdSequelize.sync({alter: true})
-    }
-  } catch (e) {
-    console.error(e)
-    throw new Error("DB CONNECTION FAILED")
-  }
-}
 
 let server: http.Server
 
 (async () => {
+  const [redisClient] = await Promise.all([
+    MultiplayerRedisClient.getRedisClient(),
+    ErdiagramlySequelize.initSequelize(),
+    S3Util.initS3(),
+  ])
 
-  await initDb()
   server = http.createServer(app)
-  const redisClient = await MultiplayerRedisClient.getRedisClient()
   new MultiplayerSocket(server, redisClient)
 
   server.listen(Number(config.server.port), () => {
