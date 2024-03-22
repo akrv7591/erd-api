@@ -1,6 +1,11 @@
 import {Client} from 'minio';
 import {Endpoint} from "../constants/endpoint";
 import config from "../config/config";
+import {createId} from "@paralleldrive/cuid2";
+import path from "path";
+import multer from "multer";
+import multerMinio from "multer-minio-storage";
+
 
 export class S3Util {
   static get s3Client() {
@@ -31,5 +36,24 @@ export class S3Util {
       console.error(e)
       throw new Error("S3 CONNECTION FAILED")
     }
+  }
+
+  static fileUpload(directory: string) {
+    return multer({
+      storage: multerMinio({
+        minioClient: S3Util.s3Client,
+        bucket: config.s3.bucket,
+        contentType: multerMinio.AUTO_CONTENT_TYPE,
+        metadata: function (req, file, cb) {
+          cb(null, {fieldName: file.fieldname});
+        },
+        acl: "public-read",
+        key: function (req, file, cb) {
+          const extname = path.extname(file.originalname)
+          const key = directory + createId() + extname
+          cb(null, key);
+        },
+      })
+    })
   }
 }

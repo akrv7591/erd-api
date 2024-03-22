@@ -1,5 +1,5 @@
 import {CreateOptions, Optional} from "sequelize";
-import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {BelongsToMany, Column, DataType, HasMany, HasOne, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {Account, IAccount} from "./Account.model";
 import {EmailVerificationToken, IEmailVerificationToken} from "./EmailVerificationToken.model";
@@ -9,6 +9,7 @@ import {ICTeam, ITeam, Team} from "./Team.model";
 import {ICUserTeam, IUserTeam, UserTeam} from "./UserTeam.model";
 import {ROLE} from "../../enums/role";
 import {IMemo, Memo} from "./Memo.mode";
+import {IProfile, Profile} from "./Profile";
 
 
 export interface IUser {
@@ -27,6 +28,7 @@ export interface IUser {
   resetTokens?: IResetToken[]
   teams?: ITeam[]
   memos?: IMemo[]
+  profile?: IProfile
   UserTeam?: IUserTeam
 }
 
@@ -131,17 +133,18 @@ export class User extends Model<IUser, ICUser> {
   })
   declare memos: Memo[]
 
+  @HasOne(() => Profile, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
+  declare profile: Profile
+
   @BelongsToMany(() => Team, () => UserTeam)
   declare teams: Team[]
 
   public toJWTPayload() {
     return {
       id: this.id,
-      name: this.name,
-      email: this.email,
-      emailVerified: this.emailVerified,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt
     };
   }
 }

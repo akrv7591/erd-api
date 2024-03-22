@@ -34,6 +34,7 @@ const envSchema = Joi.object().keys({
   S3_ACCESS_KEY: Joi.string().required(),
   S3_SECRET_KEY: Joi.string().required(),
   S3_BUCKET: Joi.string().required(),
+  S3_BASE_URL: Joi.string().required()
 });
 
 const { value: validatedEnv, error } = envSchema
@@ -100,7 +101,8 @@ const config = {
   s3: {
     access_key: validatedEnv.S3_ACCESS_KEY,
     secret_key: validatedEnv.S3_SECRET_KEY,
-    bucket: validatedEnv.S3_BUCKET
+    bucket: validatedEnv.S3_BUCKET,
+    base_url: validatedEnv.S3_BASE_URL,
   }
 } as const;
 
