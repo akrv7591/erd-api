@@ -18,6 +18,7 @@ export interface IUser {
   email: string
   password: string | null
   emailVerified?: Date | null
+  isPasswordSet: boolean
   createdAt: Date
   updatedAt: Date
 
@@ -101,6 +102,13 @@ export class User extends Model<IUser, ICUser> {
     type: DataType.DATE
   })
   declare emailVerified?: Date | null
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  })
+  declare isPasswordSet: boolean
 
   //Relations
   @HasMany(() => Account, {
