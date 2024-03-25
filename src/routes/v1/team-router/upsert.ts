@@ -28,7 +28,7 @@ export const upsert = async (req: express.Request, res: express.Response) => {
     }
 
     if (user) {
-      const invitedUsers = await Promise.all((users || []).filter(user => user.id !== req.authorizationUser?.id).map(user => User.upsert({email: user.email}, {transaction})))//
+      const invitedUsers = await Promise.all((users || []).filter(user => user.id !== req.authorizationUser?.id).map(user => User.upsert({email: user.email, isPasswordSet: false}, {transaction})))//
 
       await Promise.all(invitedUsers.map(async ([u]) => {
         const user = await User.findOne({where: {email: u.email}, transaction})
@@ -57,12 +57,6 @@ export const upsert = async (req: express.Request, res: express.Response) => {
 
       }))
     }
-
-    console.log({
-      created,
-      team: team.toJSON()
-    })
-
 
     await transaction.commit()
 

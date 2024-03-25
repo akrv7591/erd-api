@@ -72,6 +72,14 @@ export class UserController {
     }
   }
 
+  static setPassword: RequestHandler = async (req, res) => {
+    try {
+
+    } catch (e) {
+      errorHandler(e, req, res)
+    }
+  }
+
   static fetchUserList: RequestHandler = async (req: express.Request, res: express.Response) => {
     try {
       const teamId = req.query['teamId']

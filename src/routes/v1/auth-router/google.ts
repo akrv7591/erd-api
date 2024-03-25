@@ -64,7 +64,8 @@ export const google: express.RequestHandler = async (req, res) => {
       user = await User.create({
         email: googleData.email,
         name: googleData.name,
-        emailVerified: new Date()
+        emailVerified: new Date(),
+        isPasswordSet: false,
       }, {transaction})
     }
 

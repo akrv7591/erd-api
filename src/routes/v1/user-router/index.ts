@@ -13,9 +13,10 @@ userRouter.get(
 userRouter.patch(
   "/:userId",
   S3Util.fileUpload("user/profile/").single("profilePicture"),
-  // multer({dest: "temp"}).single("profilePicture"),
   UserController.patchUserWithProfile
 )
+
+userRouter.patch("/set-password", UserController.setPassword)
 
 userRouter.get(
   "",

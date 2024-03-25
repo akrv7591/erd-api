@@ -48,7 +48,8 @@ export const signup = async (
     const newUser = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      isPasswordSet: true
     });
 
     const token = randomUUID();
