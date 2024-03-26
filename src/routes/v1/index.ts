@@ -11,7 +11,7 @@ import isAuth from "../../middleware/isAuth";
 const router = express.Router()
 
 router.use("/auth", authRouter)
-router.use("/user", isAuth, userRouter)
+router.use("/users", isAuth, userRouter)
 router.use("/team", isAuth, teamRouter)
 router.use("/erd", isAuth, erdRouter)
 
