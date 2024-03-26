@@ -27,7 +27,7 @@ export const signIn = async (
   const {email, password} = req.body;
 
   if (!email || !password) {
-    return errorHandler(req, res, HttpStatusCode.BadRequest, Auth.ApiError.EMAIL_AND_PASSWORD_REQUIRED)
+    return errorHandler(req, res, HttpStatusCode.BadRequest, Auth.ApiErrors.EMAIL_AND_PASSWORD_REQUIRED)
   }
 
   const user = await User.unscoped().findOne({
@@ -36,11 +36,11 @@ export const signIn = async (
     },
   });
   if (!user) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.USER_NOT_FOUND)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.USER_NOT_FOUND)
   }
 
   if (!user.password) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.INVALID_AUTHORIZATION)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.INVALID_AUTHORIZATION)
   }
 
   // check password-router
@@ -52,7 +52,7 @@ export const signIn = async (
       // send access token per json to user-router so it can be stored in the localStorage
       return res.json({accessToken});
     } else {
-      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.INVALID_AUTHORIZATION)
+      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.INVALID_AUTHORIZATION)
     }
   } catch (err) {
     internalErrorHandler(err, req,res)

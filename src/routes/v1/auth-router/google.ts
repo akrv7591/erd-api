@@ -46,7 +46,7 @@ export const google: express.RequestHandler = async (req, res) => {
       const res = await googleApi.get<GoogleUserInfo>("/oauth2/v1/userinfo?alt=json")
       googleData = res.data
     } catch (e) {
-      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.GOOGLE_LOGIN_UNAUTHORIZED)
+      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.GOOGLE_LOGIN_UNAUTHORIZED)
     }
     transaction = await erdSequelize.transaction()
 
@@ -77,8 +77,8 @@ export const google: express.RequestHandler = async (req, res) => {
 
     await Account.upsert({
       userId: user.id,
-      type: Auth.SocialLogin.GOOGLE,
-      provider: Auth.SocialLogin.GOOGLE,
+      type: Auth.SocialLogins.GOOGLE,
+      provider: Auth.SocialLogins.GOOGLE,
       accessToken: oathData.access_token,
       providerAccountId: googleData.id,
       expiresAt: dayjs().add(oathData.expires_in, 'seconds').toDate(),

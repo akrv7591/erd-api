@@ -10,7 +10,7 @@ export interface IEmailVerificationToken {
   token: string
   expiresAt: Date | any
   createdAt: Date | any
-  type: EmailVerification.Type
+  type: EmailVerification.Types
 
   //Foreign key
   userId: string
@@ -50,9 +50,9 @@ export class EmailVerificationToken extends Model<IEmailVerificationToken, ICEma
   declare expiresAt: Date
 
   @Column({
-    type: DataType.ENUM(EmailVerification.Type.EMAIL, EmailVerification.Type.TEAM_INVITATION)
+    type: DataType.ENUM(EmailVerification.Types.EMAIL, EmailVerification.Types.TEAM_INVITATION)
   })
-  declare type: EmailVerification.Type
+  declare type: EmailVerification.Types
 
   // Foreign keys
   @ForeignKey(() => User)

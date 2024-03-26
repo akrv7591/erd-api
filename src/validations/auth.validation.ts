@@ -12,7 +12,7 @@ export const signupSchema = {
   })
 };
 
-export const loginSchema = {
+export const signInSchema = {
   body: Joi.object<UserLoginCredentials>().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6)

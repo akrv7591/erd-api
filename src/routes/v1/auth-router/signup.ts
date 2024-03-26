@@ -56,7 +56,7 @@ export const signup = async (
     const expiresAt = new Date(Date.now() + 3600000); // Token expires in 1 hour
 
     await EmailVerificationToken.create({
-      type: EmailVerification.Type.EMAIL,
+      type: EmailVerification.Types.EMAIL,
       token,
       expiresAt,
       userId: newUser.id

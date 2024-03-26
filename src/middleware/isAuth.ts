@@ -10,13 +10,13 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers?.authorization;
 
   if (!authHeader || !authHeader?.startsWith('Bearer ')) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.INVALID_ACCESS_TOKEN)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.INVALID_ACCESS_TOKEN)
   }
 
   const token: string | undefined = authHeader.split(' ')[1];
 
   if (!token) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.INVALID_ACCESS_TOKEN)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.INVALID_ACCESS_TOKEN)
   }
 
   try {
@@ -27,10 +27,10 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   } catch (err) {
 
     if (err instanceof errors.JWTExpired) {
-      return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiError.ACCESS_TOKEN_EXPIRED)
+      return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiErrors.ACCESS_TOKEN_EXPIRED)
     }
 
-    errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiError.INVALID_ACCESS_TOKEN)
+    errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiErrors.INVALID_ACCESS_TOKEN)
   }
 
 };

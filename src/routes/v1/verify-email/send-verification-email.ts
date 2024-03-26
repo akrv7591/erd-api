@@ -67,7 +67,7 @@ export const sendVerificationEmail = async (
   const token = randomUUID();
   const expiresAt = new Date(Date.now() + 3600000); // Token expires in 1 hour
   await EmailVerificationToken.create({
-    type: EmailVerification.Type.EMAIL,
+    type: EmailVerification.Types.EMAIL,
     token,
     expiresAt,
     userId: user.id

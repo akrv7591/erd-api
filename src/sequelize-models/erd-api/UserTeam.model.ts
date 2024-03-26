@@ -34,7 +34,7 @@ export interface ICUserTeam extends Optional<IUserTeam, 'createdAt' | 'updatedAt
     async afterCreate(attributes: UserTeam, options) {
       const createUserTeamInvitation = async () => {
         await EmailVerificationToken.create({
-          type: EmailVerification.Type.TEAM_INVITATION,
+          type: EmailVerification.Types.TEAM_INVITATION,
           userId: attributes.userId,
           token: attributes.teamId,
           expiresAt: new Date(Date.now() + 86400000) // Token expires in 1 day

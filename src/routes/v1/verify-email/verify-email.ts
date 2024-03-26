@@ -12,7 +12,7 @@ export const verifyAuthEmail = async (req: Request, res: Response, next: NextFun
     const {token} = req.params;
 
     if (!token) {
-      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID)
+      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID)
     }
 
     // Check if the token exists in the database and is not expired
@@ -21,22 +21,22 @@ export const verifyAuthEmail = async (req: Request, res: Response, next: NextFun
     });
 
     if (!verificationToken) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.NOT_FOUND)
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.NOT_FOUND)
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.EXPIRED)
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.EXPIRED)
     }
 
     switch (verificationToken.type) {
-      case EmailVerification.Type.EMAIL:
+      case EmailVerification.Types.EMAIL:
         // Update the user-router's email verification status in the database
         const user = await User.findOne({
           where: {id: verificationToken.userId},
         });
 
         if (!user) {
-          return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.NOT_FOUND)
+          return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.NOT_FOUND)
         }
 
         await user.update({emailVerified: new Date()})
@@ -51,7 +51,7 @@ export const verifyAuthEmail = async (req: Request, res: Response, next: NextFun
         return res.json({accessToken: accessToken});
 
       default:
-        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID)
+        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID)
     }
 
 
@@ -66,7 +66,7 @@ export const verifyJoinTeamEmail = async (req: Request, res: Response, next: Nex
     const {token} = req.params;
 
     if (!token) {
-      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID);
+      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID);
     }
 
     // Check if the token exists in the database and is not expired
@@ -75,15 +75,15 @@ export const verifyJoinTeamEmail = async (req: Request, res: Response, next: Nex
     });
 
     if (!verificationToken) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.NOT_FOUND);
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.NOT_FOUND);
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.EXPIRED)
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.EXPIRED)
     }
 
     switch (verificationToken.type) {
-      case EmailVerification.Type.TEAM_INVITATION:
+      case EmailVerification.Types.TEAM_INVITATION:
         const userTeam = await UserTeam.findOne({
           where: {
             teamId: verificationToken.token,
@@ -101,7 +101,7 @@ export const verifyJoinTeamEmail = async (req: Request, res: Response, next: Nex
         return res.sendStatus(HttpStatusCode.Ok)
 
       default:
-        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID)
+        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID)
     }
   } catch (e) {
     internalErrorHandler(e, req, res)

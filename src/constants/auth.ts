@@ -1,9 +1,17 @@
 export namespace Auth {
-  export enum SocialLogin {
+  export const endpoints = {
+    signIn: "/sign-in",
+    signUp: "/signup",
+    logout: "/logout",
+    refresh: "/refresh",
+    google: "/google"
+  }
+
+  export enum SocialLogins {
     GOOGLE = "GOOGLE"
   }
 
-  export enum ApiError {
+  export enum ApiErrors {
     EMAIL_AND_PASSWORD_REQUIRED="EMAIL_AND_PASSWORD_REQUIRED",
     USER_NOT_FOUND="USER_NOT_FOUND",
     INVALID_AUTHORIZATION="INVALID_AUTHORIZATION",
@@ -14,23 +22,23 @@ export namespace Auth {
     ACCESS_TOKEN_EXPIRED="ACCESS_TOKEN_EXPIRED"
   }
 
-  export function apiErrorText(error: ApiError): string {
+  export function apiErrorText(error: ApiErrors): string {
     switch (error) {
-      case ApiError.EMAIL_AND_PASSWORD_REQUIRED:
+      case ApiErrors.EMAIL_AND_PASSWORD_REQUIRED:
         return "Email and password are required"
-      case ApiError.USER_NOT_FOUND:
+      case ApiErrors.USER_NOT_FOUND:
         return "User not found"
-      case ApiError.INVALID_AUTHORIZATION:
+      case ApiErrors.INVALID_AUTHORIZATION:
         return "Invalid authorization"
-      case ApiError.NO_REFRESH_TOKEN_IN_COOKIES:
+      case ApiErrors.NO_REFRESH_TOKEN_IN_COOKIES:
         return "No refresh token in cookies"
-      case ApiError.REFRESH_TOKEN_INVALID:
+      case ApiErrors.REFRESH_TOKEN_INVALID:
         return "Refresh token invalid"
-      case ApiError.GOOGLE_LOGIN_UNAUTHORIZED:
+      case ApiErrors.GOOGLE_LOGIN_UNAUTHORIZED:
         return "Google login unauthorized"
-      case ApiError.INVALID_ACCESS_TOKEN:
+      case ApiErrors.INVALID_ACCESS_TOKEN:
         return "Invalid access token"
-      case ApiError.ACCESS_TOKEN_EXPIRED:
+      case ApiErrors.ACCESS_TOKEN_EXPIRED:
         return "Access token expired"
     }
   }

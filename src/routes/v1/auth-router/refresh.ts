@@ -33,7 +33,7 @@ export const refresh = async (req: Request, res: Response) => {
 
   if (!refreshToken) {
     logger.warn('There are no refresh token in cookies');
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.NO_REFRESH_TOKEN_IN_COOKIES)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.NO_REFRESH_TOKEN_IN_COOKIES)
   }
 
   // clear refresh cookie
@@ -64,10 +64,10 @@ export const refresh = async (req: Request, res: Response) => {
       });
 
     } catch (err) {
-      return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiError.REFRESH_TOKEN_INVALID)
+      return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiErrors.REFRESH_TOKEN_INVALID)
     }
     console.log("REFRESH TOKEN FAILED")
-    return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiError.REFRESH_TOKEN_INVALID)
+    return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiErrors.REFRESH_TOKEN_INVALID)
   }
 
   // delete from db

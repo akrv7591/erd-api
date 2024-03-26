@@ -1,22 +1,22 @@
 export namespace EmailVerification {
-  export enum Type {
+  export enum Types {
     EMAIL = 'email',
     TEAM_INVITATION = 'team-invitation'
   }
 
-  export enum ApiError {
+  export enum ApiErrors {
     NOT_FOUND="NOT_FOUND",
     EXPIRED="EXPIRED",
     INVALID="INVALID",
   }
 
-  export function apiErrorText(error: ApiError): string {
+  export function apiErrorText(error: ApiErrors): string {
     switch (error) {
-      case ApiError.NOT_FOUND:
+      case ApiErrors.NOT_FOUND:
         return "Not found"
-      case ApiError.EXPIRED:
+      case ApiErrors.EXPIRED:
         return "Expired"
-      case ApiError.INVALID:
+      case ApiErrors.INVALID:
         return "Invalid"
     }
   }

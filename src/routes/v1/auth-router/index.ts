@@ -1,20 +1,21 @@
 import {Router} from 'express';
 import validate from '../../../middleware/validate';
-import {loginSchema, signupSchema} from '../../../validations/auth.validation';
+import {signInSchema, signupSchema} from '../../../validations/auth.validation';
 import {signup} from "./signup";
 import {signIn} from "./signIn";
 import {logout} from "./logout";
 import {refresh} from "./refresh";
 import {google} from "./google";
+import {Auth} from "../../../constants/auth";
 
 const authRouter = Router();
 
-authRouter.post('/signup', validate(signupSchema), signup);
-authRouter.post('/sign-in', validate(loginSchema), signIn);
-authRouter.post('/logout', logout);
-authRouter.post('/refresh', refresh);
+authRouter.post(Auth.endpoints.signUp, validate(signupSchema), signup);
+authRouter.post(Auth.endpoints.signIn, validate(signInSchema), signIn);
+authRouter.post(Auth.endpoints.logout, logout);
+authRouter.post(Auth.endpoints.refresh, refresh);
 
 // SocialLogin
-authRouter.post("/google", google)
+authRouter.post(Auth.endpoints.google, google)
 
 export default authRouter;
