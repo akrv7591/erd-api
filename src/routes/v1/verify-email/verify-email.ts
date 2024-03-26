@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from "express";
+import {Request, Response} from "express";
 import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {User} from "../../../sequelize-models/erd-api/User.model";
@@ -7,13 +7,13 @@ import {UserTeam} from "../../../sequelize-models/erd-api/UserTeam.model";
 import {HttpStatusCode} from "axios";
 import {EmailVerification} from "../../../constants/emailVerification";
 
-export const verifyAuthEmail = async (req: Request, res: Response, next: NextFunction) => {
+export type VerifyEmailParams = {
+  token: string
+}
+
+export async function verifyAuthEmail(req: Request<VerifyEmailParams>, res: Response) {
   try {
     const {token} = req.params;
-
-    if (!token) {
-      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID)
-    }
 
     // Check if the token exists in the database and is not expired
     const verificationToken = await EmailVerificationToken.findOne({
@@ -61,13 +61,9 @@ export const verifyAuthEmail = async (req: Request, res: Response, next: NextFun
 };
 
 
-export const verifyJoinTeamEmail = async (req: Request, res: Response, next: NextFunction) => {
+export async function verifyJoinTeamEmail(req: Request<VerifyEmailParams>, res: Response) {
   try {
     const {token} = req.params;
-
-    if (!token) {
-      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID);
-    }
 
     // Check if the token exists in the database and is not expired
     const verificationToken = await EmailVerificationToken.findOne({

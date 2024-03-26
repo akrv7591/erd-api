@@ -17,7 +17,7 @@ export const internalErrorHandler = (
 
 
 export const errorHandler = (
-  req: Request | TypedRequest,
+  req: Request<any> | TypedRequest,
   res: Response,
   statusCode: HttpStatusCode,
   errorCode: ResponseErrorCodes

@@ -1,4 +1,10 @@
 export namespace EmailVerification {
+  export const endpoints = {
+    sendVerificationEmail: "/send-verification-email",
+    verifyEmail: "/verify-email/:token",
+    verifyJoinTeamEmail: "/verify-join-team-email/:token"
+  }
+
   export enum Types {
     EMAIL = 'email',
     TEAM_INVITATION = 'team-invitation'

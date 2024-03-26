@@ -4,25 +4,26 @@ import {sendVerifyEmailSchema, verifyEmailSchema} from '../../../validations/ver
 import {sendVerificationEmail} from "./send-verification-email";
 import {verifyAuthEmail, verifyJoinTeamEmail} from "./verify-email";
 import isAuth from "../../../middleware/isAuth";
+import {EmailVerification} from "../../../constants/emailVerification";
 
 const verifyEmailRouter = Router();
 
 verifyEmailRouter.post(
-  '/send-verification-email',
+  EmailVerification.endpoints.sendVerificationEmail,
   validate(sendVerifyEmailSchema),
   sendVerificationEmail
 );
 
 verifyEmailRouter.post(
-  '/verify-email/:token',
+  EmailVerification.endpoints.verifyEmail,
   validate(verifyEmailSchema),
   verifyAuthEmail
 );
 
 verifyEmailRouter.post(
-  '/verify-join-team-email/:token',
-  validate(verifyEmailSchema),
+  EmailVerification.endpoints.verifyJoinTeamEmail,
   isAuth,
+  validate(verifyEmailSchema),
   verifyJoinTeamEmail
 );
 

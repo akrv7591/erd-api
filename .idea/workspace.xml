@@ -4,22 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="auth api and email verification api is updated">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="auth api endpoints moved to Auth namespace">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constants/emailVerification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/emailVerification.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/isAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/isAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/signIn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/signIn.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/signup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/signup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/internalErrorHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/internalErrorHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/verify-email/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/send-verification-email.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/verify-email/send-verification-email.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/verify-email.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/verify-email/verify-email.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/EmailVerificationToken.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/EmailVerificationToken.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/response.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/response.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/auth.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/auth.validation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/verifyTokenDetail.ts" beforeDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -136,15 +128,7 @@
       <workItem from="1710979628709" duration="4026000" />
       <workItem from="1711066333420" duration="13537000" />
       <workItem from="1711325422393" duration="8288000" />
-      <workItem from="1711411152320" duration="7537000" />
-    </task>
-    <task id="LOCAL-00036" summary="added .idea to .gitignore">
-      <option name="closed" value="true" />
-      <created>1702942981587</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1702942981587</updated>
+      <workItem from="1711411152320" duration="9405000" />
     </task>
     <task id="LOCAL-00037" summary="updated data and error handlers for websockets">
       <option name="closed" value="true" />
@@ -530,7 +514,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711420746876</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="auth api endpoints moved to Auth namespace">
+      <option name="closed" value="true" />
+      <created>1711421523315</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1711421523315</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -548,7 +540,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added MemoEnum" />
     <MESSAGE value="fixed type memoes -&gt; memos" />
     <MESSAGE value="removed unused Key" />
     <MESSAGE value="fixed Typo invalid import" />
@@ -573,6 +564,7 @@
     <MESSAGE value="added isPasswordSetColumn to User model" />
     <MESSAGE value="added set password api" />
     <MESSAGE value="auth api and email verification api is updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="auth api and email verification api is updated" />
+    <MESSAGE value="auth api endpoints moved to Auth namespace" />
+    <option name="LAST_COMMIT_MESSAGE" value="auth api endpoints moved to Auth namespace" />
   </component>
 </project>

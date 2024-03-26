@@ -4,9 +4,9 @@ import httpStatus from "http-status";
 import {User} from "../../../sequelize-models/erd-api/User.model";
 import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import {Op} from "sequelize";
-import {randomUUID} from "crypto";
 import {sendVerifyEmail} from "../../../utils/sendEmail.util";
 import {EmailVerification} from "../../../constants/emailVerification";
+import {createId} from "@paralleldrive/cuid2";
 
 /**
 * Sends Verification email
@@ -64,7 +64,7 @@ export const sendVerificationEmail = async (
   }
 
   // Generate a new verification token and save it to the database
-  const token = randomUUID();
+  const token = createId();
   const expiresAt = new Date(Date.now() + 3600000); // Token expires in 1 hour
   await EmailVerificationToken.create({
     type: EmailVerification.Types.EMAIL,
