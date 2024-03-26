@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {errorHandler} from "../../../middleware/errorHandler";
+import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {isCuid} from "@paralleldrive/cuid2";
 import httpStatus from "http-status";
 import {Erd} from "../../../sequelize-models/erd-api/Erd.model";
@@ -20,6 +20,6 @@ export const deleteErd: RequestHandler = async (req, res) => {
 
     return res.sendStatus(httpStatus.OK)
   } catch (e: any) {
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
   }
 }

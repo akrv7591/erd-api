@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {errorHandler} from "../../../middleware/errorHandler";
+import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {matchedData} from "express-validator";
 import {Erd, ICErd} from "../../../sequelize-models/erd-api/Erd.model";
 import httpStatus from "http-status";
@@ -17,6 +17,6 @@ export const put: RequestHandler = async (req, res) => {
 
   } catch (e: any) {
     console.error(e)
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
   }
 }

@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {errorHandler} from "../../../middleware/errorHandler";
+import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {isCuid} from "@paralleldrive/cuid2";
 import httpStatus from "http-status";
 import {Team} from "../../../sequelize-models/erd-api/Team.model";
@@ -19,6 +19,6 @@ export const deleteTeam: RequestHandler = async (req, res) => {
     res.sendStatus(deleted? httpStatus.OK: httpStatus.NOT_FOUND)
 
   } catch (e: any) {
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
   }
 }

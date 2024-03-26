@@ -1,17 +1,19 @@
 import {NextFunction, Request, Response} from "express";
-import httpStatus from "http-status";
 import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
-import {EMAIL_VERIFICATION_ERRORS, VERIFICATION_TOKEN} from "../../../enums/verification-token";
-import {errorHandler} from "../../../middleware/errorHandler";
+import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {User} from "../../../sequelize-models/erd-api/User.model";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
 import {UserTeam} from "../../../sequelize-models/erd-api/UserTeam.model";
+import {HttpStatusCode} from "axios";
+import {EmailVerification} from "../../../constants/emailVerification";
 
 export const verifyAuthEmail = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {token} = req.params;
 
-    if (!token) return res.status(httpStatus.BAD_REQUEST).json({code: EMAIL_VERIFICATION_ERRORS.INVALID});
+    if (!token) {
+      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID)
+    }
 
     // Check if the token exists in the database and is not expired
     const verificationToken = await EmailVerificationToken.findOne({
@@ -19,22 +21,22 @@ export const verifyAuthEmail = async (req: Request, res: Response, next: NextFun
     });
 
     if (!verificationToken) {
-      return res.status(httpStatus.NOT_FOUND).json({code: EMAIL_VERIFICATION_ERRORS.NOT_FOUND});
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.NOT_FOUND)
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return res.status(httpStatus.NOT_FOUND).json({code: EMAIL_VERIFICATION_ERRORS.EXPIRED});
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.EXPIRED)
     }
 
     switch (verificationToken.type) {
-      case VERIFICATION_TOKEN.EMAIL:
+      case EmailVerification.Type.EMAIL:
         // Update the user-router's email verification status in the database
         const user = await User.findOne({
           where: {id: verificationToken.userId},
         });
 
         if (!user) {
-          return res.sendStatus(httpStatus.NOT_FOUND)
+          return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.NOT_FOUND)
         }
 
         await user.update({emailVerified: new Date()})
@@ -46,15 +48,15 @@ export const verifyAuthEmail = async (req: Request, res: Response, next: NextFun
         const accessToken = await handleAuthTokens(req, res, user)
 
         // Return a success message
-        return res.status(httpStatus.OK).json({accessToken: accessToken});
+        return res.json({accessToken: accessToken});
 
       default:
-        return res.status(httpStatus.BAD_REQUEST).json({code: EMAIL_VERIFICATION_ERRORS.INVALID});
+        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID)
     }
 
 
   } catch (e) {
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
   }
 };
 
@@ -63,7 +65,9 @@ export const verifyJoinTeamEmail = async (req: Request, res: Response, next: Nex
   try {
     const {token} = req.params;
 
-    if (!token) return res.status(httpStatus.BAD_REQUEST).json({code: EMAIL_VERIFICATION_ERRORS.INVALID});
+    if (!token) {
+      return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID);
+    }
 
     // Check if the token exists in the database and is not expired
     const verificationToken = await EmailVerificationToken.findOne({
@@ -71,15 +75,15 @@ export const verifyJoinTeamEmail = async (req: Request, res: Response, next: Nex
     });
 
     if (!verificationToken) {
-      return res.status(httpStatus.NOT_FOUND).json({code: EMAIL_VERIFICATION_ERRORS.NOT_FOUND});
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.NOT_FOUND);
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return res.status(httpStatus.NOT_FOUND).json({code: EMAIL_VERIFICATION_ERRORS.EXPIRED});
+      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiError.EXPIRED)
     }
 
     switch (verificationToken.type) {
-      case VERIFICATION_TOKEN.TEAM_INVITATION:
+      case EmailVerification.Type.TEAM_INVITATION:
         const userTeam = await UserTeam.findOne({
           where: {
             teamId: verificationToken.token,
@@ -94,12 +98,12 @@ export const verifyJoinTeamEmail = async (req: Request, res: Response, next: Nex
 
         await verificationToken.destroy()
 
-        return res.sendStatus(httpStatus.OK)
+        return res.sendStatus(HttpStatusCode.Ok)
 
       default:
-        return res.status(httpStatus.BAD_REQUEST).json({code: EMAIL_VERIFICATION_ERRORS.INVALID});
+        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiError.INVALID)
     }
   } catch (e) {
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
   }
 };

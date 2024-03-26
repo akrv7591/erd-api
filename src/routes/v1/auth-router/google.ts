@@ -1,15 +1,13 @@
 import express from "express";
-import {errorHandler} from "../../../middleware/errorHandler";
-import axios from "axios";
-import httpStatus from "http-status";
+import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import axios, {HttpStatusCode} from "axios";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../../sequelize-models/erd-api";
 import {User} from "../../../sequelize-models/erd-api/User.model";
 import {Account} from "../../../sequelize-models/erd-api/Account.model";
 import dayjs from "dayjs";
-import {SocialLogin} from "../../../constants/auth";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
-import {AUTH} from "../../../enums/auth";
+import {Auth} from "../../../constants/auth";
 
 interface GoogleOauthData {
   access_token: string;
@@ -48,7 +46,7 @@ export const google: express.RequestHandler = async (req, res) => {
       const res = await googleApi.get<GoogleUserInfo>("/oauth2/v1/userinfo?alt=json")
       googleData = res.data
     } catch (e) {
-      return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.GOOGLE_LOGIN_UNAUTHORIZED})
+      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.GOOGLE_LOGIN_UNAUTHORIZED)
     }
     transaction = await erdSequelize.transaction()
 
@@ -79,8 +77,8 @@ export const google: express.RequestHandler = async (req, res) => {
 
     await Account.upsert({
       userId: user.id,
-      type: SocialLogin.GOOGLE,
-      provider: SocialLogin.GOOGLE,
+      type: Auth.SocialLogin.GOOGLE,
+      provider: Auth.SocialLogin.GOOGLE,
       accessToken: oathData.access_token,
       providerAccountId: googleData.id,
       expiresAt: dayjs().add(oathData.expires_in, 'seconds').toDate(),
@@ -98,7 +96,7 @@ export const google: express.RequestHandler = async (req, res) => {
     return res.json({accessToken});
 
   } catch (e) {
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
     console.warn("Google login error\n ", e)
   }
 }

@@ -1,9 +1,9 @@
 import {TypedRequest} from "../../../types/types";
 import config from "../../../config/config";
-import httpStatus from "http-status";
 import {RefreshToken} from "../../../sequelize-models/erd-api/RefreshToken.model";
 import {clearRefreshTokenCookieConfig} from "../../../config/cookieConfig";
 import {Response} from "express";
+import {HttpStatusCode} from "axios";
 
 /**
  * This function handles the logout process for users. It expects a request object with the following properties:
@@ -20,7 +20,7 @@ export const logout = async (req: TypedRequest, res: Response) => {
   const cookies = req.cookies;
 
   if (!cookies[config.jwt.refresh_token.cookie_name]) {
-    return res.sendStatus(httpStatus.NO_CONTENT); // No content
+    return res.sendStatus(HttpStatusCode.NoContent); // No content
   }
   const refreshToken = cookies[config.jwt.refresh_token.cookie_name];
 
@@ -34,7 +34,7 @@ export const logout = async (req: TypedRequest, res: Response) => {
       config.jwt.refresh_token.cookie_name,
       clearRefreshTokenCookieConfig
     );
-    return res.sendStatus(httpStatus.NO_CONTENT);
+    return res.sendStatus(HttpStatusCode.NoContent);
   }
 
   // Delete refreshToken in db
@@ -46,5 +46,5 @@ export const logout = async (req: TypedRequest, res: Response) => {
     config.jwt.refresh_token.cookie_name,
     clearRefreshTokenCookieConfig
   );
-  return res.sendStatus(httpStatus.NO_CONTENT);
+  return res.sendStatus(HttpStatusCode.NoContent);
 };

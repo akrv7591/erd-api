@@ -2,7 +2,7 @@ import {RequestHandler} from "express";
 import {Team} from "../sequelize-models/erd-api/Team.model";
 import {User} from "../sequelize-models/erd-api/User.model";
 import httpStatus from "http-status";
-import {errorHandler} from "../middleware/errorHandler";
+import {internalErrorHandler} from "../middleware/internalErrorHandler";
 import {UserTeam} from "../sequelize-models/erd-api/UserTeam.model";
 import {matchedData} from "express-validator";
 
@@ -32,7 +32,7 @@ export default class TeamController {
       res.json(data)
 
     } catch (e) {
-      errorHandler(e, req, res)
+      internalErrorHandler(e, req, res)
     }
   }
 
@@ -50,7 +50,7 @@ export default class TeamController {
       res.json(data)
 
     } catch (e) {
-      errorHandler(e, req, res)
+      internalErrorHandler(e, req, res)
     }
   }
 
@@ -68,7 +68,7 @@ export default class TeamController {
       res.sendStatus(httpStatus.OK)
 
     } catch (e) {
-      errorHandler(e, req, res)
+      internalErrorHandler(e, req, res)
     }
   }
 }

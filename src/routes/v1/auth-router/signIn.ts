@@ -1,10 +1,11 @@
 import {TypedRequest, UserLoginCredentials} from "../../../types/types";
 import {Response} from "express";
-import httpStatus from "http-status";
 import {User} from "../../../sequelize-models/erd-api/User.model";
 import * as argon2 from "argon2";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
-import {AUTH} from "../../../enums/auth";
+import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import {HttpStatusCode} from "axios";
+import {Auth} from "../../../constants/auth";
 
 /**
  * This function handles the login process for users. It expects a request object with the following properties:
@@ -18,7 +19,7 @@ import {AUTH} from "../../../enums/auth";
  *   - A 200 OK status code and an access token if the login is successful and a new refresh token is stored in the database and a new refresh token cookie is set.
  *   - A 500 INTERNAL SERVER ERROR status code if there is an error in the server.
  */
-export const signin = async (
+export const signIn = async (
   req: TypedRequest<UserLoginCredentials>,
   res: Response
 ) => {
@@ -26,7 +27,7 @@ export const signin = async (
   const {email, password} = req.body;
 
   if (!email || !password) {
-    return res.status(httpStatus.BAD_REQUEST).json({code: AUTH.EMAIL_AND_PASSWORD_REQUIRED});
+    return errorHandler(req, res, HttpStatusCode.BadRequest, Auth.ApiError.EMAIL_AND_PASSWORD_REQUIRED)
   }
 
   const user = await User.unscoped().findOne({
@@ -34,9 +35,14 @@ export const signin = async (
       email
     },
   });
-  if (!user) return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.USER_NOT_FOUND});
+  if (!user) {
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.USER_NOT_FOUND)
+  }
 
-  if (!user.password) return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.INVALID_AUTHORIZATION})
+  if (!user.password) {
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.INVALID_AUTHORIZATION)
+  }
+
   // check password-router
   try {
     if (await argon2.verify(user.password, password)) {
@@ -46,9 +52,9 @@ export const signin = async (
       // send access token per json to user-router so it can be stored in the localStorage
       return res.json({accessToken});
     } else {
-      return res.status(httpStatus.UNAUTHORIZED).json({code: AUTH.INVALID_AUTHORIZATION});
+      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiError.INVALID_AUTHORIZATION)
     }
   } catch (err) {
-    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    internalErrorHandler(err, req,res)
   }
 };

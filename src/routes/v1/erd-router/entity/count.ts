@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {errorHandler} from "../../../../middleware/errorHandler";
+import {internalErrorHandler} from "../../../../middleware/internalErrorHandler";
 import {Entity} from "../../../../sequelize-models/erd-api/Entity.model";
 
 const entityCount = Router({mergeParams: true})
@@ -10,7 +10,7 @@ entityCount.get<{erdId: string}>("", async (req, res) => {
 
     res.json({count})
   } catch (e) {
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
   }
 })
 

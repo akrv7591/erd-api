@@ -4,21 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added file upload function">
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/password-router/set-password.ts" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added set password api">
+      <change afterPath="$PROJECT_DIR$/src/constants/emailVerification.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/response.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/endpoint.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/TeamController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/TeamController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/UserController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/UserController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enums/auth.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enums/verification-token.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/errorHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/internalErrorHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/isAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/isAuth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/google.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/logout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/logout.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/signin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/signIn.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/signup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/signup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/password-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/password-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/upsert.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/upsert.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/user-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/user-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/password.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/password.validation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/deleteErd.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/deleteErd.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/entity/count.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/entity/count.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/deleteTeam.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/deleteTeam.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamDetail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamDetail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/send-verification-email.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/verify-email/send-verification-email.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/verify-email.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/verify-email/verify-email.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/verify-email/verifyTokenDetail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/verify-email/verifyTokenDetail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/EmailVerificationToken.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/EmailVerificationToken.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/generateTokens.util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/generateTokens.util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/handleAuthTokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/s3Util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/s3Util.ts" afterDir="false" />
     </list>
-    <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,145 +54,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/node_modules/multer-minio-storage/index.d.ts" root0="SKIP_INSPECTION" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/.idea/workspace.xml">
-      <ranges>
-        <range start1="6" end1="10" start2="6" end2="8" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="11" end1="14" start2="9" end2="14" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="15" end1="16" start2="15" end2="15" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="17" end1="20" start2="16" end2="17" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="21" end1="22" start2="18" end2="19" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="23" end1="24" start2="20" end2="20" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="44" end1="178" start2="40" end2="173" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="189" end1="204" start2="184" end2="199" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="205" end1="206" start2="200" end2="201" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="277" end1="286" start2="272" end2="274" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="287" end1="288" start2="275" end2="276" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="289" end1="292" start2="277" end2="280" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="293" end1="294" start2="281" end2="282" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="295" end1="296" start2="283" end2="284" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="297" end1="300" start2="285" end2="288" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="301" end1="302" start2="289" end2="290" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="303" end1="304" start2="291" end2="292" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="305" end1="308" start2="293" end2="296" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="309" end1="310" start2="297" end2="298" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="311" end1="312" start2="299" end2="300" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="313" end1="316" start2="301" end2="304" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="317" end1="318" start2="305" end2="306" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="319" end1="320" start2="307" end2="308" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="321" end1="324" start2="309" end2="352" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="325" end1="326" start2="353" end2="354" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="327" end1="328" start2="355" end2="356" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="329" end1="332" start2="357" end2="360" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="333" end1="334" start2="361" end2="362" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="335" end1="336" start2="363" end2="364" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="337" end1="340" start2="365" end2="368" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="341" end1="342" start2="369" end2="370" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="343" end1="344" start2="371" end2="372" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="345" end1="348" start2="373" end2="376" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="349" end1="350" start2="377" end2="378" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="351" end1="352" start2="379" end2="380" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="353" end1="356" start2="381" end2="384" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="357" end1="358" start2="385" end2="386" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="359" end1="360" start2="387" end2="388" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="361" end1="364" start2="389" end2="392" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="365" end1="366" start2="393" end2="394" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="367" end1="368" start2="395" end2="396" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="369" end1="372" start2="397" end2="400" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="373" end1="374" start2="401" end2="402" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="375" end1="376" start2="403" end2="404" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="377" end1="380" start2="405" end2="408" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="381" end1="382" start2="409" end2="410" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="383" end1="384" start2="411" end2="412" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="385" end1="388" start2="413" end2="416" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="389" end1="390" start2="417" end2="418" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="391" end1="392" start2="419" end2="420" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="393" end1="396" start2="421" end2="424" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="397" end1="398" start2="425" end2="426" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="399" end1="400" start2="427" end2="428" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="401" end1="404" start2="429" end2="432" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="405" end1="406" start2="433" end2="434" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="407" end1="408" start2="435" end2="436" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="409" end1="412" start2="437" end2="440" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="413" end1="414" start2="441" end2="442" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="415" end1="416" start2="443" end2="444" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="417" end1="420" start2="445" end2="448" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="421" end1="422" start2="449" end2="450" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="423" end1="424" start2="451" end2="452" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="425" end1="428" start2="453" end2="456" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="429" end1="430" start2="457" end2="458" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="431" end1="432" start2="459" end2="460" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="433" end1="436" start2="461" end2="464" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="437" end1="438" start2="465" end2="466" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="439" end1="440" start2="467" end2="468" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="441" end1="444" start2="469" end2="472" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="445" end1="446" start2="473" end2="474" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="447" end1="448" start2="475" end2="476" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="449" end1="452" start2="477" end2="480" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="453" end1="454" start2="481" end2="482" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="455" end1="456" start2="483" end2="484" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="457" end1="460" start2="485" end2="488" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="461" end1="462" start2="489" end2="490" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="463" end1="464" start2="491" end2="492" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="465" end1="468" start2="493" end2="496" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="469" end1="470" start2="497" end2="498" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="471" end1="472" start2="499" end2="500" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="473" end1="476" start2="501" end2="504" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="477" end1="478" start2="505" end2="506" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="479" end1="480" start2="507" end2="508" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="481" end1="484" start2="509" end2="512" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="485" end1="486" start2="513" end2="514" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="487" end1="488" start2="515" end2="516" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="489" end1="492" start2="517" end2="520" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="493" end1="494" start2="521" end2="522" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="495" end1="496" start2="523" end2="524" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="497" end1="500" start2="525" end2="528" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="501" end1="502" start2="529" end2="530" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="503" end1="504" start2="531" end2="532" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="505" end1="508" start2="533" end2="536" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="509" end1="510" start2="537" end2="538" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="511" end1="512" start2="539" end2="540" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="513" end1="516" start2="541" end2="544" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="517" end1="518" start2="545" end2="546" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="519" end1="520" start2="547" end2="548" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="521" end1="524" start2="549" end2="552" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="525" end1="526" start2="553" end2="554" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="527" end1="528" start2="555" end2="556" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="529" end1="532" start2="557" end2="560" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="533" end1="534" start2="561" end2="562" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="535" end1="536" start2="563" end2="564" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="537" end1="540" start2="565" end2="568" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="541" end1="542" start2="569" end2="570" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="543" end1="544" start2="571" end2="572" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="545" end1="548" start2="573" end2="576" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="549" end1="550" start2="577" end2="578" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="551" end1="552" start2="579" end2="580" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="553" end1="556" start2="581" end2="584" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="557" end1="558" start2="585" end2="586" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="559" end1="560" start2="587" end2="588" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="561" end1="564" start2="589" end2="592" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="565" end1="566" start2="593" end2="594" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="567" end1="568" start2="595" end2="596" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="569" end1="572" start2="597" end2="600" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="573" end1="574" start2="601" end2="602" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="575" end1="576" start2="603" end2="604" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="577" end1="580" start2="605" end2="608" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="581" end1="582" start2="609" end2="610" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="583" end1="584" start2="611" end2="612" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="585" end1="588" start2="613" end2="616" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="589" end1="590" start2="617" end2="618" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="591" end1="592" start2="619" end2="620" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="593" end1="596" start2="621" end2="624" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="597" end1="598" start2="625" end2="626" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="599" end1="600" start2="627" end2="628" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="601" end1="604" start2="629" end2="632" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="605" end1="606" start2="633" end2="634" changelist="cb807120-2791-4332-a94a-3b67148a0d77" />
-        <range start1="623" end1="624" start2="651" end2="668" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="641" end1="643" start2="685" end2="685" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-        <range start1="666" end1="667" start2="708" end2="711" changelist="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -271,255 +152,8 @@
       <workItem from="1710893035069" duration="7218000" />
       <workItem from="1710979628709" duration="4026000" />
       <workItem from="1711066333420" duration="13537000" />
-      <workItem from="1711325422393" duration="7489000" />
-    </task>
-    <task id="LOCAL-00004" summary="Added validations">
-      <option name="closed" value="true" />
-      <created>1699316363442</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1699316363442</updated>
-    </task>
-    <task id="LOCAL-00005" summary="added Erd and UserErd models">
-      <option name="closed" value="true" />
-      <created>1699316381286</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1699316381286</updated>
-    </task>
-    <task id="LOCAL-00006" summary="api updates plus Erd, UserErd and Table model added">
-      <option name="closed" value="true" />
-      <created>1699398990661</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1699398990661</updated>
-    </task>
-    <task id="LOCAL-00007" summary="added Column model">
-      <option name="closed" value="true" />
-      <created>1699400211661</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1699400211661</updated>
-    </task>
-    <task id="LOCAL-00008" summary="added Relation model">
-      <option name="closed" value="true" />
-      <created>1699400786920</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1699400786920</updated>
-    </task>
-    <task id="LOCAL-00009" summary="added table validator">
-      <option name="closed" value="true" />
-      <created>1699515591187</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515591187</updated>
-    </task>
-    <task id="LOCAL-00010" summary="added column put api validator">
-      <option name="closed" value="true" />
-      <created>1699515603297</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515603297</updated>
-    </task>
-    <task id="LOCAL-00011" summary="added position and type column to Table.model.ts">
-      <option name="closed" value="true" />
-      <created>1699515648454</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515648454</updated>
-    </task>
-    <task id="LOCAL-00012" summary="added order column to Column.model.ts">
-      <option name="closed" value="true" />
-      <created>1699515671722</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515671722</updated>
-    </task>
-    <task id="LOCAL-00013" summary="added deleteErd api">
-      <option name="closed" value="true" />
-      <created>1699515840785</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515840785</updated>
-    </task>
-    <task id="LOCAL-00014" summary="added count api for table">
-      <option name="closed" value="true" />
-      <created>1699515873854</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515873854</updated>
-    </task>
-    <task id="LOCAL-00015" summary="added list api for table">
-      <option name="closed" value="true" />
-      <created>1699515888514</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515888514</updated>
-    </task>
-    <task id="LOCAL-00016" summary="added update api for table">
-      <option name="closed" value="true" />
-      <created>1699515895095</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515895095</updated>
-    </task>
-    <task id="LOCAL-00017" summary="added bulkUpdate api for table">
-      <option name="closed" value="true" />
-      <created>1699515905794</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1699515905794</updated>
-    </task>
-    <task id="LOCAL-00018" summary="added list api for relation-router">
-      <option name="closed" value="true" />
-      <created>1699516616209</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1699516616209</updated>
-    </task>
-    <task id="LOCAL-00019" summary="added crud apis for column-router">
-      <option name="closed" value="true" />
-      <created>1699516655251</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1699516655251</updated>
-    </task>
-    <task id="LOCAL-00020" summary="added deleteTeam api to team-router">
-      <option name="closed" value="true" />
-      <created>1699521512359</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1699521512359</updated>
-    </task>
-    <task id="LOCAL-00021" summary="fixed deleteTeam api to team-router">
-      <option name="closed" value="true" />
-      <created>1699582019933</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1699582019933</updated>
-    </task>
-    <task id="LOCAL-00022" summary="USerErd removed id and added composite primary key">
-      <option name="closed" value="true" />
-      <created>1699600574457</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1699600574457</updated>
-    </task>
-    <task id="LOCAL-00023" summary="UserTeam removed id and added composite primary key">
-      <option name="closed" value="true" />
-      <created>1699600582557</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1699600582557</updated>
-    </task>
-    <task id="LOCAL-00024" summary="added deleteTable api">
-      <option name="closed" value="true" />
-      <created>1699600595059</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1699600595059</updated>
-    </task>
-    <task id="LOCAL-00025" summary="added deleteTable api to tableRouter">
-      <option name="closed" value="true" />
-      <created>1699600609128</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1699600609128</updated>
-    </task>
-    <task id="LOCAL-00026" summary="alpha push">
-      <option name="closed" value="true" />
-      <created>1702517989555</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1702517989555</updated>
-    </task>
-    <task id="LOCAL-00027" summary="added auth enums">
-      <option name="closed" value="true" />
-      <created>1702536647489</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1702536647489</updated>
-    </task>
-    <task id="LOCAL-00028" summary="fixed cookies issue">
-      <option name="closed" value="true" />
-      <created>1702544363313</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1702544363313</updated>
-    </task>
-    <task id="LOCAL-00029" summary="test jenkins">
-      <option name="closed" value="true" />
-      <created>1702544561355</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1702544561355</updated>
-    </task>
-    <task id="LOCAL-00030" summary="test jenkins">
-      <option name="closed" value="true" />
-      <created>1702544744455</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1702544744455</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Workspace updated">
-      <option name="closed" value="true" />
-      <created>1702620053373</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1702620053373</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Erd invitation email send function">
-      <option name="closed" value="true" />
-      <created>1702621284188</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1702621284188</updated>
-    </task>
-    <task id="LOCAL-00033" summary="added try catch to sockets">
-      <option name="closed" value="true" />
-      <created>1702625102282</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1702625102282</updated>
-    </task>
-    <task id="LOCAL-00034" summary="fixed M:N table add function">
-      <option name="closed" value="true" />
-      <created>1702865198651</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1702865198651</updated>
+      <workItem from="1711325422393" duration="8288000" />
+      <workItem from="1711411152320" duration="6944000" />
     </task>
     <task id="LOCAL-00035" summary="fixed player add function">
       <option name="closed" value="true" />
@@ -593,6 +227,278 @@
       <option name="project" value="LOCAL" />
       <updated>1706863771474</updated>
     </task>
+    <task id="LOCAL-00044" summary="Changed Table -&gt; Entity">
+      <option name="closed" value="true" />
+      <created>1710320793744</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1710320793744</updated>
+    </task>
+    <task id="LOCAL-00045" summary="added ErdEnum">
+      <option name="closed" value="true" />
+      <created>1710377390727</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1710377390727</updated>
+    </task>
+    <task id="LOCAL-00046" summary="added erd-controller.ts with onPatch function">
+      <option name="closed" value="true" />
+      <created>1710377406537</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1710377406537</updated>
+    </task>
+    <task id="LOCAL-00047" summary="added put message">
+      <option name="closed" value="true" />
+      <created>1710378947859</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1710378947859</updated>
+    </task>
+    <task id="LOCAL-00048" summary="added onPut method">
+      <option name="closed" value="true" />
+      <created>1710378959469</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1710378959469</updated>
+    </task>
+    <task id="LOCAL-00049" summary="added onPut method to multiplayer socket listener">
+      <option name="closed" value="true" />
+      <created>1710379016889</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1710379016889</updated>
+    </task>
+    <task id="LOCAL-00050" summary="added entity router">
+      <option name="closed" value="true" />
+      <created>1710379671315</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1710379671315</updated>
+    </task>
+    <task id="LOCAL-00051" summary="removed unused include object">
+      <option name="closed" value="true" />
+      <created>1710379687218</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1710379687218</updated>
+    </task>
+    <task id="LOCAL-00052" summary="added entity count apu">
+      <option name="closed" value="true" />
+      <created>1710379937339</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1710379937339</updated>
+    </task>
+    <task id="LOCAL-00053" summary="added entityCount to entityRouter">
+      <option name="closed" value="true" />
+      <created>1710379983184</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1710379983184</updated>
+    </task>
+    <task id="LOCAL-00054" summary="fixed entity count router">
+      <option name="closed" value="true" />
+      <created>1710380148841</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1710380148841</updated>
+    </task>
+    <task id="LOCAL-00055" summary="fixed erd-controller.ts">
+      <option name="closed" value="true" />
+      <created>1710393104591</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1710393104591</updated>
+    </task>
+    <task id="LOCAL-00056" summary="added Memo model">
+      <option name="closed" value="true" />
+      <created>1710396633749</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1710396633749</updated>
+    </task>
+    <task id="LOCAL-00057" summary="added Memo model">
+      <option name="closed" value="true" />
+      <created>1710396640896</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1710396640896</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Added MemoEnum">
+      <option name="closed" value="true" />
+      <created>1710396783351</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1710396783351</updated>
+    </task>
+    <task id="LOCAL-00059" summary="fixed type memoes -&gt; memos">
+      <option name="closed" value="true" />
+      <created>1710397379851</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1710397379851</updated>
+    </task>
+    <task id="LOCAL-00060" summary="removed unused Key">
+      <option name="closed" value="true" />
+      <created>1710398004827</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398004827</updated>
+    </task>
+    <task id="LOCAL-00061" summary="fixed Typo invalid import">
+      <option name="closed" value="true" />
+      <created>1710398223631</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398223631</updated>
+    </task>
+    <task id="LOCAL-00062" summary="fixed Typo invalid import">
+      <option name="closed" value="true" />
+      <created>1710398226841</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398226841</updated>
+    </task>
+    <task id="LOCAL-00063" summary="added memo controller">
+      <option name="closed" value="true" />
+      <created>1710398366913</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398366913</updated>
+    </task>
+    <task id="LOCAL-00064" summary="added memo listeners to multiplayer-socket.ts">
+      <option name="closed" value="true" />
+      <created>1710398487403</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398487403</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Updated Enum names">
+      <option name="closed" value="true" />
+      <created>1710398684906</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398684906</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Updated Enum names">
+      <option name="closed" value="true" />
+      <created>1710398823445</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398823445</updated>
+    </task>
+    <task id="LOCAL-00067" summary="Fixed IMemo type">
+      <option name="closed" value="true" />
+      <created>1710398953386</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1710398953386</updated>
+    </task>
+    <task id="LOCAL-00068" summary="fixed virtual data object">
+      <option name="closed" value="true" />
+      <created>1710467091992</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1710467091993</updated>
+    </task>
+    <task id="LOCAL-00069" summary="updated memo patch function">
+      <option name="closed" value="true" />
+      <created>1710467105189</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1710467105189</updated>
+    </task>
+    <task id="LOCAL-00070" summary="added virtual selected field for Column.model.ts">
+      <option name="closed" value="true" />
+      <created>1710736953724</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1710736953724</updated>
+    </task>
+    <task id="LOCAL-00071" summary="removed Entity type column">
+      <option name="closed" value="true" />
+      <created>1710823197500</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1710823197500</updated>
+    </task>
+    <task id="LOCAL-00072" summary="added NODE_TYPE enum">
+      <option name="closed" value="true" />
+      <created>1710823214373</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1710823214373</updated>
+    </task>
+    <task id="LOCAL-00073" summary="added minio package">
+      <option name="closed" value="true" />
+      <created>1710893537045</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1710893537046</updated>
+    </task>
+    <task id="LOCAL-00074" summary="added endpoint.ts constants">
+      <option name="closed" value="true" />
+      <created>1710893556905</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1710893556905</updated>
+    </task>
+    <task id="LOCAL-00075" summary="added s3 config keys">
+      <option name="closed" value="true" />
+      <created>1710893589074</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1710893589074</updated>
+    </task>
+    <task id="LOCAL-00076" summary="added s3Util and s3Util.initS3 added to init">
+      <option name="closed" value="true" />
+      <created>1710893639101</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1710893639101</updated>
+    </task>
+    <task id="LOCAL-00077" summary="updated team apis">
+      <option name="closed" value="true" />
+      <created>1710923158423</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1710923158423</updated>
+    </task>
     <task id="LOCAL-00078" summary="removed console.log">
       <option name="closed" value="true" />
       <created>1710988407654</created>
@@ -625,7 +531,23 @@
       <option name="project" value="LOCAL" />
       <updated>1711345574668</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="added isPasswordSetColumn to User model">
+      <option name="closed" value="true" />
+      <created>1711354303824</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1711354303824</updated>
+    </task>
+    <task id="LOCAL-00083" summary="added set password api">
+      <option name="closed" value="true" />
+      <created>1711354326812</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1711354326812</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -643,8 +565,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed entity count router" />
-    <MESSAGE value="fixed erd-controller.ts" />
     <MESSAGE value="added Memo model" />
     <MESSAGE value="Added MemoEnum" />
     <MESSAGE value="fixed type memoes -&gt; memos" />
@@ -668,6 +588,8 @@
     <MESSAGE value="update Erd list api" />
     <MESSAGE value="added file upload function" />
     <MESSAGE value="removed readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed readme" />
+    <MESSAGE value="added isPasswordSetColumn to User model" />
+    <MESSAGE value="added set password api" />
+    <option name="LAST_COMMIT_MESSAGE" value="added set password api" />
   </component>
 </project>

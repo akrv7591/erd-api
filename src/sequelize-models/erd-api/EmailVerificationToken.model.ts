@@ -2,7 +2,7 @@ import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {IUser, User} from "./User.model";
-import {VERIFICATION_TOKEN} from "../../enums/verification-token";
+import {EmailVerification} from "../../constants/emailVerification";
 
 
 export interface IEmailVerificationToken {
@@ -10,7 +10,7 @@ export interface IEmailVerificationToken {
   token: string
   expiresAt: Date | any
   createdAt: Date | any
-  type: VERIFICATION_TOKEN
+  type: EmailVerification.Type
 
   //Foreign key
   userId: string
@@ -50,9 +50,9 @@ export class EmailVerificationToken extends Model<IEmailVerificationToken, ICEma
   declare expiresAt: Date
 
   @Column({
-    type: DataType.ENUM(VERIFICATION_TOKEN.EMAIL, VERIFICATION_TOKEN.TEAM_INVITATION)
+    type: DataType.ENUM(EmailVerification.Type.EMAIL, EmailVerification.Type.TEAM_INVITATION)
   })
-  declare type: VERIFICATION_TOKEN
+  declare type: EmailVerification.Type
 
   // Foreign keys
   @ForeignKey(() => User)

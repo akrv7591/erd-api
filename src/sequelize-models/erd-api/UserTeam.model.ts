@@ -4,8 +4,8 @@ import {IUser, User} from "./User.model";
 import {ITeam, Team} from "./Team.model";
 import {ROLE} from "../../enums/role";
 import {EmailVerificationToken} from "./EmailVerificationToken.model";
-import {VERIFICATION_TOKEN} from "../../enums/verification-token";
 import {sendUserInvitationEmail} from "../../utils/email/sendUserInvitation";
+import {EmailVerification} from "../../constants/emailVerification";
 
 export interface IUserTeam {
   //Composite primary keys
@@ -34,7 +34,7 @@ export interface ICUserTeam extends Optional<IUserTeam, 'createdAt' | 'updatedAt
     async afterCreate(attributes: UserTeam, options) {
       const createUserTeamInvitation = async () => {
         await EmailVerificationToken.create({
-          type: VERIFICATION_TOKEN.TEAM_INVITATION,
+          type: EmailVerification.Type.TEAM_INVITATION,
           userId: attributes.userId,
           token: attributes.teamId,
           expiresAt: new Date(Date.now() + 86400000) // Token expires in 1 day

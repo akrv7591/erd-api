@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import compressFilter from './utils/compressFilter.util';
-import { errorHandler } from './middleware/errorHandler';
+import { internalErrorHandler } from './middleware/internalErrorHandler';
 import config from './config/config';
 import { xssMiddleware } from './middleware/xssMiddleware';
 import path from 'path';
@@ -50,6 +50,6 @@ app.all('*', (req, res) => {
   }
 });
 
-app.use(errorHandler);
+app.use(internalErrorHandler);
 
 export default app;

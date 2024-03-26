@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {errorHandler} from "../../../middleware/errorHandler";
+import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import httpStatus from "http-status";
 
@@ -21,6 +21,6 @@ export const verifyTokenDetail: RequestHandler<Params> = async (req, res) => {
 
     res.json(data)
   } catch (e: any) {
-    errorHandler(e, req, res)
+    internalErrorHandler(e, req, res)
   }
 }

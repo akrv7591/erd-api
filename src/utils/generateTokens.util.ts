@@ -3,6 +3,11 @@ import {User} from "../sequelize-models/erd-api/User.model";
 import {SignJWT} from "jose"
 
 
+/**
+ * This functions generates a valid access token
+ *
+ * @returns Returns a valid access token
+ */
 export const createAccessToken = (user: User): Promise<string> => {
   return new SignJWT(user.toJWTPayload())
     .setProtectedHeader({alg: "HS256"})

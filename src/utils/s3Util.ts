@@ -1,5 +1,4 @@
 import {Client} from 'minio';
-import {Endpoint} from "../constants/endpoint";
 import config from "../config/config";
 import {createId} from "@paralleldrive/cuid2";
 import path from "path";
@@ -10,7 +9,7 @@ import multerMinio from "multer-minio-storage";
 export class S3Util {
   static get s3Client() {
     return new Client({
-      endPoint: Endpoint.s3,
+      endPoint: config.s3.end_point,
       useSSL: true,
       accessKey: config.s3.access_key,
       secretKey: config.s3.secret_key,

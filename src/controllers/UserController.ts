@@ -4,7 +4,7 @@ import {StaticFile} from "../sequelize-models/erd-api/StaticFile";
 import httpStatus from "http-status";
 import express, {RequestHandler} from "express";
 import {Team} from "../sequelize-models/erd-api/Team.model";
-import {errorHandler} from "../middleware/errorHandler";
+import {internalErrorHandler} from "../middleware/internalErrorHandler";
 
 
 export class UserController {
@@ -68,7 +68,7 @@ export class UserController {
       res.json()
 
     } catch (e) {
-      errorHandler(e, req, res)
+      internalErrorHandler(e, req, res)
     }
   }
 
@@ -76,7 +76,7 @@ export class UserController {
     try {
 
     } catch (e) {
-      errorHandler(e, req, res)
+      internalErrorHandler(e, req, res)
     }
   }
 

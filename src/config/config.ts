@@ -103,6 +103,7 @@ const config = {
     secret_key: validatedEnv.S3_SECRET_KEY,
     bucket: validatedEnv.S3_BUCKET,
     base_url: validatedEnv.S3_BASE_URL,
+    end_point: validatedEnv.S3_BASE_URL.split("//")[1]
   }
 } as const;
 
