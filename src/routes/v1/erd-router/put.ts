@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import {internalErrorHandler} from "../../../middleware/errorHandler";
 import {ErdModel, ICErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 import httpStatus from "http-status";
 

@@ -7,7 +7,7 @@ import {jwtVerify} from "jose";
 import {IAuthorizedUser} from "../../../types/express";
 import {createAccessToken, createRefreshToken} from "../../../utils/generateTokens.util";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
-import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
 import {HttpStatusCode} from "axios";
 import {AUTH} from "../../../constants/auth";
 

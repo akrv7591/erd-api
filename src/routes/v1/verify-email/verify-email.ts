@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {EmailVerificationTokenModel} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
-import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";

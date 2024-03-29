@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import {internalErrorHandler} from "../../../middleware/errorHandler";
 import {isCuid} from "@paralleldrive/cuid2";
 import httpStatus from "http-status";
 import {ErdModel} from "../../../sequelize-models/erd-api/Erd.model";

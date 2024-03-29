@@ -1,7 +1,7 @@
 import type {NextFunction, Request, Response} from 'express';
 import Joi, {type ObjectSchema} from 'joi';
 import type {RequireAtLeastOne} from '../types/types';
-import {errorHandler} from "./internalErrorHandler";
+import {errorHandler} from "./errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../constants/common";
 

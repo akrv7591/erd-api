@@ -3,7 +3,7 @@ import {Response} from "express";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import * as argon2 from "argon2";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
-import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
 import {HttpStatusCode} from "axios";
 import {AUTH} from "../../../constants/auth";
 

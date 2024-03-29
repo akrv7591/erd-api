@@ -1,5 +1,5 @@
 import express from "express";
-import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
+import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
 import axios, {HttpStatusCode} from "axios";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../../sequelize-models/erd-api";

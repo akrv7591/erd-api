@@ -2,7 +2,7 @@ import type {NextFunction, Request, Response} from 'express';
 import {errors, jwtVerify} from "jose";
 import config from '../config/config';
 import {IAuthorizedUser} from "../types/express";
-import {errorHandler} from "./internalErrorHandler";
+import {errorHandler} from "./errorHandler";
 import {HttpStatusCode} from "axios";
 import {AUTH} from "../constants/auth";
 
