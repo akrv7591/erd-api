@@ -19,8 +19,6 @@ import {IPlayground} from "../../types/playground";
 import {erdController} from "./erd-controller";
 import {MemoModel} from "../../sequelize-models/erd-api/Memo.mode";
 import {memoController} from "./memo-controller";
-import {ProfileModel} from "../../sequelize-models/erd-api/Profile.model";
-import {StaticFileModel} from "../../sequelize-models/erd-api/StaticFile";
 
 export class MultiplayerSocket {
   io: Server
@@ -62,8 +60,8 @@ export class MultiplayerSocket {
       const [player] = await this.addUserToPlayground(playgroundKey, playerId)
       playground = await this.getPlayground(playgroundKey)
 
-      this.io.to(socket.id).emit("data", playground)
-      this.io.to(playgroundKey).emit(PlayerEnum.join, player)
+      socket.to(playgroundKey).emit(PlayerEnum.join, player)
+      socket.emit("data", playground)
 
     } catch (e) {
       console.error("GET PLAYGROUND ERROR: ", e)
@@ -197,12 +195,8 @@ export class MultiplayerSocket {
   }
 
   private addUserToPlayground = async (playgroundKey: string, userId: string) => {
-    const user = await UserModel.findByPk(userId, {
-      include: [{
-        model: ProfileModel,
-        include: [StaticFileModel]
-      }]
-    })
+    const user = await UserModel.findByPk(userId)
+
     let userAdded = false
 
     if (user) {
@@ -214,7 +208,7 @@ export class MultiplayerSocket {
       }
     }
 
-    return [user, userAdded]
+    return [user?.toJSON(), userAdded]
   }
 
   private getPlayground = async (playgroundKey: string) => {

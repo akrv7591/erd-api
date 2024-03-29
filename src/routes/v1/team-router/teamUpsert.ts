@@ -1,6 +1,5 @@
-import {Response, Request} from "express";
+import {RequestHandler} from "express";
 import httpStatus from "http-status";
-import {matchedData} from "express-validator"
 import {ICTeamModel, TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
@@ -13,11 +12,11 @@ export type PutTeamRequestBody = ICTeamModel & {
   id: string
 }
 
-export const teamUpsert = async (req: Request<{}, PutTeamRequestBody>, res: Response) => {
+export const teamUpsert: RequestHandler<{}, {}, PutTeamRequestBody> = async (req, res) => {
   let transaction: Transaction | null = null
   try {
     transaction = await erdSequelize.transaction()
-    let {users, ...data} = matchedData(req) as ICTeamModel
+    let {users, ...data} = req.body
     const [team, created] = await TeamModel.upsert(data, {transaction})
 
     const user = await UserModel.findByPk(req.authorizationUser?.id, {transaction})
@@ -32,7 +31,10 @@ export const teamUpsert = async (req: Request<{}, PutTeamRequestBody>, res: Resp
     }
 
     if (user) {
-      const invitedUsers = await Promise.all((users || []).filter(user => user.id !== req.authorizationUser?.id).map(user => UserModel.upsert({email: user.email, isPasswordSet: false}, {transaction})))//
+      const invitedUsers = await Promise.all((users || []).filter(user => user.id !== req.authorizationUser?.id).map(user => UserModel.upsert({
+        email: user.email,
+        isPasswordSet: false
+      }, {transaction})))//
 
       await Promise.all(invitedUsers.map(async ([u]) => {
         const user = await UserModel.findOne({where: {email: u.email}, transaction})

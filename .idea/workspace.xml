@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="email-verification api endpoints moved to EmailVerification namespace">
-      <change afterPath="$PROJECT_DIR$/src/constants/user.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/user-router/fetchUser.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/user-router/fetchUserList.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/user-router/patchUser.ts" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="temp fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/UserController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/user-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/user-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/validateSchemas.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamUpsert.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamUpsert.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-socket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-socket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/deleteUserFromTeam.validator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/erd.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/erd.validation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/team.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/team.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,30 +43,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/src/sequelize-models/erd-api&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/src/validations",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/validations" />
       <recent name="$PROJECT_DIR$/src/sequelize-models/erd-api" />
       <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
       <recent name="$PROJECT_DIR$/dist" />
       <recent name="$PROJECT_DIR$/src/routes/v1/team-router" />
-      <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
@@ -129,23 +133,9 @@
       <workItem from="1710979628709" duration="4026000" />
       <workItem from="1711066333420" duration="13537000" />
       <workItem from="1711325422393" duration="8288000" />
-      <workItem from="1711411152320" duration="13312000" />
-    </task>
-    <task id="LOCAL-00038" summary="added subscribe to use websockets">
-      <option name="closed" value="true" />
-      <created>1702975289010</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1702975289010</updated>
-    </task>
-    <task id="LOCAL-00039" summary="update web socket data controllers">
-      <option name="closed" value="true" />
-      <created>1703577631666</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1703577631666</updated>
+      <workItem from="1711411152320" duration="15110000" />
+      <workItem from="1711497486218" duration="2356000" />
+      <workItem from="1711584545986" duration="24040000" />
     </task>
     <task id="LOCAL-00040" summary="allow unused parameters on websocket controllers">
       <option name="closed" value="true" />
@@ -523,7 +513,23 @@
       <option name="project" value="LOCAL" />
       <updated>1711423251807</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="moved user apis from UserController.ts to seperate modules">
+      <option name="closed" value="true" />
+      <created>1711438316008</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1711438316008</updated>
+    </task>
+    <task id="LOCAL-00088" summary="temp fixes">
+      <option name="closed" value="true" />
+      <created>1711693501988</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1711693501988</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,8 +547,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="removed unused Key" />
-    <MESSAGE value="fixed Typo invalid import" />
     <MESSAGE value="added memo controller" />
     <MESSAGE value="added memo listeners to multiplayer-socket.ts" />
     <MESSAGE value="Updated Enum names" />
@@ -566,6 +570,8 @@
     <MESSAGE value="auth api and email verification api is updated" />
     <MESSAGE value="auth api endpoints moved to Auth namespace" />
     <MESSAGE value="email-verification api endpoints moved to EmailVerification namespace" />
-    <option name="LAST_COMMIT_MESSAGE" value="email-verification api endpoints moved to EmailVerification namespace" />
+    <MESSAGE value="moved user apis from UserController.ts to seperate modules" />
+    <MESSAGE value="temp fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="temp fixes" />
   </component>
 </project>

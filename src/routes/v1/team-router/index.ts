@@ -8,8 +8,7 @@ import {teamDetail} from "./teamDetail";
 import {teamUserList} from "./teamUserList";
 import {teamUserPermission} from "./teamUserPermission";
 import {teamDeleteUser} from "./teamDeleteUser";
-import {teamDeleteUserSchema} from "../../../validations/deleteUserFromTeam.validator";
-import {putTeamSchema, teamDetailOrDeleteSchema, teamIdSchema} from "../../../validations/team";
+import {putTeamSchema, teamDeleteUserSchema, teamDetailOrDeleteSchema, teamIdSchema} from "../../../validations/team";
 import {TEAM} from "../../../constants/team";
 
 
