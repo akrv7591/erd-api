@@ -3,8 +3,8 @@ import {Server, Socket} from "socket.io";
 import {RedisClientType} from "redis";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
-import {Column} from "../../sequelize-models/erd-api/Column.model";
-import {Entity, IEntity} from "../../sequelize-models/erd-api/Entity.model"
+import {ColumnModel} from "../../sequelize-models/erd-api/Column.model";
+import {EntityModel, IEntityModel} from "../../sequelize-models/erd-api/Entity.model"
 
 export interface CallbackDataType {
   type: EntityEnum;
@@ -32,13 +32,13 @@ export const entityControllers = (io: Server, socket: Socket, redis: RedisClient
       transaction = await erdSequelize.transaction()
       const {data, ...icTable} = entityData
 
-      await Entity.create({
+      await EntityModel.create({
         ...icTable,
         name: data.name,
         color: data.color,
         erdId: playgroundId
       }, {transaction})
-      await Column.bulkCreate(data.columns, {transaction})
+      await ColumnModel.bulkCreate(data.columns, {transaction})
       await redis.json.arrAppend(playgroundKey, '.entities', entityData as any)
       await transaction.commit()
 
@@ -54,7 +54,7 @@ export const entityControllers = (io: Server, socket: Socket, redis: RedisClient
 
   }
 
-  async function onUpdate(entityData: IEntity, callback: Function) {
+  async function onUpdate(entityData: IEntityModel, callback: Function) {
     const callbackData = getCallbackData(EntityEnum.update)
 
     try {
@@ -77,7 +77,7 @@ export const entityControllers = (io: Server, socket: Socket, redis: RedisClient
     try {
       await redis.json.del(playgroundKey, `.entities[?(@.id=='${entityId}')]`)
       socket.to(playgroundKey).emit(EntityEnum.delete, entityId)
-      await Entity.destroy({
+      await EntityModel.destroy({
         where: {
           id: entityId
         }
@@ -97,7 +97,7 @@ export const entityControllers = (io: Server, socket: Socket, redis: RedisClient
     try {
       await redis.json.set(playgroundKey, `$.entities[?(@.id=='${entityId}')].data.${key}`, value)
       socket.to(playgroundKey).emit(EntityEnum.set, {entityId, data: {[key]: value}})
-      await Entity.update({
+      await EntityModel.update({
         [key]: value
       }, {
         where: {

@@ -1,15 +1,15 @@
 import {clearRefreshTokenCookieConfig, refreshTokenCookieConfig} from "../../../config/cookieConfig";
 import config from "../../../config/config";
-import {RefreshToken} from "../../../sequelize-models/erd-api/RefreshToken.model";
+import {RefreshTokenModel} from "../../../sequelize-models/erd-api/RefreshToken.model";
 import {Request, Response} from "express";
 import logger from "../../../middleware/logger";
 import {jwtVerify} from "jose";
 import {IAuthorizedUser} from "../../../types/express";
 import {createAccessToken, createRefreshToken} from "../../../utils/generateTokens.util";
-import {User} from "../../../sequelize-models/erd-api/User.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {HttpStatusCode} from "axios";
-import {Auth} from "../../../constants/auth";
+import {AUTH} from "../../../constants/auth";
 
 /**
  * This function handles the refresh process for users. It expects a request object with the following properties:
@@ -33,7 +33,7 @@ export const refresh = async (req: Request, res: Response) => {
 
   if (!refreshToken) {
     logger.warn('There are no refresh token in cookies');
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.NO_REFRESH_TOKEN_IN_COOKIES)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.NO_REFRESH_TOKEN_IN_COOKIES)
   }
 
   // clear refresh cookie
@@ -43,7 +43,7 @@ export const refresh = async (req: Request, res: Response) => {
   );
 
   // check if refresh token is in db
-  const foundRefreshToken = await RefreshToken.findOne({
+  const foundRefreshToken = await RefreshTokenModel.findOne({
     where: {
       token: refreshToken
     }
@@ -57,21 +57,21 @@ export const refresh = async (req: Request, res: Response) => {
       logger.warn('Attempted refresh token reuse!');
 
       // Delete all tokens of the user-router because we detected that a token was stolen from him
-      await RefreshToken.destroy({
+      await RefreshTokenModel.destroy({
         where: {
           userId: payload.id
         }
       });
 
     } catch (err) {
-      return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiErrors.REFRESH_TOKEN_INVALID)
+      return errorHandler(req, res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.REFRESH_TOKEN_INVALID)
     }
     console.log("REFRESH TOKEN FAILED")
-    return errorHandler(req, res, HttpStatusCode.Forbidden, Auth.ApiErrors.REFRESH_TOKEN_INVALID)
+    return errorHandler(req, res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.REFRESH_TOKEN_INVALID)
   }
 
   // delete from db
-  await RefreshToken.destroy({
+  await RefreshTokenModel.destroy({
     where: {
       token: refreshToken
     }
@@ -81,7 +81,7 @@ export const refresh = async (req: Request, res: Response) => {
   // evaluate jwt
   try {
     const {payload} = await jwtVerify<IAuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
-    const user = await User.findByPk(payload.id)
+    const user = await UserModel.findByPk(payload.id)
 
 
     // Refresh token was still valid
@@ -90,7 +90,7 @@ export const refresh = async (req: Request, res: Response) => {
     const newRefreshToken = await createRefreshToken(user!);
 
     // add refresh token to db
-    await RefreshToken
+    await RefreshTokenModel
       .create({
         token: newRefreshToken,
         userId: payload.id

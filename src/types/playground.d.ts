@@ -1,19 +1,19 @@
-import {IErd} from "../sequelize-models/erd-api/Erd.model";
-import {IEntity} from "../sequelize-models/erd-api/Entity.model";
-import {IColumn} from "../sequelize-models/erd-api/Column.model";
-import {IUser} from "../sequelize-models/erd-api/User.model";
-import {IRelation} from "../sequelize-models/erd-api/Relation.model";
+import {IErdModel} from "../sequelize-models/erd-api/Erd.model";
+import {IEntityModel} from "../sequelize-models/erd-api/Entity.model";
+import {IColumnModel} from "../sequelize-models/erd-api/Column.model";
+import {IUserModel} from "../sequelize-models/erd-api/User.model";
+import {IRelationModel} from "../sequelize-models/erd-api/Relation.model";
 
-interface IPlaygroundEntity extends Omit<IEntity, 'columns' | 'name' | 'color'>{
+interface IPlaygroundEntity extends Omit<IEntityModel, 'columns' | 'name' | 'color'>{
   data: {
     name: string
     color: string
-    columns: IColumn[]
+    columns: IColumnModel[]
   }
 }
 
-export interface IPlayground extends Omit<IErd, 'users' | 'entities' | 'relations'> {
+export interface IPlayground extends Omit<IErdModel, 'users' | 'entities' | 'relations'> {
   entities: IPlaygroundEntity[]
-  players: Omit<IUser, 'password'>[]
-  relations: IRelation[]
+  players: Omit<IUserModel, 'password'>[]
+  relations: IRelationModel[]
 }

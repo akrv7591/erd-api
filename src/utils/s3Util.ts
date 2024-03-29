@@ -29,7 +29,7 @@ export class S3Util {
           }
         })
       } else {
-        console.log(config.s3.bucket + " bucket exists we can continue")
+        console.log("\u2714 S3 CONNECTION SUCCESS")
       }
     } catch (e) {
       console.error(e)

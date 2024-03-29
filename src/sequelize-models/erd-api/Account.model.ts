@@ -1,9 +1,9 @@
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IUser, User} from "./User.model";
+import {IUserModel, UserModel} from "./User.model";
 
-export interface IAccount {
+export interface IAccountModel {
   id: string
   type: string
   provider: string
@@ -21,18 +21,18 @@ export interface IAccount {
   userId: string
 
   //Relations
-  user?: IUser
+  user?: IUserModel
 }
 
-export interface ICAccount extends Optional<IAccount, 'id' | 'createdAt' | 'refreshToken' | 'accessToken' | 'tokenType' | 'scope' | 'idToken' | 'sessionState'>{}
+export interface ICAccountModel extends Optional<IAccountModel, 'id' | 'createdAt' | 'refreshToken' | 'accessToken' | 'tokenType' | 'scope' | 'idToken' | 'sessionState'>{}
 
 @Table({
-  modelName: 'Account',
+  modelName: 'AccountModel',
   tableName: 'Account',
   timestamps: true,
   updatedAt: false
 })
-export class Account extends Model<IAccount, ICAccount> {
+export class AccountModel extends Model<IAccountModel, ICAccountModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -97,7 +97,7 @@ export class Account extends Model<IAccount, ICAccount> {
   declare sessionState: string | null
 
   // Foreign keys
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -106,6 +106,6 @@ export class Account extends Model<IAccount, ICAccount> {
   declare userId: string
 
   // Relations
-  @BelongsTo(() => User)
-  declare user: User
+  @BelongsTo(() => UserModel)
+  declare user: UserModel
 }

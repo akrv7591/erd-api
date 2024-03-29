@@ -1,10 +1,11 @@
 import type {Response} from 'express';
 import httpStatus from 'http-status';
 import {randomUUID} from 'crypto';
-import type {EmailRequestBody, TypedRequest} from '../../../types/types';
+import {TypedRequest} from '../../../types/types';
 import {sendResetEmail} from '../../../utils/sendEmail.util';
-import {User} from "../../../sequelize-models/erd-api/User.model";
-import {ResetToken} from "../../../sequelize-models/erd-api/ResetToken.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
+import {ResetTokenModel} from "../../../sequelize-models/erd-api/ResetToken.model";
+import {EmailRequestBody} from "../verify-email/send-verification-email";
 
 /**
  * Sends Forgot password-router email
@@ -26,7 +27,7 @@ export const forgotPassword = async (
   }
 
   // Check if the email exists in the database
-  const user = await User.findOne({where: {email}});
+  const user = await UserModel.findOne({where: {email}});
 
   // check if email is verified
   if (!user || user.emailVerified) {
@@ -38,7 +39,7 @@ export const forgotPassword = async (
   // Generate a reset token and save it to the database
   const resetToken = randomUUID();
   const expiresAt = new Date(Date.now() + 3600000); // Token expires in 1 hour
-  await ResetToken.create({
+  await ResetTokenModel.create({
     token: resetToken,
     expiresAt,
     userId: user.id

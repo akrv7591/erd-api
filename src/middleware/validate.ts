@@ -1,7 +1,9 @@
-import type { NextFunction, Request, Response } from 'express';
-import httpStatus from 'http-status';
-import Joi, { type ObjectSchema } from 'joi';
-import type { RequireAtLeastOne } from '../types/types';
+import type {NextFunction, Request, Response} from 'express';
+import Joi, {type ObjectSchema} from 'joi';
+import type {RequireAtLeastOne} from '../types/types';
+import {errorHandler} from "./internalErrorHandler";
+import {HttpStatusCode} from "axios";
+import {COMMON} from "../constants/common";
 
 type RequestValidationSchema = RequireAtLeastOne<
   Record<'body' | 'query' | 'params', ObjectSchema>
@@ -34,7 +36,7 @@ const validate =
         message: err.message
       }));
 
-      res.status(httpStatus.BAD_REQUEST).json({ errors });
+      errorHandler(req, res, HttpStatusCode.BadRequest, COMMON.API_ERRORS.BAD_REQUEST, errors)
     }
   };
 

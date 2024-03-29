@@ -5,7 +5,11 @@ export class MultiplayerRedisClient {
   static async getRedisClient() {
     const redisClient = createClient({url: config.redis.url});
 
-    await redisClient.connect();
+    try {
+      await redisClient.connect();
+    } catch (e) {
+      throw new Error("REDIS CONNECTION FAILED ")
+    }
 
     return redisClient
   }

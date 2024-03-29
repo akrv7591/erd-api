@@ -8,17 +8,19 @@ import {ColumnEnum, Key, PlayerEnum, RelationEnum, EntityEnum, ErdEnum, MemoEnum
 import {entityControllers} from "./entity-controllers";
 import {relationController} from "./relation-controller";
 import {columnController} from "./column-controller";
-import {Erd} from "../../sequelize-models/erd-api/Erd.model";
-import {User} from "../../sequelize-models/erd-api/User.model";
-import {Relation as RelationModel} from "../../sequelize-models/erd-api/Relation.model";
-import {Column as ColumnModel} from "../../sequelize-models/erd-api/Column.model";
-import {Entity, IEntity} from "../../sequelize-models/erd-api/Entity.model";
+import {ErdModel} from "../../sequelize-models/erd-api/Erd.model";
+import {UserModel} from "../../sequelize-models/erd-api/User.model";
+import {RelationModel as RelationModel} from "../../sequelize-models/erd-api/Relation.model";
+import {ColumnModel as ColumnModel} from "../../sequelize-models/erd-api/Column.model";
+import {EntityModel, IEntityModel} from "../../sequelize-models/erd-api/Entity.model";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 import {IPlayground} from "../../types/playground";
 import {erdController} from "./erd-controller";
-import {Memo} from "../../sequelize-models/erd-api/Memo.mode";
+import {MemoModel} from "../../sequelize-models/erd-api/Memo.mode";
 import {memoController} from "./memo-controller";
+import {ProfileModel} from "../../sequelize-models/erd-api/Profile.model";
+import {StaticFileModel} from "../../sequelize-models/erd-api/StaticFile";
 
 export class MultiplayerSocket {
   io: Server
@@ -160,8 +162,8 @@ export class MultiplayerSocket {
 
     const [erd, entities, memos, relations] = await Promise.all([
 
-      Erd.findByPk(erdId).then(erd => erd?.toJSON()),
-      Entity.findAll({
+      ErdModel.findByPk(erdId).then(erd => erd?.toJSON()),
+      EntityModel.findAll({
         where: {
           erdId
         },
@@ -172,7 +174,7 @@ export class MultiplayerSocket {
           ['columns', 'order', 'asc']
         ],
       }).then(entities => entities.map(entity => entity.toJSON())),
-      Memo.findAll({
+      MemoModel.findAll({
         where: {
           erdId
         }
@@ -195,7 +197,12 @@ export class MultiplayerSocket {
   }
 
   private addUserToPlayground = async (playgroundKey: string, userId: string) => {
-    const user = await User.findByPk(userId)
+    const user = await UserModel.findByPk(userId, {
+      include: [{
+        model: ProfileModel,
+        include: [StaticFileModel]
+      }]
+    })
     let userAdded = false
 
     if (user) {
@@ -248,12 +255,12 @@ export class MultiplayerSocket {
 
       if (playground) {
         const {entities, relations, players, ...erd} = playground
-        const icEntities: IEntity[] = entities.map(({data, ...table}) => {
+        const icEntities: IEntityModel[] = entities.map(({data, ...table}) => {
           return {...table, erdId: erd.id, color: data.color, name: data.name}
         })
 
         await Promise.all([
-          Entity.bulkCreate(icEntities, {
+          EntityModel.bulkCreate(icEntities, {
             updateOnDuplicate: ["id", "position"],
             transaction
           }),

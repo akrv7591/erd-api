@@ -2,7 +2,7 @@ import {RequestHandler} from "express";
 import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {isCuid} from "@paralleldrive/cuid2";
 import httpStatus from "http-status";
-import {Erd} from "../../../sequelize-models/erd-api/Erd.model";
+import {ErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 
 export const deleteErd: RequestHandler = async (req, res) => {
   try {
@@ -10,7 +10,7 @@ export const deleteErd: RequestHandler = async (req, res) => {
 
     if (!erdId || !isCuid(erdId)) return res.status(httpStatus.BAD_REQUEST)
 
-    const deleted = await Erd.destroy({
+    const deleted = await ErdModel.destroy({
       where: {
         id: erdId
       }

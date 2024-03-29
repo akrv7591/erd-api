@@ -1,10 +1,10 @@
 import {Optional} from "sequelize";
 import {Column, DataType, HasOne, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IProfile, Profile} from "./Profile";
+import {IProfileModel, ProfileModel} from "./Profile.model";
 import config from "../../config/config";
 
-export interface IStaticFile {
+export interface IStaticFileModel {
   id: string;
   key: string;
   mime: string;
@@ -13,17 +13,17 @@ export interface IStaticFile {
   updatedAt: Date;
 
   // Relations
-  profile?: IProfile
+  profile?: IProfileModel
 }
 
-export interface ICStaticFile extends Optional<IStaticFile, 'id' | 'createdAt' | 'updatedAt'> {}
+export interface ICStaticFileModel extends Optional<IStaticFileModel, 'id' | 'createdAt' | 'updatedAt'> {}
 
 
 @Table({
-  modelName: "StaticFile",
+  modelName: "StaticFileModel",
   tableName: "StaticFile",
 })
-export class StaticFile extends Model<IStaticFile, ICStaticFile> {
+export class StaticFileModel extends Model<IStaticFileModel, ICStaticFileModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -51,11 +51,11 @@ export class StaticFile extends Model<IStaticFile, ICStaticFile> {
   })
   declare name: string;
 
-  @HasOne(() => Profile, {
+  @HasOne(() => ProfileModel, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  declare profile: IProfile;
+  declare profile: IProfileModel;
 
   // Virtual fields
   @Column(DataType.VIRTUAL)

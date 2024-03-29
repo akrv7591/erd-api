@@ -7,11 +7,11 @@
 import config from "../../config/config";
 import transporter from "../../config/nodemailer";
 import logger from "../../middleware/logger";
-import { User } from "../../sequelize-models/erd-api/User.model";
-import {Team} from "../../sequelize-models/erd-api/Team.model";
+import { UserModel } from "../../sequelize-models/erd-api/User.model";
+import {TeamModel} from "../../sequelize-models/erd-api/Team.model";
 
 
-export const sendUserInvitationEmail = (user: User, team: Team) => {
+export const sendUserInvitationEmail = (user: UserModel, team: TeamModel) => {
   const verifyLink = `${config.client.url}/team/${team.id}/join`;
   const mailOptions = {
     from: config.email.from,

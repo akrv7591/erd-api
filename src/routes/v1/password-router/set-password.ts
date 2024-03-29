@@ -1,7 +1,7 @@
 import {RequestHandler} from "express";
 import httpStatus from "http-status";
 import argon2 from "argon2"
-import {User} from "../../../sequelize-models/erd-api/User.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 
 export interface SetPasswordBody {
   password: string | null | undefined;
@@ -13,7 +13,7 @@ export const setPassword: RequestHandler<{}, {}, SetPasswordBody> = async (req, 
 
     const {password, newPassword} = req.body
 
-    const user = await User.unscoped().findOne({
+    const user = await UserModel.unscoped().findOne({
       where: {
         id: req.authorizationUser?.id,
       }

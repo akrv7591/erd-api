@@ -1,6 +1,6 @@
 import {TypedRequest} from "../../../types/types";
 import config from "../../../config/config";
-import {RefreshToken} from "../../../sequelize-models/erd-api/RefreshToken.model";
+import {RefreshTokenModel} from "../../../sequelize-models/erd-api/RefreshToken.model";
 import {clearRefreshTokenCookieConfig} from "../../../config/cookieConfig";
 import {Response} from "express";
 import {HttpStatusCode} from "axios";
@@ -25,7 +25,7 @@ export const logout = async (req: TypedRequest, res: Response) => {
   const refreshToken = cookies[config.jwt.refresh_token.cookie_name];
 
   // Is refreshToken in db?
-  const foundRft = await RefreshToken.findOne({
+  const foundRft = await RefreshTokenModel.findOne({
     where: {token: refreshToken}
   });
 
@@ -38,7 +38,7 @@ export const logout = async (req: TypedRequest, res: Response) => {
   }
 
   // Delete refreshToken in db
-  await RefreshToken.destroy({
+  await RefreshTokenModel.destroy({
     where: {token: refreshToken}
   });
 

@@ -1,7 +1,7 @@
 import {CallbackDataStatus, ErdEnum, Key} from "../../enums/multiplayer";
 import {Server, Socket} from "socket.io";
 import {RedisClientType} from "redis";
-import {Erd, IErd} from "../../sequelize-models/erd-api/Erd.model";
+import {ErdModel, IErdModel} from "../../sequelize-models/erd-api/Erd.model";
 
 export interface CallbackDataType {
   type: ErdEnum;
@@ -24,7 +24,7 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
   const playgroundId = socket.handshake.auth['playgroundId']
   const playgroundKey = `${Key.playground}:${playgroundId}`
 
-  const onPut = async (data: Partial<IErd>, callback: Function) => {
+  const onPut = async (data: Partial<IErdModel>, callback: Function) => {
     const callbackData = getCallbackData(ErdEnum.put)
 
     try {
@@ -36,7 +36,7 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
 
       await Promise.all([
         redis.json.mSet(erdRedisData),
-        Erd.update(data, {
+        ErdModel.update(data, {
           where: {
             id: playgroundId
           }
@@ -60,7 +60,7 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
     try {
       await Promise.all([
         redis.json.set(playgroundKey, `$.${key}`, value),
-        Erd.update({[key]: value}, {
+        ErdModel.update({[key]: value}, {
           where: {
             id: playgroundId
           }

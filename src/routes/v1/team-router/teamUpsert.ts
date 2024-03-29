@@ -1,25 +1,29 @@
-import express from "express";
+import {Response, Request} from "express";
 import httpStatus from "http-status";
 import {matchedData} from "express-validator"
-import {ICTeam, Team} from "../../../sequelize-models/erd-api/Team.model";
-import {User} from "../../../sequelize-models/erd-api/User.model";
-import {UserTeam} from "../../../sequelize-models/erd-api/UserTeam.model";
+import {ICTeamModel, TeamModel} from "../../../sequelize-models/erd-api/Team.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
+import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import {ROLE} from "../../../enums/role";
 import {erdSequelize} from "../../../sequelize-models/erd-api";
 import {Transaction} from "sequelize";
 import logger from "../../../middleware/logger";
 
-export const upsert = async (req: express.Request, res: express.Response) => {
+export type PutTeamRequestBody = ICTeamModel & {
+  id: string
+}
+
+export const teamUpsert = async (req: Request<{}, PutTeamRequestBody>, res: Response) => {
   let transaction: Transaction | null = null
   try {
     transaction = await erdSequelize.transaction()
-    let {users, ...data} = matchedData(req) as ICTeam
-    const [team, created] = await Team.upsert(data, {transaction})
+    let {users, ...data} = matchedData(req) as ICTeamModel
+    const [team, created] = await TeamModel.upsert(data, {transaction})
 
-    const user = await User.findByPk(req.authorizationUser?.id, {transaction})
+    const user = await UserModel.findByPk(req.authorizationUser?.id, {transaction})
 
     if (created) {
-      if (user) await UserTeam.create({
+      if (user) await UserTeamModel.create({
         teamId: team.id,
         userId: user.id,
         role: ROLE.ADMIN,
@@ -28,12 +32,12 @@ export const upsert = async (req: express.Request, res: express.Response) => {
     }
 
     if (user) {
-      const invitedUsers = await Promise.all((users || []).filter(user => user.id !== req.authorizationUser?.id).map(user => User.upsert({email: user.email, isPasswordSet: false}, {transaction})))//
+      const invitedUsers = await Promise.all((users || []).filter(user => user.id !== req.authorizationUser?.id).map(user => UserModel.upsert({email: user.email, isPasswordSet: false}, {transaction})))//
 
       await Promise.all(invitedUsers.map(async ([u]) => {
-        const user = await User.findOne({where: {email: u.email}, transaction})
+        const user = await UserModel.findOne({where: {email: u.email}, transaction})
 
-        const userTeam = await UserTeam.findOne({
+        const userTeam = await UserTeamModel.findOne({
           where: {
             userId: user?.id,
             teamId: team.id
@@ -43,7 +47,7 @@ export const upsert = async (req: express.Request, res: express.Response) => {
         const role = users!.find(u => u.email === user!.email)?.UserTeam?.role!
 
         if (!userTeam) {
-          return UserTeam.create({
+          return UserTeamModel.create({
             teamId: team.id,
             userId: user!.id,
             role,

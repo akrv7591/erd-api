@@ -3,11 +3,11 @@ import {errorHandler, internalErrorHandler} from "../../../middleware/internalEr
 import axios, {HttpStatusCode} from "axios";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../../sequelize-models/erd-api";
-import {User} from "../../../sequelize-models/erd-api/User.model";
-import {Account} from "../../../sequelize-models/erd-api/Account.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
+import {AccountModel} from "../../../sequelize-models/erd-api/Account.model";
 import dayjs from "dayjs";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
-import {Auth} from "../../../constants/auth";
+import {AUTH} from "../../../constants/auth";
 
 interface GoogleOauthData {
   access_token: string;
@@ -46,12 +46,12 @@ export const google: express.RequestHandler = async (req, res) => {
       const res = await googleApi.get<GoogleUserInfo>("/oauth2/v1/userinfo?alt=json")
       googleData = res.data
     } catch (e) {
-      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.GOOGLE_LOGIN_UNAUTHORIZED)
+      return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.GOOGLE_LOGIN_UNAUTHORIZED)
     }
     transaction = await erdSequelize.transaction()
 
     // Check if user exists
-    let user = await User.findOne({
+    let user = await UserModel.findOne({
       where: {
         email: googleData.email
       }
@@ -59,7 +59,7 @@ export const google: express.RequestHandler = async (req, res) => {
 
     // If user doesn't exist create user and continue
     if (!user) {
-      user = await User.create({
+      user = await UserModel.create({
         email: googleData.email,
         name: googleData.name,
         emailVerified: new Date(),
@@ -75,10 +75,10 @@ export const google: express.RequestHandler = async (req, res) => {
       user.name = googleData.name
     }
 
-    await Account.upsert({
+    await AccountModel.upsert({
       userId: user.id,
-      type: Auth.SocialLogins.GOOGLE,
-      provider: Auth.SocialLogins.GOOGLE,
+      type: AUTH.SOCIAL_LOGIN.GOOGLE,
+      provider: AUTH.SOCIAL_LOGIN.GOOGLE,
       accessToken: oathData.access_token,
       providerAccountId: googleData.id,
       expiresAt: dayjs().add(oathData.expires_in, 'seconds').toDate(),

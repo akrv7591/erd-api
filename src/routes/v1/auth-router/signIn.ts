@@ -1,11 +1,11 @@
 import {TypedRequest, UserLoginCredentials} from "../../../types/types";
 import {Response} from "express";
-import {User} from "../../../sequelize-models/erd-api/User.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import * as argon2 from "argon2";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
 import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {HttpStatusCode} from "axios";
-import {Auth} from "../../../constants/auth";
+import {AUTH} from "../../../constants/auth";
 
 /**
  * This function handles the login process for users. It expects a request object with the following properties:
@@ -27,20 +27,20 @@ export const signIn = async (
   const {email, password} = req.body;
 
   if (!email || !password) {
-    return errorHandler(req, res, HttpStatusCode.BadRequest, Auth.ApiErrors.EMAIL_AND_PASSWORD_REQUIRED)
+    return errorHandler(req, res, HttpStatusCode.BadRequest, AUTH.API_ERRORS.EMAIL_AND_PASSWORD_REQUIRED)
   }
 
-  const user = await User.unscoped().findOne({
+  const user = await UserModel.unscoped().findOne({
     where: {
       email
     },
   });
   if (!user) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.USER_NOT_FOUND)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.USER_NOT_FOUND)
   }
 
   if (!user.password) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.INVALID_AUTHORIZATION)
+    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_AUTHORIZATION)
   }
 
   // check password-router
@@ -52,7 +52,7 @@ export const signIn = async (
       // send access token per json to user-router so it can be stored in the localStorage
       return res.json({accessToken});
     } else {
-      return errorHandler(req, res, HttpStatusCode.Unauthorized, Auth.ApiErrors.INVALID_AUTHORIZATION)
+      return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_AUTHORIZATION)
     }
   } catch (err) {
     internalErrorHandler(err, req,res)

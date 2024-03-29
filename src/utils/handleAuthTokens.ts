@@ -1,12 +1,12 @@
 import express from "express";
 import config from "../config/config";
-import {RefreshToken} from "../sequelize-models/erd-api/RefreshToken.model";
-import {User} from "../sequelize-models/erd-api/User.model";
+import {RefreshTokenModel} from "../sequelize-models/erd-api/RefreshToken.model";
+import {UserModel} from "../sequelize-models/erd-api/User.model";
 import {clearRefreshTokenCookieConfig, refreshTokenCookieConfig} from "../config/cookieConfig";
 import {createAccessToken, createRefreshToken} from "./generateTokens.util";
 import {Transaction} from "sequelize";
 
-export default async function handleAuthTokens(req: any, res: express.Response, user: User, transaction: Transaction | null = null) {
+export default async function handleAuthTokens(req: any, res: express.Response, user: UserModel, transaction: Transaction | null = null) {
   const cookies = req.cookies;
 
   // if there is a refresh token in the req.cookie, then we need to check if this
@@ -17,7 +17,7 @@ export default async function handleAuthTokens(req: any, res: express.Response, 
 
   if (cookies?.[config.jwt.refresh_token.cookie_name]) {
     // check if the given refresh token is from the current user
-    const checkRefreshToken = await RefreshToken.findOne({
+    const checkRefreshToken = await RefreshTokenModel.findOne({
       where: {
         token: cookies[config.jwt.refresh_token.cookie_name]
       }
@@ -26,7 +26,7 @@ export default async function handleAuthTokens(req: any, res: express.Response, 
     // if this token does not exist int the database or belongs to another user-router,
     // then we clear all refresh tokens from the user-router in the db
     if (!checkRefreshToken || checkRefreshToken.userId !== user.id) {
-      await RefreshToken.destroy({
+      await RefreshTokenModel.destroy({
         where: {
           userId: user.id
         },
@@ -48,7 +48,7 @@ export default async function handleAuthTokens(req: any, res: express.Response, 
   const newRefreshToken = await createRefreshToken(user);
 
   // store new refresh token in db
-  await RefreshToken.create({
+  await RefreshTokenModel.create({
     token: newRefreshToken,
     userId: user.id
   }, {

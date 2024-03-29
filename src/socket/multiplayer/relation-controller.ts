@@ -1,7 +1,7 @@
 import {CallbackDataStatus, Key, RelationEnum} from "../../enums/multiplayer";
 import {Server, Socket} from "socket.io";
 import {RedisClientType} from "redis";
-import {Relation as RelationModel} from "../../sequelize-models/erd-api/Relation.model"
+import {RelationModel as RelationModel} from "../../sequelize-models/erd-api/Relation.model"
 
 export interface CallbackDataType {
   type: RelationEnum;

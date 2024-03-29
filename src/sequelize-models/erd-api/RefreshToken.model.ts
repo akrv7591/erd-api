@@ -1,9 +1,9 @@
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IUser, User} from "./User.model";
+import {IUserModel, UserModel} from "./User.model";
 
-export interface IRefreshToken {
+export interface IRefreshTokenModel {
   id: string
   token: string
   createdAt: Date | any
@@ -12,18 +12,18 @@ export interface IRefreshToken {
   userId: string
 
   //Relations
-  user?: IUser
+  user?: IUserModel
 }
 
-export interface ICRefreshToken extends Optional<IRefreshToken, 'id' | 'createdAt'>{}
+export interface ICRefreshTokenModel extends Optional<IRefreshTokenModel, 'id' | 'createdAt'>{}
 
 @Table({
-  modelName: 'RefreshToken',
+  modelName: 'RefreshTokenModel',
   tableName: 'RefreshToken',
   timestamps: true,
   updatedAt: false
 })
-export class RefreshToken extends Model<IRefreshToken, ICRefreshToken> {
+export class RefreshTokenModel extends Model<IRefreshTokenModel, ICRefreshTokenModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -40,7 +40,7 @@ export class RefreshToken extends Model<IRefreshToken, ICRefreshToken> {
   declare token: string
 
   // Foreign keys
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -48,6 +48,6 @@ export class RefreshToken extends Model<IRefreshToken, ICRefreshToken> {
   declare userId: string
 
   // Relations
-  @BelongsTo(() => User)
-  declare user: User
+  @BelongsTo(() => UserModel)
+  declare user: UserModel
 }

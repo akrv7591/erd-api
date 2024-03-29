@@ -1,22 +1,22 @@
 import {RequestHandler} from "express";
 import httpStatus from "http-status";
-import {Erd, IErd} from "../../../sequelize-models/erd-api/Erd.model";
+import {ErdModel, IErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 import {WhereOptions} from "sequelize";
-import {Team} from "../../../sequelize-models/erd-api/Team.model";
-import {UserTeam} from "../../../sequelize-models/erd-api/UserTeam.model";
+import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
+import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 
 export const list: RequestHandler = async (req, res) => {
   const teamId = req.query['teamId'] as string[]
 
-  const where: WhereOptions<IErd> = {}
+  const where: WhereOptions<IErdModel> = {}
 
   if (teamId) {
     where.teamId = teamId
   } else {
-    const userTeamIds = await Team.findAll({
+    const userTeamIds = await TeamModel.findAll({
       attributes: ['id'],
       include: [{
-        model: UserTeam,
+        model: UserTeamModel,
         required: true,
         where: {
           userId: req.authorizationUser?.id
@@ -29,7 +29,7 @@ export const list: RequestHandler = async (req, res) => {
   }
 
   try {
-    const data = await Erd.findAndCountAll({
+    const data = await ErdModel.findAndCountAll({
       ...req.pagination,
       where: {
         ...req.pagination?.where,

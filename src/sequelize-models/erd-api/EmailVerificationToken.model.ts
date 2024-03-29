@@ -1,33 +1,33 @@
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IUser, User} from "./User.model";
-import {EmailVerification} from "../../constants/emailVerification";
+import {IUserModel, UserModel} from "./User.model";
+import {EMAIL_VERIFICATION} from "../../constants/emailVerification";
 
 
-export interface IEmailVerificationToken {
+export interface IEmailVerificationTokenModel {
   id: string
   token: string
   expiresAt: Date | any
   createdAt: Date | any
-  type: EmailVerification.Types
+  type: EMAIL_VERIFICATION.TYPES
 
   //Foreign key
   userId: string
 
   //Relations
-  user?: IUser
+  user?: IUserModel
 }
 
-export interface ICEmailVerificationToken extends Optional<IEmailVerificationToken, 'id' | 'createdAt'>{}
+export interface ICEmailVerificationTokenModel extends Optional<IEmailVerificationTokenModel, 'id' | 'createdAt'>{}
 
 @Table({
-  modelName: 'EmailVerificationToken',
+  modelName: 'EmailVerificationTokenModel',
   tableName: 'EmailVerificationToken',
   timestamps: true,
   updatedAt: false
 })
-export class EmailVerificationToken extends Model<IEmailVerificationToken, ICEmailVerificationToken> {
+export class EmailVerificationTokenModel extends Model<IEmailVerificationTokenModel, ICEmailVerificationTokenModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -50,12 +50,12 @@ export class EmailVerificationToken extends Model<IEmailVerificationToken, ICEma
   declare expiresAt: Date
 
   @Column({
-    type: DataType.ENUM(EmailVerification.Types.EMAIL, EmailVerification.Types.TEAM_INVITATION)
+    type: DataType.ENUM(EMAIL_VERIFICATION.TYPES.EMAIL, EMAIL_VERIFICATION.TYPES.TEAM_INVITATION)
   })
-  declare type: EmailVerification.Types
+  declare type: EMAIL_VERIFICATION.TYPES
 
   // Foreign keys
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -63,6 +63,6 @@ export class EmailVerificationToken extends Model<IEmailVerificationToken, ICEma
   declare userId: string
 
   // Relations
-  @BelongsTo(() => User)
-  declare user: User
+  @BelongsTo(() => UserModel)
+  declare user: UserModel
 }

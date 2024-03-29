@@ -1,9 +1,9 @@
 import {Optional} from "sequelize";
 import {Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
-import {ITeam, Team} from "./Team.model";
-import {Erd, IErd} from "./Erd.model";
+import {ITeamModel, TeamModel} from "./Team.model";
+import {ErdModel, IErdModel} from "./Erd.model";
 
-export interface ITeamErd {
+export interface ITeamErdModel {
   createdAt: Date
   updatedAt: Date
 
@@ -12,21 +12,21 @@ export interface ITeamErd {
   erdId: string
 
   //Relations
-  team?: ITeam
-  erd?: IErd
+  team?: ITeamModel
+  erd?: IErdModel
 }
 
-export interface ICTeamErd extends Optional<ITeamErd, 'createdAt' | 'updatedAt'> {
+export interface ICTeamErdModel extends Optional<ITeamErdModel, 'createdAt' | 'updatedAt'> {
 }
 
 @Table({
-  modelName: 'TeamErd',
+  modelName: 'TeamErdModel',
   tableName: 'TeamErd',
   timestamps: true,
 })
-export class TeamErd extends Model<ITeamErd, ICTeamErd> {
+export class TeamErdModel extends Model<ITeamErdModel, ICTeamErdModel> {
   @PrimaryKey
-  @ForeignKey(() => Team)
+  @ForeignKey(() => TeamModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -34,7 +34,7 @@ export class TeamErd extends Model<ITeamErd, ICTeamErd> {
   declare teamId: string
 
   @PrimaryKey
-  @ForeignKey(() => Erd)
+  @ForeignKey(() => ErdModel)
   @Column({
     type: DataType.STRING,
     allowNull: false

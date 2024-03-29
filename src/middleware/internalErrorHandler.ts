@@ -20,7 +20,8 @@ export const errorHandler = (
   req: Request<any> | TypedRequest,
   res: Response,
   statusCode: HttpStatusCode,
-  errorCode: ResponseErrorCodes
+  errorCode: ResponseErrorCodes,
+  errors?: {field: string, message: string}[]
 ): void => {
-  res.status(statusCode).json({code: errorCode})
+  res.status(statusCode).json({code: errorCode, errors})
 }

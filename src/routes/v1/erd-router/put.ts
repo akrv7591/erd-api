@@ -1,15 +1,15 @@
 import {RequestHandler} from "express";
 import {internalErrorHandler} from "../../../middleware/internalErrorHandler";
 import {matchedData} from "express-validator";
-import {Erd, ICErd} from "../../../sequelize-models/erd-api/Erd.model";
+import {ErdModel, ICErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 import httpStatus from "http-status";
 
 
 export const put: RequestHandler = async (req, res) => {
   try {
-    const data = matchedData(req) as ICErd
+    const data = matchedData(req) as ICErdModel
 
-    const [erd, created] = await Erd.upsert(data)
+    const [erd, created] = await ErdModel.upsert(data)
 
     console.log(erd.toJSON())
 

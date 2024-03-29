@@ -1,13 +1,13 @@
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
-import {IUser, User} from "./User.model";
-import {ITeam, Team} from "./Team.model";
+import {IUserModel, UserModel} from "./User.model";
+import {ITeamModel, TeamModel} from "./Team.model";
 import {ROLE} from "../../enums/role";
-import {EmailVerificationToken} from "./EmailVerificationToken.model";
+import {EmailVerificationTokenModel} from "./EmailVerificationToken.model";
 import {sendUserInvitationEmail} from "../../utils/email/sendUserInvitation";
-import {EmailVerification} from "../../constants/emailVerification";
+import {EMAIL_VERIFICATION} from "../../constants/emailVerification";
 
-export interface IUserTeam {
+export interface IUserTeamModel {
   //Composite primary keys
   userId: string
   teamId: string
@@ -18,30 +18,30 @@ export interface IUserTeam {
   updatedAt: Date
 
   //Relations
-  user?: IUser
-  team?: ITeam
+  user?: IUserModel
+  team?: ITeamModel
 }
 
 
-export interface ICUserTeam extends Optional<IUserTeam, 'createdAt' | 'updatedAt'> {
+export interface ICUserTeamModel extends Optional<IUserTeamModel, 'createdAt' | 'updatedAt'> {
 }
 
 @Table({
-  modelName: 'UserTeam',
+  modelName: 'UserTeamModel',
   tableName: 'UserTeam',
   timestamps: true,
   hooks: {
-    async afterCreate(attributes: UserTeam, options) {
+    async afterCreate(attributes: UserTeamModel, options) {
       const createUserTeamInvitation = async () => {
-        await EmailVerificationToken.create({
-          type: EmailVerification.Types.TEAM_INVITATION,
+        await EmailVerificationTokenModel.create({
+          type: EMAIL_VERIFICATION.TYPES.TEAM_INVITATION,
           userId: attributes.userId,
           token: attributes.teamId,
           expiresAt: new Date(Date.now() + 86400000) // Token expires in 1 day
         })
         const [user, team] = await Promise.all([
-          User.findByPk(attributes.userId),
-          Team.findByPk(attributes.teamId)
+          UserModel.findByPk(attributes.userId),
+          TeamModel.findByPk(attributes.teamId)
         ])
         if (user && team) {
           sendUserInvitationEmail(user, team)
@@ -57,10 +57,10 @@ export interface ICUserTeam extends Optional<IUserTeam, 'createdAt' | 'updatedAt
     }
   }
 })
-export class UserTeam extends Model<IUserTeam, ICUserTeam> {
+export class UserTeamModel extends Model<IUserTeamModel, ICUserTeamModel> {
   //Composite primary keys
   @PrimaryKey
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -68,7 +68,7 @@ export class UserTeam extends Model<IUserTeam, ICUserTeam> {
   declare userId: string
 
   @PrimaryKey
-  @ForeignKey(() => Team)
+  @ForeignKey(() => TeamModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -89,6 +89,6 @@ export class UserTeam extends Model<IUserTeam, ICUserTeam> {
   })
   declare pending: boolean
 
-  @BelongsTo(() => Team)
-  declare team: Team
+  @BelongsTo(() => TeamModel)
+  declare team: TeamModel
 }

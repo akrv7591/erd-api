@@ -1,27 +1,23 @@
 import express from "express";
-import {pagination} from "../../../middleware/pagination";
 import {S3Util} from "../../../utils/s3Util";
-import {fetchUser} from "./fetchUser";
-import {patchUser} from "./patchUser";
-import {fetchUserList} from "./fetchUserList";
+import {userDetail} from "./userDetail";
+import {userPatch} from "./userPatch";
+import validate from "../../../middleware/validate";
+import {userDetailOrPatchSchema} from "../../../validations/user";
 
 const userRouter = express.Router({mergeParams: true})
 
 userRouter.get(
   "/:userId",
-  fetchUser
+  validate(userDetailOrPatchSchema),
+  userDetail
 )
 
 userRouter.patch(
   "/:userId",
+  validate(userDetailOrPatchSchema),
   S3Util.fileUpload("user/profile/").single("profilePicture"),
-  patchUser
-)
-
-userRouter.get(
-  "",
-  pagination({searchFields: ['name'], like: true}),
-  fetchUserList
+  userPatch
 )
 
 export default userRouter

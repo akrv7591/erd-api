@@ -1,30 +1,30 @@
 import {Optional} from "sequelize";
 import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IUser, User} from "./User.model";
-import {UserTeam} from "./UserTeam.model";
-import {Erd, IErd} from "./Erd.model";
+import {IUserModel, UserModel} from "./User.model";
+import {UserTeamModel} from "./UserTeam.model";
+import {ErdModel, IErdModel} from "./Erd.model";
 
-export interface ITeam {
+export interface ITeamModel {
   id: string
   createdAt: Date
   updatedAt: Date
   name: string
 
   //Relations
-  users?: IUser[]
-  erds?: IErd[]
+  users?: IUserModel[]
+  erds?: IErdModel[]
 }
 
-export interface ICTeam extends Optional<ITeam, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICTeamModel extends Optional<ITeamModel, 'id' | 'createdAt' | 'updatedAt'> {
 }
 
 @Table({
-  modelName: 'Team',
+  modelName: 'TeamModel',
   tableName: 'Team',
   timestamps: true,
 })
-export class Team extends Model<ITeam, ICTeam> {
+export class TeamModel extends Model<ITeamModel, ICTeamModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -42,12 +42,12 @@ export class Team extends Model<ITeam, ICTeam> {
   declare name: string
 
   // Relations
-  @BelongsToMany(() => User, () => UserTeam)
-  declare users: User[]
+  @BelongsToMany(() => UserModel, () => UserTeamModel)
+  declare users: UserModel[]
 
-  @HasMany(() => Erd)
-  declare erds: Erd[]
+  @HasMany(() => ErdModel)
+  declare erds: ErdModel[]
 
-  @HasMany(() => UserTeam)
-  declare userTeams: UserTeam[]
+  @HasMany(() => UserTeamModel)
+  declare userTeams: UserTeamModel[]
 }

@@ -5,15 +5,15 @@ import verifyEmailRouter from "./verify-email";
 import passwordRouter from "./password-router";
 import teamRouter from "./team-router";
 import erdRouter from "./erd-router";
-import isAuth from "../../middleware/isAuth";
+import authorization from "../../middleware/authorization";
 
 
 const router = express.Router()
 
 router.use("/auth", authRouter)
-router.use("/users", isAuth, userRouter)
-router.use("/team", isAuth, teamRouter)
-router.use("/erd", isAuth, erdRouter)
+router.use("/users", authorization, userRouter)
+router.use("/team", authorization, teamRouter)
+router.use("/erd", authorization, erdRouter)
 
 router.use("", verifyEmailRouter)
 router.use("", passwordRouter)

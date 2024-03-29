@@ -1,16 +1,18 @@
-import {Erd, IErd} from "./Erd.model";
-import {IUser, User} from "./User.model";
+import {ErdModel, IErdModel} from "./Erd.model";
+import {IUserModel, UserModel} from "./User.model";
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {INodePosition} from "./Entity.model";
 import {NODE_TYPES} from "../../enums/node-type";
 
-export interface IMemo {
+export interface IMemoModel {
   id: string;
   content: string;
   color: string;
   position: INodePosition;
+  width: number;
+  height: number;
   createdAt: string;
   updatedAt: string;
 
@@ -19,17 +21,17 @@ export interface IMemo {
   userId: string | null;
 
   // Relations
-  erd?: IErd;
-  user?: IUser;
+  erd?: IErdModel;
+  user?: IUserModel;
 }
 
-export interface ICMemo extends Optional<IMemo, 'id' | 'createdAt' | 'updatedAt'> {}
+export interface ICMemoModel extends Optional<IMemoModel, 'id' | 'createdAt' | 'updatedAt'> {}
 
 @Table({
-  modelName: "Memo",
+  modelName: "MemoModel",
   tableName: "Memo",
 })
-export class Memo extends Model<IMemo, ICMemo> {
+export class MemoModel extends Model<IMemoModel, ICMemoModel> {
   @PrimaryKey
   @Column({
     allowNull: false,
@@ -56,24 +58,38 @@ export class Memo extends Model<IMemo, ICMemo> {
   })
   declare position: string
 
-  @ForeignKey(() => Erd)
+  // @Column({
+  //   type: DataType.INTEGER,
+  //   allowNull: false,
+  //   defaultValue: () => 200,
+  // })
+  // declare height: number;
+  //
+  // @Column({
+  //   type: DataType.INTEGER,
+  //   allowNull: false,
+  //   defaultValue: () => 200,
+  // })
+  // declare width: number;
+
+  @ForeignKey(() => ErdModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
   })
   declare erdId: string;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING
   })
   declare userId: string;
 
-  @BelongsTo(() => Erd)
-  declare erd: IErd;
+  @BelongsTo(() => ErdModel)
+  declare erd: IErdModel;
 
-  @BelongsTo(() => User)
-  declare user: IUser;
+  @BelongsTo(() => UserModel)
+  declare user: IUserModel;
 
   @Column(DataType.VIRTUAL)
   get data() {

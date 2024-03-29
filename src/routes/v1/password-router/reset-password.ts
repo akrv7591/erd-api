@@ -1,11 +1,11 @@
 import {ResetPasswordRequestBodyType, TypedRequest} from "../../../types/types";
 import {Response} from "express";
 import httpStatus from "http-status";
-import {ResetToken} from "../../../sequelize-models/erd-api/ResetToken.model";
+import {ResetTokenModel} from "../../../sequelize-models/erd-api/ResetToken.model";
 import {Op} from "sequelize";
 import * as argon2 from "argon2";
-import {User} from "../../../sequelize-models/erd-api/User.model";
-import {RefreshToken} from "../../../sequelize-models/erd-api/RefreshToken.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
+import {RefreshTokenModel} from "../../../sequelize-models/erd-api/RefreshToken.model";
 
 /**
 * Handles Password reset
@@ -29,7 +29,7 @@ export const resetPassword = async (
   }
 
   // Check if the token exists in the database and is not expired
-  const resetToken = await ResetToken.findOne({
+  const resetToken = await ResetTokenModel.findOne({
     where: {
       token,
       expiresAt: {
@@ -45,17 +45,17 @@ export const resetPassword = async (
 
   // Update the user-router's password-router in the database
   const hashedPassword = await argon2.hash(newPassword);
-  await User.update({password: hashedPassword}, {
+  await UserModel.update({password: hashedPassword}, {
     where: {id: resetToken.userId},
   });
 
   // Delete the reset and all other reset tokens that the user-router owns from the database
-  await ResetToken.destroy({
+  await ResetTokenModel.destroy({
     where: {userId: resetToken.userId}
   });
 
   // Delete also all refresh tokens
-  await RefreshToken.destroy({
+  await RefreshTokenModel.destroy({
     where: {
       userId: resetToken.userId
     }

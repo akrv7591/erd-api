@@ -1,9 +1,9 @@
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IUser, User} from "./User.model";
+import {IUserModel, UserModel} from "./User.model";
 
-export interface IResetToken {
+export interface IResetTokenModel {
   id: string
   token: string
   expiresAt: Date | any
@@ -13,18 +13,18 @@ export interface IResetToken {
   userId: string
 
   //Relations
-  user?: IUser
+  user?: IUserModel
 }
 
-export interface ICResetToken extends Optional<IResetToken, 'id' | 'createdAt'>{}
+export interface ICResetTokenModel extends Optional<IResetTokenModel, 'id' | 'createdAt'>{}
 
 @Table({
-  modelName: 'ResetToken',
+  modelName: 'ResetTokenModel',
   tableName: 'ResetToken',
   timestamps: true,
   updatedAt: false
 })
-export class ResetToken extends Model<IResetToken, ICResetToken> {
+export class ResetTokenModel extends Model<IResetTokenModel, ICResetTokenModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -47,7 +47,7 @@ export class ResetToken extends Model<IResetToken, ICResetToken> {
   declare expiresAt: Date
 
   // Foreign keys
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -55,6 +55,6 @@ export class ResetToken extends Model<IResetToken, ICResetToken> {
   declare userId: string
 
   // Relations
-  @BelongsTo(() => User)
-  declare user: User
+  @BelongsTo(() => UserModel)
+  declare user: UserModel
 }

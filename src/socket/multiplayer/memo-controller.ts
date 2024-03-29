@@ -1,7 +1,7 @@
 import {CallbackDataStatus, Key, MemoEnum} from "../../enums/multiplayer";
 import {Server, Socket} from "socket.io";
 import {RedisClientType} from "redis";
-import {IMemo, Memo} from "../../sequelize-models/erd-api/Memo.mode";
+import {IMemoModel, MemoModel} from "../../sequelize-models/erd-api/Memo.mode";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 import {INodePosition} from "../../sequelize-models/erd-api/Entity.model";
@@ -28,13 +28,13 @@ export const memoController = (io: Server, socket: Socket, redis: RedisClientTyp
   const playerId = socket.handshake.auth['playerId']
   const playgroundKey = `${Key.playground}:${playgroundId}`
 
-  const onAdd = async (m: {position: INodePosition, data: Pick<IMemo, 'color' | 'content'>}, callback: Function) => {
+  const onAdd = async (m: {position: INodePosition, data: Pick<IMemoModel, 'color' | 'content' | 'width' | 'height'>}, callback: Function) => {
     const callbackData = getCallbackData(MemoEnum.add)
     let transaction: Transaction | null = null
 
     try {
       transaction = await erdSequelize.transaction()
-      const memo = await Memo.create({
+      const memo = await MemoModel.create({
         position: m.position,
         ...m.data,
         erdId: playgroundId,
@@ -57,7 +57,7 @@ export const memoController = (io: Server, socket: Socket, redis: RedisClientTyp
     }
   }
 
-  const onPut = async (data: IMemo, callback: Function) => {
+  const onPut = async (data: IMemoModel, callback: Function) => {
     const callbackData = getCallbackData(MemoEnum.put)
     try {
       const memoRedisData: any[] = []
@@ -68,7 +68,7 @@ export const memoController = (io: Server, socket: Socket, redis: RedisClientTyp
 
       await Promise.all([
         redis.json.mSet(memoRedisData),
-        Memo.update(data, {where: {id: data.id}})
+        MemoModel.update(data, {where: {id: data.id}})
       ])
 
       callbackData.status = CallbackDataStatus.OK
@@ -90,7 +90,7 @@ export const memoController = (io: Server, socket: Socket, redis: RedisClientTyp
     let transaction: Transaction | null = null
     try {
       transaction = await erdSequelize.transaction()
-      await Memo.update({[data.key]: data.value}, {
+      await MemoModel.update({[data.key]: data.value}, {
         where: {
           id: data.memoId
         },
@@ -117,7 +117,7 @@ export const memoController = (io: Server, socket: Socket, redis: RedisClientTyp
 
     try {
       transaction = await erdSequelize.transaction()
-      await Memo.destroy({
+      await MemoModel.destroy({
         where: {
           id: memoId
         },

@@ -1,12 +1,12 @@
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {Entity, IEntity,} from "./Entity.model";
-import {IRelation, Relation} from "./Relation.model";
-import {ITeam, Team} from "./Team.model";
-import {IMemo, Memo} from "./Memo.mode";
+import {EntityModel, IEntityModel,} from "./Entity.model";
+import {IRelationModel, RelationModel} from "./Relation.model";
+import {ITeamModel, TeamModel} from "./Team.model";
+import {IMemoModel, MemoModel} from "./Memo.mode";
 
-export interface IErd {
+export interface IErdModel {
   id: string
   createdAt: Date
   updatedAt: Date
@@ -19,21 +19,21 @@ export interface IErd {
   teamId: string
 
   //Relations
-  team?: ITeam
-  entities?: IEntity[]
-  relations?: IRelation[]
-  memos?: IMemo[]
+  team?: ITeamModel
+  entities?: IEntityModel[]
+  relations?: IRelationModel[]
+  memos?: IMemoModel[]
 }
 
-export interface ICErd extends Optional<IErd, 'id' | 'createdAt' | 'description'> {
+export interface ICErdModel extends Optional<IErdModel, 'id' | 'createdAt' | 'description'> {
 }
 
 @Table({
-  modelName: 'Erd',
+  modelName: 'ErdModel',
   tableName: 'Erd',
   timestamps: true,
 })
-export class Erd extends Model<IErd, ICErd> {
+export class ErdModel extends Model<IErdModel, ICErdModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -77,7 +77,7 @@ export class Erd extends Model<IErd, ICErd> {
   })
   declare columnNameCase: "snake" | "camel";
 
-  @ForeignKey(() => Team)
+  @ForeignKey(() => TeamModel)
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -85,24 +85,24 @@ export class Erd extends Model<IErd, ICErd> {
   declare teamId: string;
 
   // Relations
-  @BelongsTo(() => Team)
-  declare team: Team
+  @BelongsTo(() => TeamModel)
+  declare team: TeamModel
 
-  @HasMany(() => Entity, {
+  @HasMany(() => EntityModel, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  declare entities: Entity[]
+  declare entities: EntityModel[]
 
-  @HasMany(() => Relation, {
+  @HasMany(() => RelationModel, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  declare relations: Relation[]
+  declare relations: RelationModel[]
 
-  @HasMany(() => Memo, {
+  @HasMany(() => MemoModel, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  declare memos: Memo[]
+  declare memos: MemoModel[]
 }

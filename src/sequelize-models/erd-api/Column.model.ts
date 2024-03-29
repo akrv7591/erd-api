@@ -8,10 +8,10 @@ import {
   Table as SequelizeTable
 } from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {Entity, IEntity} from "./Entity.model";
+import {EntityModel, IEntityModel} from "./Entity.model";
 import {Optional} from "sequelize";
 
-export interface IColumn {
+export interface IColumnModel {
   id: string;
   createdAt: string;
   updatedAt: string;
@@ -30,21 +30,21 @@ export interface IColumn {
   entityId: string;
 
   // Relations
-  entity?: IEntity
+  entity?: IEntityModel
 }
 
-export interface ICColumn extends Optional<IColumn, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICColumnModel extends Optional<IColumnModel, 'id' | 'createdAt' | 'updatedAt'> {
 }
 
 @SequelizeTable({
-  modelName: 'Column',
+  modelName: 'ColumnModel',
   tableName: 'Column',
   timestamps: true,
   defaultScope: {
     order: [['order', 'asc']]
   }
 })
-export class Column extends Model<IColumn, ICColumn> {
+export class ColumnModel extends Model<IColumnModel, ICColumnModel> {
   @PrimaryKey
   @SequelizeColumn({
     type: DataType.STRING,
@@ -116,7 +116,7 @@ export class Column extends Model<IColumn, ICColumn> {
   declare order: number;
 
   // ForeignKey
-  @ForeignKey(() => Entity)
+  @ForeignKey(() => EntityModel)
   @SequelizeColumn({
     type: DataType.STRING,
     allowNull: false
@@ -130,6 +130,6 @@ export class Column extends Model<IColumn, ICColumn> {
   }
 
   // Relations
-  @BelongsTo(() => Entity)
-  declare entity: Entity
+  @BelongsTo(() => EntityModel)
+  declare entity: EntityModel
 }

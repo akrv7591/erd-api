@@ -1,5 +1,5 @@
 import config from '../config/config';
-import {User} from "../sequelize-models/erd-api/User.model";
+import {UserModel} from "../sequelize-models/erd-api/User.model";
 import {SignJWT} from "jose"
 
 
@@ -8,7 +8,7 @@ import {SignJWT} from "jose"
  *
  * @returns Returns a valid access token
  */
-export const createAccessToken = (user: User): Promise<string> => {
+export const createAccessToken = (user: UserModel): Promise<string> => {
   return new SignJWT(user.toJWTPayload())
     .setProtectedHeader({alg: "HS256"})
     .setIssuedAt()
@@ -21,7 +21,7 @@ export const createAccessToken = (user: User): Promise<string> => {
  *
  * @returns Returns a valid refresh token
  */
-export const createRefreshToken = (user: User): Promise<string> => {
+export const createRefreshToken = (user: UserModel): Promise<string> => {
   return new SignJWT(user.toJWTPayload())
     .setProtectedHeader({alg: "HS256"})
     .setIssuedAt()

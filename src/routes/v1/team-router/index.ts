@@ -1,23 +1,54 @@
 import express from "express";
+import validate from "../../../middleware/validate";
 import {pagination} from "../../../middleware/pagination";
-import {list} from "./list";
-import {upsert} from "./upsert";
-import {validateSchemas} from "../../../middleware/validateSchemas";
-import {teamSchema} from "../../../validations/team.validation";
-import {deleteTeam} from "./deleteTeam";
-import TeamController from "../../../controllers/TeamController"
+import {teamList} from "./teamList";
+import {teamUpsert} from "./teamUpsert";
+import {teamDelete} from "./teamDelete";
 import {teamDetail} from "./teamDetail";
-import {deleteUserFromTeamValidator} from "../../../validations/deleteUserFromTeam.validator";
+import {teamUserList} from "./teamUserList";
+import {teamUserPermission} from "./teamUserPermission";
+import {teamDeleteUser} from "./teamDeleteUser";
+import {teamDeleteUserSchema} from "../../../validations/deleteUserFromTeam.validator";
+import {putTeamSchema, teamDetailOrDeleteSchema, teamIdSchema} from "../../../validations/team";
+import {TEAM} from "../../../constants/team";
+
 
 const teamRouter = express.Router()
 
-teamRouter.get("/:teamId/user-list", TeamController.userList)
-teamRouter.get("/:teamId/user-permission", TeamController.userPermission)
-teamRouter.delete("/:teamId/delete-user/:userId", validateSchemas(deleteUserFromTeamValidator), TeamController.deleteUserFromTeam)
-teamRouter.get("/:teamId/user-team", teamDetail)
-teamRouter.delete("/:teamId", deleteTeam)
-teamRouter.get("/:teamId", teamDetail)
-teamRouter.get("", pagination({searchFields: ['name'], like: true}), list)
-teamRouter.put("", validateSchemas(teamSchema), upsert)
+teamRouter.get(
+  TEAM.ENDPOINTS.teamUserList,
+  validate(teamIdSchema),
+  teamUserList
+)
+teamRouter.get(
+  TEAM.ENDPOINTS.teamUserPermission,
+  validate(teamIdSchema),
+  teamUserPermission
+)
+teamRouter.delete(
+  TEAM.ENDPOINTS.teamDeleteUser,
+  validate(teamDeleteUserSchema),
+  teamDeleteUser
+)
+teamRouter.delete(
+  TEAM.ENDPOINTS.teamDelete,
+  validate(teamDetailOrDeleteSchema),
+  teamDelete
+)
+teamRouter.get(
+  TEAM.ENDPOINTS.teamDetail,
+  validate(teamDetailOrDeleteSchema),
+  teamDetail
+)
+teamRouter.get(
+  TEAM.ENDPOINTS.teamList,
+  pagination({searchFields: ['name'], like: true}),
+  teamList
+)
+teamRouter.put(
+  TEAM.ENDPOINTS.teamUpsert,
+  validate(putTeamSchema),
+  teamUpsert
+)
 
 export default teamRouter

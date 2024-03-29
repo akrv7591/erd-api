@@ -9,9 +9,9 @@ import {
   PrimaryKey,
   Table as SequelizeTable
 } from "sequelize-typescript";
-import {Erd, IErd} from "./Erd.model";
+import {ErdModel, IErdModel} from "./Erd.model";
 
-export interface IRelation {
+export interface IRelationModel {
   id: string;
   source: string;
   target: string;
@@ -22,19 +22,19 @@ export interface IRelation {
   erdId: string;
 
   // Relations
-  erd?: IErd
+  erd?: IErdModel
 }
 
-export interface ICRelation extends Optional<IRelation, 'createdAt'> {
+export interface ICRelationModel extends Optional<IRelationModel, 'createdAt'> {
 }
 
 @SequelizeTable({
-  modelName: 'Relation',
+  modelName: 'RelationModel',
   tableName: 'Relation',
   timestamps: true,
   updatedAt: false
 })
-export class Relation extends Model<IRelation, ICRelation> {
+export class RelationModel extends Model<IRelationModel, ICRelationModel> {
   @PrimaryKey
   @SequelizeColumn({
     type: DataType.STRING,
@@ -62,7 +62,7 @@ export class Relation extends Model<IRelation, ICRelation> {
   declare markerEnd: string
 
   // ForeignKey
-  @ForeignKey(() => Erd)
+  @ForeignKey(() => ErdModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -70,6 +70,6 @@ export class Relation extends Model<IRelation, ICRelation> {
   declare erdId: string
 
   // Relations
-  @BelongsTo(() => Erd)
-  declare erd: Erd
+  @BelongsTo(() => ErdModel)
+  declare erd: ErdModel
 }

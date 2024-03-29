@@ -50,10 +50,6 @@ export interface UserSignUpCredentials {
 
 export type UserLoginCredentials = Omit<UserSignUpCredentials, 'username'>;
 
-export interface EmailRequestBody {
-  email: string;
-}
-
 export interface ResetPasswordRequestBodyType {
   newPassword: string;
 }

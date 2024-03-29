@@ -10,8 +10,8 @@ import {
   Table as SequelizeTable
 } from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {Erd, IErd} from "./Erd.model";
-import {Column as ColumnModel, IColumn} from "./Column.model";
+import {ErdModel, IErdModel} from "./Erd.model";
+import {ColumnModel as ColumnModel, IColumnModel} from "./Column.model";
 import {NODE_TYPES} from "../../enums/node-type";
 
 export interface INodePosition {
@@ -20,7 +20,7 @@ export interface INodePosition {
 }
 
 
-export interface IEntity {
+export interface IEntityModel {
   id: string;
   createdAt: string;
   updatedAt: string;
@@ -34,19 +34,19 @@ export interface IEntity {
   erdId: string;
 
   // Relations
-  erd?: IErd
-  columns?: IColumn[]
+  erd?: IErdModel
+  columns?: IColumnModel[]
 }
 
-export interface ICEntity extends Optional<IEntity, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICEntityModel extends Optional<IEntityModel, 'id' | 'createdAt' | 'updatedAt'> {
 }
 
 @SequelizeTable({
-  modelName: 'Entity',
+  modelName: 'EntityModel',
   tableName: 'Entity',
   timestamps: true,
 })
-export class Entity extends Model<IEntity, ICEntity> {
+export class EntityModel extends Model<IEntityModel, ICEntityModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -75,7 +75,7 @@ export class Entity extends Model<IEntity, ICEntity> {
   declare position: string
 
   // ForeignKey
-  @ForeignKey(() => Erd)
+  @ForeignKey(() => ErdModel)
   @Column({
     type: DataType.STRING,
     allowNull: false
@@ -83,8 +83,8 @@ export class Entity extends Model<IEntity, ICEntity> {
   declare erdId: string
 
   // Relations
-  @BelongsTo(() => Erd)
-  declare erd: Erd
+  @BelongsTo(() => ErdModel)
+  declare erd: ErdModel
 
   @HasMany(() => ColumnModel, {
     onUpdate: "CASCADE",

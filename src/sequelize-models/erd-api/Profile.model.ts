@@ -1,10 +1,10 @@
-import {IUser, User} from "./User.model";
+import {IUserModel, UserModel} from "./User.model";
 import {Optional} from "sequelize";
 import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IStaticFile, StaticFile} from "./StaticFile";
+import {IStaticFileModel, StaticFileModel} from "./StaticFile";
 
-export interface IProfile {
+export interface IProfileModel {
   id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -13,18 +13,18 @@ export interface IProfile {
   imageId: string | null;
   userId: string;
 
-  user?: IUser;
-  image?: IStaticFile | null
+  user?: IUserModel;
+  image?: IStaticFileModel | null
 }
 
-export interface ICProfile extends Optional<IProfile, 'id' | 'createdAt'| 'updatedAt'> {}
+export interface ICProfileModel extends Optional<IProfileModel, 'id' | 'createdAt'| 'updatedAt'> {}
 
 
 @Table({
-  modelName: "Profile",
+  modelName: "ProfileModel",
   tableName: "Profile",
 })
-export class Profile extends Model<IProfile, ICProfile> {
+export class ProfileModel extends Model<IProfileModel, ICProfileModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -36,23 +36,23 @@ export class Profile extends Model<IProfile, ICProfile> {
 
 
   // Foreign keys
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   declare userId: string
 
-  @ForeignKey(() => StaticFile)
+  @ForeignKey(() => StaticFileModel)
   @Column({
     type: DataType.STRING,
   })
   declare imageId: string
 
   // Relations
-  @BelongsTo(() => User)
-  declare user: User
+  @BelongsTo(() => UserModel)
+  declare user: UserModel
 
-  @BelongsTo(() => StaticFile)
-  declare image: StaticFile | null
+  @BelongsTo(() => StaticFileModel)
+  declare image: StaticFileModel | null
 }

@@ -1,13 +1,13 @@
 import {Response} from "express";
 import {TypedRequest, UserSignUpCredentials} from "../../../types/types";
 import httpStatus from "http-status";
-import {User} from "../../../sequelize-models/erd-api/User.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import * as argon2 from "argon2";
 import {randomUUID} from "crypto";
-import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
+import {EmailVerificationTokenModel} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import {sendVerifyEmail} from "../../../utils/sendEmail.util";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
-import {EmailVerification} from "../../../constants/emailVerification";
+import {EMAIL_VERIFICATION} from "../../../constants/emailVerification";
 
 /**
  * This function handles the signup process for new users. It expects a request object with the following properties:
@@ -34,7 +34,7 @@ export const signup = async (
     });
   }
 
-  const checkUserEmail = await User.findOne({
+  const checkUserEmail = await UserModel.findOne({
     where: {
       email
     }
@@ -45,7 +45,7 @@ export const signup = async (
   try {
     const hashedPassword = await argon2.hash(password);
 
-    const newUser = await User.create({
+    const newUser = await UserModel.create({
       name,
       email,
       password: hashedPassword,
@@ -55,8 +55,8 @@ export const signup = async (
     const token = randomUUID();
     const expiresAt = new Date(Date.now() + 3600000); // Token expires in 1 hour
 
-    await EmailVerificationToken.create({
-      type: EmailVerification.Types.EMAIL,
+    await EmailVerificationTokenModel.create({
+      type: EMAIL_VERIFICATION.TYPES.EMAIL,
       token,
       expiresAt,
       userId: newUser.id

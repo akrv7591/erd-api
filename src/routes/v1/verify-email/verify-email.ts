@@ -1,11 +1,11 @@
 import {Request, Response} from "express";
-import {EmailVerificationToken} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
+import {EmailVerificationTokenModel} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
 import {errorHandler, internalErrorHandler} from "../../../middleware/internalErrorHandler";
-import {User} from "../../../sequelize-models/erd-api/User.model";
+import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
-import {UserTeam} from "../../../sequelize-models/erd-api/UserTeam.model";
+import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import {HttpStatusCode} from "axios";
-import {EmailVerification} from "../../../constants/emailVerification";
+import {EMAIL_VERIFICATION} from "../../../constants/emailVerification";
 
 export type VerifyEmailParams = {
   token: string
@@ -16,27 +16,27 @@ export async function verifyAuthEmail(req: Request<VerifyEmailParams>, res: Resp
     const {token} = req.params;
 
     // Check if the token exists in the database and is not expired
-    const verificationToken = await EmailVerificationToken.findOne({
+    const verificationToken = await EmailVerificationTokenModel.findOne({
       where: {token}
     });
 
     if (!verificationToken) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.NOT_FOUND)
+      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND)
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.EXPIRED)
+      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.EXPIRED)
     }
 
     switch (verificationToken.type) {
-      case EmailVerification.Types.EMAIL:
+      case EMAIL_VERIFICATION.TYPES.EMAIL:
         // Update the user-router's email verification status in the database
-        const user = await User.findOne({
+        const user = await UserModel.findOne({
           where: {id: verificationToken.userId},
         });
 
         if (!user) {
-          return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.NOT_FOUND)
+          return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND)
         }
 
         await user.update({emailVerified: new Date()})
@@ -51,7 +51,7 @@ export async function verifyAuthEmail(req: Request<VerifyEmailParams>, res: Resp
         return res.json({accessToken: accessToken});
 
       default:
-        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID)
+        return errorHandler(req, res, HttpStatusCode.BadRequest, EMAIL_VERIFICATION.API_ERRORS.INVALID)
     }
 
 
@@ -66,21 +66,21 @@ export async function verifyJoinTeamEmail(req: Request<VerifyEmailParams>, res: 
     const {token} = req.params;
 
     // Check if the token exists in the database and is not expired
-    const verificationToken = await EmailVerificationToken.findOne({
+    const verificationToken = await EmailVerificationTokenModel.findOne({
       where: {token}
     });
 
     if (!verificationToken) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.NOT_FOUND);
+      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND);
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EmailVerification.ApiErrors.EXPIRED)
+      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.EXPIRED)
     }
 
     switch (verificationToken.type) {
-      case EmailVerification.Types.TEAM_INVITATION:
-        const userTeam = await UserTeam.findOne({
+      case EMAIL_VERIFICATION.TYPES.TEAM_INVITATION:
+        const userTeam = await UserTeamModel.findOne({
           where: {
             teamId: verificationToken.token,
             userId: req.authorizationUser?.id
@@ -97,7 +97,7 @@ export async function verifyJoinTeamEmail(req: Request<VerifyEmailParams>, res: 
         return res.sendStatus(HttpStatusCode.Ok)
 
       default:
-        return errorHandler(req, res, HttpStatusCode.BadRequest, EmailVerification.ApiErrors.INVALID)
+        return errorHandler(req, res, HttpStatusCode.BadRequest, EMAIL_VERIFICATION.API_ERRORS.INVALID)
     }
   } catch (e) {
     internalErrorHandler(e, req, res)

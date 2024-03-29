@@ -1,7 +1,7 @@
 import {CallbackDataStatus, ColumnEnum, Key} from "../../enums/multiplayer";
 import {Server, Socket} from "socket.io";
 import {RedisClientType} from "redis";
-import {Column as ColumnModel} from "../../sequelize-models/erd-api/Column.model"
+import {ColumnModel as ColumnModel} from "../../sequelize-models/erd-api/Column.model"
 
 export interface CallbackDataType {
   type: ColumnEnum;

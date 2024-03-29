@@ -1,18 +1,18 @@
 import {CreateOptions, Optional} from "sequelize";
 import {BelongsToMany, Column, DataType, HasMany, HasOne, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {Account, IAccount} from "./Account.model";
-import {EmailVerificationToken, IEmailVerificationToken} from "./EmailVerificationToken.model";
-import {IRefreshToken, RefreshToken} from "./RefreshToken.model";
-import {IResetToken, ResetToken} from "./ResetToken.model";
-import {ICTeam, ITeam, Team} from "./Team.model";
-import {ICUserTeam, IUserTeam, UserTeam} from "./UserTeam.model";
+import {AccountModel, IAccountModel} from "./Account.model";
+import {EmailVerificationTokenModel, IEmailVerificationTokenModel} from "./EmailVerificationToken.model";
+import {IRefreshTokenModel, RefreshTokenModel} from "./RefreshToken.model";
+import {IResetTokenModel, ResetTokenModel} from "./ResetToken.model";
+import {ICTeamModel, ITeamModel, TeamModel} from "./Team.model";
+import {ICUserTeamModel, IUserTeamModel, UserTeamModel} from "./UserTeam.model";
 import {ROLE} from "../../enums/role";
-import {IMemo, Memo} from "./Memo.mode";
-import {IProfile, Profile} from "./Profile";
+import {IMemoModel, MemoModel} from "./Memo.mode";
+import {IProfileModel, ProfileModel} from "./Profile.model";
 
 
-export interface IUser {
+export interface IUserModel {
   id: string
   name: string
   email: string
@@ -23,20 +23,20 @@ export interface IUser {
   updatedAt: Date
 
   //Relations
-  accounts?: IAccount[]
-  emailVerificationTokens?: IEmailVerificationToken[]
-  refreshTokens?: IRefreshToken[]
-  resetTokens?: IResetToken[]
-  teams?: ITeam[]
-  memos?: IMemo[]
-  profile?: IProfile
-  UserTeam?: IUserTeam
+  accounts?: IAccountModel[]
+  emailVerificationTokens?: IEmailVerificationTokenModel[]
+  refreshTokens?: IRefreshTokenModel[]
+  resetTokens?: IResetTokenModel[]
+  teams?: ITeamModel[]
+  memos?: IMemoModel[]
+  profile?: IProfileModel
+  UserTeam?: IUserTeamModel
 }
 
-export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt' | 'emailVerified' | 'name'>{}
+export interface ICUserModel extends Optional<IUserModel, 'id' | 'createdAt' | 'updatedAt' | 'emailVerified' | 'name'>{}
 
 @Table({
-  modelName: 'User',
+  modelName: 'UserModel',
   tableName: 'User',
   timestamps: true,
   defaultScope: {
@@ -45,9 +45,9 @@ export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt'
     }
   },
   hooks: {
-    async afterCreate(user: User, options) {
-      const teamCreateOptions: CreateOptions<ICTeam> = {}
-      const userTeamCreateOptions: CreateOptions<ICUserTeam> = {
+    async afterCreate(user: UserModel, options) {
+      const teamCreateOptions: CreateOptions<ICTeamModel> = {}
+      const userTeamCreateOptions: CreateOptions<ICUserTeamModel> = {
         hooks: false
       }
 
@@ -56,11 +56,11 @@ export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt'
         userTeamCreateOptions.transaction = options.transaction
       }
 
-      const team = await Team.create({
+      const team = await TeamModel.create({
         name: "Private",
       }, teamCreateOptions)
 
-      await UserTeam.create({
+      await UserTeamModel.create({
         userId: user.id,
         teamId: team.id,
         role: ROLE.ADMIN,
@@ -69,7 +69,7 @@ export interface ICUser extends Optional<IUser, 'id' | 'createdAt' | 'updatedAt'
     }
   }
 })
-export class User extends Model<IUser, ICUser> {
+export class UserModel extends Model<IUserModel, ICUserModel> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -111,44 +111,44 @@ export class User extends Model<IUser, ICUser> {
   declare isPasswordSet: boolean
 
   //Relations
-  @HasMany(() => Account, {
+  @HasMany(() => AccountModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   })
-  declare accounts: Account[]
+  declare accounts: AccountModel[]
 
-  @HasMany(() => EmailVerificationToken, {
+  @HasMany(() => EmailVerificationTokenModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   })
-  declare emailVerificationTokens: EmailVerificationToken[]
+  declare emailVerificationTokens: EmailVerificationTokenModel[]
 
-  @HasMany(() => RefreshToken, {
+  @HasMany(() => RefreshTokenModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   })
-  declare refreshTokens: RefreshToken[]
+  declare refreshTokens: RefreshTokenModel[]
 
-  @HasMany(() => ResetToken, {
+  @HasMany(() => ResetTokenModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   })
-  declare resetTokens: ResetToken[]
+  declare resetTokens: ResetTokenModel[]
 
-  @HasMany(() => Memo, {
+  @HasMany(() => MemoModel, {
     onUpdate: "CASCADE",
     onDelete: "SET NULL"
   })
-  declare memos: Memo[]
+  declare memos: MemoModel[]
 
-  @HasOne(() => Profile, {
+  @HasOne(() => ProfileModel, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  declare profile: Profile
+  declare profile: ProfileModel
 
-  @BelongsToMany(() => Team, () => UserTeam)
-  declare teams: Team[]
+  @BelongsToMany(() => TeamModel, () => UserTeamModel)
+  declare teams: TeamModel[]
 
   public toJWTPayload() {
     return {

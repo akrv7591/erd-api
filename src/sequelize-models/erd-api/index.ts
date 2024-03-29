@@ -1,20 +1,20 @@
 import {Sequelize, SequelizeOptions} from 'sequelize-typescript';
 import config from "../../config/config";
-import {User} from "./User.model";
-import {Account} from "./Account.model";
-import {EmailVerificationToken} from "./EmailVerificationToken.model";
-import {RefreshToken} from "./RefreshToken.model";
-import {ResetToken} from "./ResetToken.model";
-import {Team} from "./Team.model";
-import {UserTeam} from "./UserTeam.model";
-import {Erd} from "./Erd.model";
-import {Entity} from "./Entity.model";
-import {Column} from "./Column.model";
-import {Relation} from "./Relation.model";
-import {TeamErd} from "./TeamErd.model";
-import {Memo} from "./Memo.mode";
-import {Profile} from "./Profile";
-import {StaticFile} from "./StaticFile";
+import {UserModel} from "./User.model";
+import {AccountModel} from "./Account.model";
+import {EmailVerificationTokenModel} from "./EmailVerificationToken.model";
+import {RefreshTokenModel} from "./RefreshToken.model";
+import {ResetTokenModel} from "./ResetToken.model";
+import {TeamModel} from "./Team.model";
+import {UserTeamModel} from "./UserTeam.model";
+import {ErdModel} from "./Erd.model";
+import {EntityModel} from "./Entity.model";
+import {ColumnModel} from "./Column.model";
+import {RelationModel} from "./Relation.model";
+import {TeamErdModel} from "./TeamErd.model";
+import {MemoModel} from "./Memo.mode";
+import {ProfileModel} from "./Profile.model";
+import {StaticFileModel} from "./StaticFile";
 
 const logFunction: SequelizeOptions['logging'] = (sql, timing) => {
   console.log(sql);
@@ -24,21 +24,21 @@ export const erdSequelize = new Sequelize({
   ...config.db.erd,
   logging: config.db.logging ? logFunction : false,
   models: [
-    User,
-    Account,
-    EmailVerificationToken,
-    RefreshToken,
-    ResetToken,
-    Team,
-    UserTeam,
-    Erd,
-    Entity,
-    Column,
-    Relation,
-    TeamErd,
-    Memo,
-    Profile,
-    StaticFile,
+    UserModel,
+    AccountModel,
+    EmailVerificationTokenModel,
+    RefreshTokenModel,
+    ResetTokenModel,
+    TeamModel,
+    UserTeamModel,
+    ErdModel,
+    EntityModel,
+    ColumnModel,
+    RelationModel,
+    TeamErdModel,
+    MemoModel,
+    ProfileModel,
+    StaticFileModel,
   ]
 });
 
@@ -50,6 +50,11 @@ export class ErdiagramlySequelize {
       if (config.db.sync) {
         await erdSequelize.sync({alter: true})
       }
+
+      // await MemoModel.sync({alter: true})
+
+      console.log("\u2714 DB CONNECTION SUCCESS")
+
     } catch (e) {
       console.error(e)
       throw new Error("DB CONNECTION FAILED")

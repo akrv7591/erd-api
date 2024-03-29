@@ -1,28 +1,28 @@
 import { Router } from 'express';
 import validate from '../../../middleware/validate';
-import {sendVerifyEmailSchema, verifyEmailSchema} from '../../../validations/verifyEmail.validation';
+import {sendVerifyEmailSchema, verifyEmailSchema} from '../../../validations/verifyEmail';
 import {sendVerificationEmail} from "./send-verification-email";
 import {verifyAuthEmail, verifyJoinTeamEmail} from "./verify-email";
-import isAuth from "../../../middleware/isAuth";
-import {EmailVerification} from "../../../constants/emailVerification";
+import authorization from "../../../middleware/authorization";
+import {EMAIL_VERIFICATION} from "../../../constants/emailVerification";
 
 const verifyEmailRouter = Router();
 
 verifyEmailRouter.post(
-  EmailVerification.endpoints.sendVerificationEmail,
+  EMAIL_VERIFICATION.ENDPOINTS.sendVerificationEmail,
   validate(sendVerifyEmailSchema),
   sendVerificationEmail
 );
 
 verifyEmailRouter.post(
-  EmailVerification.endpoints.verifyEmail,
+  EMAIL_VERIFICATION.ENDPOINTS.verifyEmail,
   validate(verifyEmailSchema),
   verifyAuthEmail
 );
 
 verifyEmailRouter.post(
-  EmailVerification.endpoints.verifyJoinTeamEmail,
-  isAuth,
+  EMAIL_VERIFICATION.ENDPOINTS.verifyJoinTeamEmail,
+  authorization,
   validate(verifyEmailSchema),
   verifyJoinTeamEmail
 );

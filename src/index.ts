@@ -17,6 +17,8 @@ let server: http.Server
     S3Util.initS3(),
   ])
 
+  console.log("----- ALL GOOD TO GO -----")
+
   server = http.createServer(app)
   new MultiplayerSocket(server, redisClient)
 
