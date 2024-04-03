@@ -1,6 +1,8 @@
-import express from "express";
+import {Request, Response, NextFunction} from "express";
 import {Op, Order} from "sequelize";
 import httpStatus from "http-status";
+import {errorHandler} from "../utils/errorHandler";
+import {COMMON} from "../constants/common";
 interface IPaginationOptions {
   searchFields?: string[],
   like?: boolean
@@ -8,14 +10,20 @@ interface IPaginationOptions {
 
 export const pagination = ({searchFields, like}: IPaginationOptions) =>
   async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
   ) => {
-    const pagination: express.Request['pagination'] = {}
+    const pagination: Request['pagination'] = {}
 
-    const { q, limit, order, offset } = req.query;
+    let {
+      q,
+      limit = 10,
+      offset = 0,
+      order = ["createdAt", 'desc'],
+    } = req.query;
 
+    // Check if the query string is valid and search fields exist
     if (q && searchFields && searchFields.length > 0) {
       const query = like? `%${q}%`: q
       pagination.where = {
@@ -23,20 +31,25 @@ export const pagination = ({searchFields, like}: IPaginationOptions) =>
       }
     }
 
+    // Check if the order is valid
     if (Array.isArray(order) && order.length > 0) {
       pagination.order = order as Order
     }
 
-    if (limit || offset) {
-      if (!limit && offset) return res.status(httpStatus.BAD_REQUEST).json({message: "if one of limit or offset exist both should exist"})
+    // Check if the limit and offset are valid
+    limit = parseInt(String(limit))
+    offset = parseInt(String(offset))
 
-      try {
-        pagination.limit = parseInt(String(limit))
-        pagination.offset = parseInt(String(offset))
-      } catch (e) {
-        return res.status(httpStatus.BAD_REQUEST).json({message: "limit or order is not valid"})
-      }
+    if (isNaN(limit)) {
+      return errorHandler(req, res, httpStatus.BAD_REQUEST, COMMON.API_ERRORS.LIMIT_IS_NOT_VALID)
     }
+
+    if (isNaN(offset)) {
+      return errorHandler(req, res, httpStatus.BAD_REQUEST, COMMON.API_ERRORS.OFFSET_IS_NOT_VALID)
+    }
+
+    pagination.limit = parseInt(String(limit))
+    pagination.offset = parseInt(String(offset))
 
     req.pagination = pagination
 
