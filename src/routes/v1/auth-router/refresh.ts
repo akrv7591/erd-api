@@ -2,12 +2,12 @@ import {clearRefreshTokenCookieConfig, refreshTokenCookieConfig} from "../../../
 import config from "../../../config/config";
 import {RefreshTokenModel} from "../../../sequelize-models/erd-api/RefreshToken.model";
 import {Request, Response} from "express";
-import logger from "../../../middleware/logger";
+import logger from "../../../utils/logger";
 import {jwtVerify} from "jose";
 import {IAuthorizedUser} from "../../../types/express";
 import {createAccessToken, createRefreshToken} from "../../../utils/generateTokens.util";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
-import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
+import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {AUTH} from "../../../constants/auth";
 

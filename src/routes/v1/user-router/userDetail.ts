@@ -2,7 +2,7 @@ import {RequestHandler} from "express";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {ProfileModel} from "../../../sequelize-models/erd-api/Profile.model";
 import {StaticFileModel} from "../../../sequelize-models/erd-api/StaticFile";
-import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
+import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import {COMMON} from "../../../constants/common";
 import {HttpStatusCode} from "axios";
 

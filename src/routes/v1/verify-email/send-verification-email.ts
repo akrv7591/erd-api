@@ -6,7 +6,7 @@ import {Op} from "sequelize";
 import {sendVerifyEmail} from "../../../utils/sendEmail.util";
 import {EMAIL_VERIFICATION} from "../../../constants/emailVerification";
 import {createId} from "@paralleldrive/cuid2";
-import {errorHandler} from "../../../middleware/errorHandler";
+import {errorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../../../constants/common";
 

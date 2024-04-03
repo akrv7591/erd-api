@@ -6,7 +6,7 @@ import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import {ROLE} from "../../../enums/role";
 import {erdSequelize} from "../../../sequelize-models/erd-api";
 import {Transaction} from "sequelize";
-import logger from "../../../middleware/logger";
+import logger from "../../../utils/logger";
 
 export type PutTeamRequestBody = ICTeamModel & {
   id: string

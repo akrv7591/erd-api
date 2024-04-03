@@ -1,5 +1,5 @@
 import {RequestHandler} from "express";
-import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
+import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import httpStatus from "http-status";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {HttpStatusCode} from "axios";

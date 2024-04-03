@@ -1,5 +1,5 @@
 import express from "express";
-import logger from "../../../middleware/logger";
+import logger from "../../../utils/logger";
 import httpStatus from "http-status";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";

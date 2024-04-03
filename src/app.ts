@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import compressFilter from './utils/compressFilter.util';
-import { internalErrorHandler } from './middleware/errorHandler';
+import { internalErrorHandler } from './utils/errorHandler';
 import config from './config/config';
 import { xssMiddleware } from './middleware/xssMiddleware';
 import path from 'path';

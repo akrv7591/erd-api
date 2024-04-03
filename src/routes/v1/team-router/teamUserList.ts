@@ -1,7 +1,7 @@
 import {RequestHandler} from "express";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
-import {errorHandler, internalErrorHandler} from "../../../middleware/errorHandler";
+import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../../../constants/common";
 

@@ -1,7 +1,7 @@
 import {RequestHandler} from "express";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import httpStatus from "http-status";
-import {internalErrorHandler} from "../../../middleware/errorHandler";
+import {internalErrorHandler} from "../../../utils/errorHandler";
 
 export type TeamDeleteUserRequestParams = {
   teamId: string

@@ -1,6 +1,6 @@
 import app from './app';
 import config from './config/config';
-import logger from './middleware/logger';
+import logger from './utils/logger';
 import {ErdiagramlySequelize} from "./sequelize-models/erd-api";
 import * as http from "http";
 import {MultiplayerSocket} from "./socket/multiplayer/multiplayer-socket";

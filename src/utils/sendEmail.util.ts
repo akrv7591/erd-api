@@ -1,4 +1,4 @@
-import logger from '../middleware/logger';
+import logger from './logger';
 import transporter from '../config/nodemailer';
 import config from '../config/config';
 

@@ -6,7 +6,7 @@
  */
 import config from "../../config/config";
 import transporter from "../../config/nodemailer";
-import logger from "../../middleware/logger";
+import logger from "../logger";
 import { UserModel } from "../../sequelize-models/erd-api/User.model";
 import {TeamModel} from "../../sequelize-models/erd-api/Team.model";
 
