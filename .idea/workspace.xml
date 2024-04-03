@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="temp fixes">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added test for authorization.ts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/validateSchemas.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/put.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamUpsert.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamUpsert.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-socket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-socket.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/deleteUserFromTeam.validator.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/erd.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/erd.validation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/team.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/team.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/index.ts" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,35 +33,111 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/src/validations",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/__test__/middleware&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/__test__/middleware" />
       <recent name="$PROJECT_DIR$/src/validations" />
       <recent name="$PROJECT_DIR$/src/sequelize-models/erd-api" />
       <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
       <recent name="$PROJECT_DIR$/dist" />
-      <recent name="$PROJECT_DIR$/src/routes/v1/team-router" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/utils" />
       <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
       <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
     </key>
+  </component>
+  <component name="RunManager" selected="Jest.authorization middleware">
+    <configuration name="authorization middleware" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-names>
+        <test-name value="authorization middleware" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="authorization middleware.should set authorizationUser in request and call next if token is valid" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-names>
+        <test-name value="authorization middleware" />
+        <test-name value="should set authorizationUser in request and call next if token is valid" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="authorization" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-names>
+        <test-name value="authorization" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="authorization.should return an error when access token is expired" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-names>
+        <test-name value="authorization" />
+        <test-name value="should return an error when access token is expired" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="authorization.should return an error when access token is invalid" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-names>
+        <test-name value="authorization" />
+        <test-name value="should return an error when access token is invalid" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.authorization middleware" />
+        <item itemvalue="Jest.authorization middleware.should set authorizationUser in request and call next if token is valid" />
+        <item itemvalue="Jest.authorization.should return an error when access token is expired" />
+        <item itemvalue="Jest.authorization" />
+        <item itemvalue="Jest.authorization.should return an error when access token is invalid" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -135,47 +201,10 @@
       <workItem from="1711325422393" duration="8288000" />
       <workItem from="1711411152320" duration="15110000" />
       <workItem from="1711497486218" duration="2356000" />
-      <workItem from="1711584545986" duration="24040000" />
-    </task>
-    <task id="LOCAL-00040" summary="allow unused parameters on websocket controllers">
-      <option name="closed" value="true" />
-      <created>1703577837591</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1703577837591</updated>
-    </task>
-    <task id="LOCAL-00041" summary="big changes">
-      <option name="closed" value="true" />
-      <created>1704358162255</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1704358162255</updated>
-    </task>
-    <task id="LOCAL-00042" summary="reformatting">
-      <option name="closed" value="true" />
-      <created>1704693745136</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1704693745136</updated>
-    </task>
-    <task id="LOCAL-00043" summary="removed unused space">
-      <option name="closed" value="true" />
-      <created>1706863771474</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1706863771474</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Changed Table -&gt; Entity">
-      <option name="closed" value="true" />
-      <created>1710320793744</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1710320793744</updated>
+      <workItem from="1711584545986" duration="24859000" />
+      <workItem from="1712016189143" duration="22312000" />
+      <workItem from="1712052091729" duration="11000" />
+      <workItem from="1712102032849" duration="4125000" />
     </task>
     <task id="LOCAL-00045" summary="added ErdEnum">
       <option name="closed" value="true" />
@@ -529,7 +558,47 @@
       <option name="project" value="LOCAL" />
       <updated>1711693501988</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="removed express-validator">
+      <option name="closed" value="true" />
+      <created>1711702189972</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1711702189972</updated>
+    </task>
+    <task id="LOCAL-00090" summary="internalErrorHandler.ts -&gt; errorHandler.ts">
+      <option name="closed" value="true" />
+      <created>1711702258499</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1711702258499</updated>
+    </task>
+    <task id="LOCAL-00091" summary="added testing packages">
+      <option name="closed" value="true" />
+      <created>1712106316799</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1712106316799</updated>
+    </task>
+    <task id="LOCAL-00092" summary="refactored&#10;/middleware/logger.ts -&gt; utils/logger.ts, &#10;/middleware/errorHandler.ts -&gt; utils/errorHandler.ts">
+      <option name="closed" value="true" />
+      <created>1712106446173</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1712106446173</updated>
+    </task>
+    <task id="LOCAL-00093" summary="added test for authorization.ts">
+      <option name="closed" value="true" />
+      <created>1712106473723</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1712106473723</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,11 +616,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added memo controller" />
-    <MESSAGE value="added memo listeners to multiplayer-socket.ts" />
-    <MESSAGE value="Updated Enum names" />
-    <MESSAGE value="Fixed IMemo type" />
-    <MESSAGE value="fixed virtual data object" />
     <MESSAGE value="updated memo patch function" />
     <MESSAGE value="added virtual selected field for Column.model.ts" />
     <MESSAGE value="removed Entity type column" />
@@ -572,6 +636,11 @@
     <MESSAGE value="email-verification api endpoints moved to EmailVerification namespace" />
     <MESSAGE value="moved user apis from UserController.ts to seperate modules" />
     <MESSAGE value="temp fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="temp fixes" />
+    <MESSAGE value="removed express-validator" />
+    <MESSAGE value="internalErrorHandler.ts -&gt; errorHandler.ts" />
+    <MESSAGE value="added testing packages" />
+    <MESSAGE value="refactored&#10;/middleware/logger.ts -&gt; utils/logger.ts, &#10;/middleware/errorHandler.ts -&gt; utils/errorHandler.ts" />
+    <MESSAGE value="added test for authorization.ts" />
+    <option name="LAST_COMMIT_MESSAGE" value="added test for authorization.ts" />
   </component>
 </project>

@@ -6,11 +6,12 @@ import passwordRouter from "./password-router";
 import teamRouter from "./team-router";
 import erdRouter from "./erd-router";
 import authorization from "../../middleware/authorization";
+import authLimiter from "../../middleware/authLimiter";
 
 
 const router = express.Router()
 
-router.use("/auth", authRouter)
+router.use("/auth", authLimiter, authRouter)
 router.use("/users", authorization, userRouter)
 router.use("/team", authorization, teamRouter)
 router.use("/erd", authorization, erdRouter)
