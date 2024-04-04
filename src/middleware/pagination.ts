@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from "express";
+import {NextFunction, Request, RequestHandler, Response} from "express";
 import {Op, Order} from "sequelize";
 import httpStatus from "http-status";
 import {errorHandler} from "../utils/errorHandler";
@@ -10,14 +10,15 @@ interface IPaginationOptions {
   searchFields?: string[],
   like?: boolean
 }
-export type PaginationRequestQuery = {
+export type PaginationRequestQuery<T = {}> = {
   q?: string
   limit?: string
   offset?: string
   order?: FindOptions['order']
-}
+} & T
 
-export type PaginationRequest = Request<any, {}, {}, PaginationRequestQuery>
+export type PaginationRequestHandler<P = {}, Q = {}> = RequestHandler<P, {}, {}, PaginationRequestQuery<Q>>
+export type PaginationRequest<P = {}, Q = {}>  = Request<P, {}, {}, PaginationRequestQuery<Q>>
 
 export const pagination = ({searchFields, like = true}: IPaginationOptions) =>
   async (

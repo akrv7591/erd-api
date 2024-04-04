@@ -1,12 +1,18 @@
-import {RequestHandler} from "express";
 import httpStatus from "http-status";
 import {ErdModel, IErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 import {WhereOptions} from "sequelize";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
+import {PaginationRequestHandler} from "../../../middleware/pagination";
 
-export const list: RequestHandler = async (req, res) => {
-  const teamId = req.query['teamId'] as string[]
+interface RequestParams {}
+
+interface RequestQuery {
+  teamId?: string[]
+}
+
+export const list: PaginationRequestHandler<RequestParams, RequestQuery> = async (req, res) => {
+  const teamId = req.query.teamId
 
   const where: WhereOptions<IErdModel> = {}
 

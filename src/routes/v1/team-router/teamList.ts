@@ -1,10 +1,13 @@
-import express from "express";
 import logger from "../../../utils/logger";
 import httpStatus from "http-status";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
+import {PaginationRequestHandler} from "../../../middleware/pagination";
 
-export const teamList = async (req: express.Request, res: express.Response) => {
+interface RequestParams {}
+interface RequestQuery {}
+
+export const teamList: PaginationRequestHandler<RequestParams, RequestQuery> = async (req, res) => {
   try {
     const list = await TeamModel.findAndCountAll({
       ...req.pagination,

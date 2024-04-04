@@ -4,6 +4,7 @@ import type {RequireAtLeastOne} from '../types/types';
 import {errorHandler} from "../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../constants/common";
+import {PaginationRequest} from "./pagination";
 
 export type RequestValidationSchema = RequireAtLeastOne<
   Record<'body' | 'query' | 'params', ObjectSchema>
@@ -20,7 +21,7 @@ export type RequestValidationSchema = RequireAtLeastOne<
  */
 const validate =
   (schema: RequestValidationSchema) =>
-  (req: Request, res: Response, next: NextFunction) => {
+  (req: Request | PaginationRequest, res: Response, next: NextFunction) => {
     const { error } = Joi.object(schema).validate(
       {
         body: req.body,
