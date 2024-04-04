@@ -1,4 +1,3 @@
-import express from "express";
 import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import axios, {HttpStatusCode} from "axios";
 import {Transaction} from "sequelize";
@@ -8,8 +7,9 @@ import {AccountModel} from "../../../sequelize-models/erd-api/Account.model";
 import dayjs from "dayjs";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
 import {AUTH} from "../../../constants/auth";
+import {PostRequest} from "../../../types/types";
 
-interface GoogleOauthData {
+export type GoogleBody = {
   access_token: string;
   token_type: string;
   expires_in: number;
@@ -29,8 +29,9 @@ interface GoogleUserInfo {
   locale: string;
 }
 
-export const google: express.RequestHandler = async (req, res) => {
-  const oathData: GoogleOauthData = req.body
+
+export const google: PostRequest<{}, GoogleBody> = async (req, res) => {
+  const oathData = req.body
   try {
     const googleApi = axios.create({
       baseURL: "https://www.googleapis.com",
@@ -46,7 +47,7 @@ export const google: express.RequestHandler = async (req, res) => {
       const res = await googleApi.get<GoogleUserInfo>("/oauth2/v1/userinfo?alt=json")
       googleData = res.data
     } catch (e) {
-      return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.GOOGLE_LOGIN_UNAUTHORIZED)
+      return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.GOOGLE_LOGIN_UNAUTHORIZED)
     }
     transaction = await erdSequelize.transaction()
 
@@ -96,7 +97,6 @@ export const google: express.RequestHandler = async (req, res) => {
     return res.json({accessToken});
 
   } catch (e) {
-    internalErrorHandler(e, req, res)
-    console.warn("Google login error\n ", e)
+    internalErrorHandler(res, e)
   }
 }

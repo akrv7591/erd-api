@@ -1,15 +1,15 @@
-import {RequestHandler} from "express";
 import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import httpStatus from "http-status";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../../../constants/common";
+import {DeleteRequest} from "../../../types/types";
 
 export type TeamDetailOrDeleteParams = {
   teamId: string
 }
 
-export const teamDelete: RequestHandler<TeamDetailOrDeleteParams> = async (req, res) => {
+export const teamDelete: DeleteRequest<TeamDetailOrDeleteParams> = async (req, res) => {
   try {
     const {teamId} = req.params
 
@@ -20,12 +20,12 @@ export const teamDelete: RequestHandler<TeamDetailOrDeleteParams> = async (req, 
     })
 
     if (!deleted) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, COMMON.API_ERRORS.NOT_FOUND)
+      return errorHandler(res, HttpStatusCode.NotFound, COMMON.API_ERRORS.NOT_FOUND)
     }
 
     res.sendStatus(httpStatus.OK)
 
   } catch (e: any) {
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 }

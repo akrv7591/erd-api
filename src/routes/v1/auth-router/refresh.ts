@@ -1,7 +1,6 @@
 import {clearRefreshTokenCookieConfig, refreshTokenCookieConfig} from "../../../config/cookieConfig";
 import config from "../../../config/config";
 import {RefreshTokenModel} from "../../../sequelize-models/erd-api/RefreshToken.model";
-import {Request, Response} from "express";
 import logger from "../../../utils/logger";
 import {jwtVerify} from "jose";
 import {IAuthorizedUser} from "../../../types/express";
@@ -10,13 +9,10 @@ import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {AUTH} from "../../../constants/auth";
+import type {PostRequest} from "../../../types/types";
 
 /**
  * This function handles the refresh process for users. It expects a request object with the following properties:
- *
- * @param {Request} req - The request object that includes a cookie with a valid refresh token
- * @param {Response} res - The response object that will be used to send the HTTP response.
- *
  * @returns {Response} Returns an HTTP response that includes one of the following:
  *   - A 401 UNAUTHORIZED status code if the refresh token cookie is undefined
  *   - A 403 FORBIDDEN status code if a refresh token reuse was detected but the token wasn't valid
@@ -27,13 +23,13 @@ import {AUTH} from "../../../constants/auth";
  */
 
 
-export const refresh = async (req: Request, res: Response) => {
+export const refresh: PostRequest = async (req, res) => {
   const refreshToken: string | undefined =
     req.cookies[config.jwt.refresh_token.cookie_name];
 
   if (!refreshToken) {
     logger.warn('There are no refresh token in cookies');
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.NO_REFRESH_TOKEN_IN_COOKIES)
+    return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.NO_REFRESH_TOKEN_IN_COOKIES)
   }
 
   // clear refresh cookie
@@ -64,10 +60,10 @@ export const refresh = async (req: Request, res: Response) => {
       });
 
     } catch (err) {
-      return errorHandler(req, res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.REFRESH_TOKEN_INVALID)
+      return errorHandler(res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.REFRESH_TOKEN_INVALID)
     }
     console.log("REFRESH TOKEN FAILED")
-    return errorHandler(req, res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.REFRESH_TOKEN_INVALID)
+    return errorHandler(res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.REFRESH_TOKEN_INVALID)
   }
 
   // delete from db
@@ -104,7 +100,7 @@ export const refresh = async (req: Request, res: Response) => {
     );
 
     return res.json({accessToken});
-  } catch (err) {
-    internalErrorHandler(err, req, res)
+  } catch (e) {
+    internalErrorHandler(res, e)
   }
 };

@@ -1,19 +1,41 @@
 import express from "express";
+import entityRouter from "./entity-router";
+import {erdDeleteSchema, erdDetailSchema, erdUpsertSchema} from "../../../validations/erd";
+import {ERD} from "../../../constants/erd";
 import {pagination} from "../../../middleware/pagination";
-import {list} from "./list";
-import {put} from "./put";
-import {erdUpsertSchema} from "../../../validations/erd.validation";
-import {deleteErd} from "./deleteErd";
-import {detail} from "./detail";
-import entityRouter from "./entity";
+import {erdList} from "./erdList";
+import {erdUpsert} from "./erdUpsert";
+import {erdDelete} from "./erdDelete";
+import {erdDetail} from "./erdDetail";
 import validate from "../../../middleware/validate";
 
 const erdRouter = express.Router()
 
-erdRouter.use("/:erdId/entity", entityRouter)
-erdRouter.delete("/:erdId", deleteErd)
-erdRouter.get("/:erdId", detail)
-erdRouter.get("", pagination({searchFields: ['name'], like: true}), list)
-erdRouter.put("", validate(erdUpsertSchema), put)
+erdRouter.use(
+  ERD.ENDPOINTS.erdEntityRouter,
+  validate(erdDetailSchema),
+  entityRouter
+)
+erdRouter.get(
+  ERD.ENDPOINTS.erdDetail,
+  validate(erdDetailSchema),
+  erdDetail
+)
+erdRouter.delete(
+  ERD.ENDPOINTS.erdDelete,
+  validate(erdDeleteSchema),
+  erdDelete
+)
+erdRouter.get(
+  ERD.ENDPOINTS.erdList,
+  pagination({searchFields: ['name'], like: true}),
+  erdList
+)
+erdRouter.put(
+  ERD.ENDPOINTS.erdUpsert,
+  validate(erdUpsertSchema),
+  erdUpsert
+)
+
 
 export default erdRouter

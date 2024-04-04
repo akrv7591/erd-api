@@ -3,7 +3,7 @@ import {ErdModel, IErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 import {WhereOptions} from "sequelize";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
-import {PaginationRequestHandler} from "../../../middleware/pagination";
+import {ListRequest} from "../../../types/types";
 
 interface RequestParams {}
 
@@ -11,7 +11,7 @@ interface RequestQuery {
   teamId?: string[]
 }
 
-export const list: PaginationRequestHandler<RequestParams, RequestQuery> = async (req, res) => {
+export const erdList: ListRequest<RequestParams, RequestQuery> = async (req, res) => {
   const teamId = req.query.teamId
 
   const where: WhereOptions<IErdModel> = {}

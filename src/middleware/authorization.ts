@@ -11,19 +11,19 @@ const authorization = async (req: Request, res: Response, next: NextFunction) =>
 
   // Handle no authorization header
   if (!authHeader) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
+    return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
   }
 
   // Handle invalid authorization header
   if (!authHeader.startsWith('Bearer ')) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
+    return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
   }
 
   const token: string | undefined = authHeader.split(' ')[1];
 
   // Handle no token
   if (!token) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
+    return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
   }
 
   // Verify token
@@ -37,11 +37,11 @@ const authorization = async (req: Request, res: Response, next: NextFunction) =>
 
     switch (code) {
       case "ERR_JWS_INVALID":
-        return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
+        return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
       case "ERR_JWS_EXPIRED":
-        return errorHandler(req, res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.ACCESS_TOKEN_EXPIRED)
+        return errorHandler(res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.ACCESS_TOKEN_EXPIRED)
       default:
-        return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
+        return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN)
     }
   }
 };

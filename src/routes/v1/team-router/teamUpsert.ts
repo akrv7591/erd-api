@@ -1,4 +1,3 @@
-import {RequestHandler} from "express";
 import httpStatus from "http-status";
 import {ICTeamModel, TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
@@ -7,12 +6,15 @@ import {ROLE} from "../../../enums/role";
 import {erdSequelize} from "../../../sequelize-models/erd-api";
 import {Transaction} from "sequelize";
 import logger from "../../../utils/logger";
+import {PutRequest} from "../../../types/types";
 
-export type PutTeamRequestBody = ICTeamModel & {
+export type PutTeamParams = ICTeamModel & {}
+
+export type PutTeamBody = ICTeamModel & {
   id: string
 }
 
-export const teamUpsert: RequestHandler<{}, {}, PutTeamRequestBody> = async (req, res) => {
+export const teamUpsert: PutRequest<PutTeamParams, PutTeamBody> = async (req, res) => {
   let transaction: Transaction | null = null
   try {
     transaction = await erdSequelize.transaction()

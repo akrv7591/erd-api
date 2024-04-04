@@ -1,5 +1,4 @@
-import {ResetPasswordRequestBodyType, TypedRequest} from "../../../types/types";
-import {Response} from "express";
+import {PostRequest} from "../../../types/types";
 import httpStatus from "http-status";
 import {ResetTokenModel} from "../../../sequelize-models/erd-api/ResetToken.model";
 import {Op} from "sequelize";
@@ -7,16 +6,21 @@ import * as argon2 from "argon2";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {RefreshTokenModel} from "../../../sequelize-models/erd-api/RefreshToken.model";
 
+export type ResetPasswordParams = {
+  token: string
+}
+
+export type ResetPasswordBody = {
+  newPassword: string;
+}
+
 /**
-* Handles Password reset
-* @param req
-* @param res
-* @returns
-*/
-export const resetPassword = async (
-  req: TypedRequest<ResetPasswordRequestBodyType>,
-  res: Response
-) => {
+ * Handles Password reset
+ * @param req
+ * @param res
+ * @returns
+ */
+export const resetPassword: PostRequest<ResetPasswordParams, ResetPasswordBody> = async (req, res) => {
   const {token} = req.params;
   const {newPassword} = req.body;
 
@@ -33,7 +37,8 @@ export const resetPassword = async (
     where: {
       token,
       expiresAt: {
-        [Op.gt]: new Date()}
+        [Op.gt]: new Date()
+      }
     }
   });
 

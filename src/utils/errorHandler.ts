@@ -1,27 +1,23 @@
-import type { Request, Response } from 'express';
+import type {Response} from 'express';
 import logger from './logger';
 import {HttpStatusCode} from "axios";
 import {ResponseErrorCodes} from "../types/response";
-import {TypedRequest} from "../types/types";
 
 export const internalErrorHandler = (
+  res: Response,
   err: Error | any,
-  _req: Request<any> | TypedRequest,
-  res: Response
 ): void => {
   logger.error(err);
 
-  res.status(500).json({ message: err.message });
+  res.status(HttpStatusCode.InternalServerError).json({message: err.message});
 };
 
 
-
 export const errorHandler = (
-  req: Request<any> | TypedRequest,
   res: Response,
   statusCode: HttpStatusCode,
   errorCode: ResponseErrorCodes,
-  errors?: {field: string, message: string}[]
+  errors?: { field: string, message: string }[]
 ): void => {
   res.status(statusCode).json({code: errorCode, errors})
 }

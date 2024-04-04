@@ -1,14 +1,16 @@
-import {RequestHandler} from "express";
 import httpStatus from "http-status";
 import argon2 from "argon2"
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
+import {PostRequest} from "../../../types/types";
 
-export interface SetPasswordBody {
+export type SetPasswordParams = {}
+
+export type SetPasswordBody = {
   password: string | null | undefined;
   newPassword: string;
 }
 
-export const setPassword: RequestHandler<{}, {}, SetPasswordBody> = async (req, res) => {
+export const setPassword: PostRequest<SetPasswordParams, SetPasswordBody> = async (req, res) => {
   try {
 
     const {password, newPassword} = req.body

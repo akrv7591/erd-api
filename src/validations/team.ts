@@ -1,8 +1,8 @@
 import Joi from 'joi';
 import {isCuid} from "@paralleldrive/cuid2";
 import {TeamDetailOrDeleteParams} from "../routes/v1/team-router/teamDelete";
-import {PutTeamRequestBody} from "../routes/v1/team-router/teamUpsert";
-import {TeamDeleteUserRequestBody, TeamDeleteUserRequestParams} from "../routes/v1/team-router/teamDeleteUser";
+import {PutTeamBody} from "../routes/v1/team-router/teamUpsert";
+import {TeamDeleteUserBody, TeamDeleteUserParams} from "../routes/v1/team-router/teamDeleteUser";
 
 export const teamIdSchema = {
   params: Joi.object().keys({
@@ -24,7 +24,7 @@ export const teamDetailOrDeleteSchema = {
 };
 
 export const putTeamSchema = {
-  body: Joi.object<PutTeamRequestBody>().keys({
+  body: Joi.object<PutTeamBody>().keys({
     id: Joi.string().required().custom(value => isCuid(value)).messages({
       'string.base': 'Team id must be a string',
       'string.custom': 'Team id must be a valid cuid',
@@ -39,13 +39,13 @@ export const putTeamSchema = {
 }
 
 export const teamDeleteUserSchema = {
-  params: Joi.object<TeamDeleteUserRequestParams>().keys({
+  params: Joi.object<TeamDeleteUserParams>().keys({
     teamId: Joi.string().required().custom(value => isCuid(value)).messages({
       'string.base': 'Team id must be a string',
       'string.custom': 'Team id must be a valid cuid',
     })
   }),
-  body: Joi.object<TeamDeleteUserRequestBody>().keys({
+  body: Joi.object<TeamDeleteUserBody>().keys({
     userId: Joi.string().required().custom(value => isCuid(value)).messages({
       'string.base': 'User id must be a string',
       'string.custom': 'User id must be a valid cuid',

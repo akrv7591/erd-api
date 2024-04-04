@@ -1,12 +1,10 @@
 import Joi from 'joi';
-import type {
-  UserLoginCredentials,
-  UserSignUpCredentials
-} from '../types/types';
 import {PASSWORD} from "../constants/password";
+import type {SignupBody} from "../routes/v1/auth-router/signup";
+import type {SignInBody} from "../routes/v1/auth-router/signIn";
 
 export const signupSchema = {
-  body: Joi.object<UserSignUpCredentials>().keys({
+  body: Joi.object<SignupBody>().keys({
     email: Joi.string().required().email().messages({
       'string.base': 'Email must be a string',
       'string.email': 'Email must be a valid email',
@@ -24,7 +22,7 @@ export const signupSchema = {
 };
 
 export const signInSchema = {
-  body: Joi.object<UserLoginCredentials>().keys({
+  body: Joi.object<SignInBody>().keys({
     email: Joi.string().required().email().messages({
       'string.base': 'Email must be a string',
       'string.email': 'Email must be a valid email',

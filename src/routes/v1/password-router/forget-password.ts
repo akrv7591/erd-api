@@ -1,11 +1,12 @@
-import type {Response} from 'express';
 import httpStatus from 'http-status';
 import {randomUUID} from 'crypto';
-import {TypedRequest} from '../../../types/types';
+import {PostRequest} from '../../../types/types';
 import {sendResetEmail} from '../../../utils/sendEmail.util';
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {ResetTokenModel} from "../../../sequelize-models/erd-api/ResetToken.model";
 import {EmailRequestBody} from "../verify-email/send-verification-email";
+
+export type ForgetPasswordParams = {}
 
 /**
  * Sends Forgot password-router email
@@ -13,10 +14,7 @@ import {EmailRequestBody} from "../verify-email/send-verification-email";
  * @param res
  * @returns
  */
-export const forgotPassword = async (
-  req: TypedRequest<EmailRequestBody>,
-  res: Response
-) => {
+export const forgotPassword: PostRequest<ForgetPasswordParams, EmailRequestBody> = async (req, res) => {
   const {email} = req.body;
 
   // check req.body values

@@ -6,12 +6,13 @@ import handleAuthTokens from "../../../utils/handleAuthTokens";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import {HttpStatusCode} from "axios";
 import {EMAIL_VERIFICATION} from "../../../constants/emailVerification";
+import {PostRequest} from "../../../types/types";
 
 export type VerifyEmailParams = {
   token: string
 }
 
-export async function verifyAuthEmail(req: Request<VerifyEmailParams>, res: Response) {
+export const verifyAuthEmail: PostRequest<VerifyEmailParams> = async (req: Request, res: Response) => {
   try {
     const {token} = req.params;
 
@@ -21,11 +22,11 @@ export async function verifyAuthEmail(req: Request<VerifyEmailParams>, res: Resp
     });
 
     if (!verificationToken) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND)
+      return errorHandler(res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND)
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.EXPIRED)
+      return errorHandler(res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.EXPIRED)
     }
 
     switch (verificationToken.type) {
@@ -36,7 +37,7 @@ export async function verifyAuthEmail(req: Request<VerifyEmailParams>, res: Resp
         });
 
         if (!user) {
-          return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND)
+          return errorHandler(res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND)
         }
 
         await user.update({emailVerified: new Date()})
@@ -51,17 +52,17 @@ export async function verifyAuthEmail(req: Request<VerifyEmailParams>, res: Resp
         return res.json({accessToken: accessToken});
 
       default:
-        return errorHandler(req, res, HttpStatusCode.BadRequest, EMAIL_VERIFICATION.API_ERRORS.INVALID)
+        return errorHandler(res, HttpStatusCode.BadRequest, EMAIL_VERIFICATION.API_ERRORS.INVALID)
     }
 
 
   } catch (e) {
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 };
 
 
-export async function verifyJoinTeamEmail(req: Request<VerifyEmailParams>, res: Response) {
+export const verifyJoinTeamEmail: PostRequest<VerifyEmailParams> = async (req, res) => {
   try {
     const {token} = req.params;
 
@@ -71,11 +72,11 @@ export async function verifyJoinTeamEmail(req: Request<VerifyEmailParams>, res: 
     });
 
     if (!verificationToken) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND);
+      return errorHandler(res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.NOT_FOUND);
     }
 
     if (verificationToken.expiresAt < new Date()) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.EXPIRED)
+      return errorHandler(res, HttpStatusCode.NotFound, EMAIL_VERIFICATION.API_ERRORS.EXPIRED)
     }
 
     switch (verificationToken.type) {
@@ -97,9 +98,9 @@ export async function verifyJoinTeamEmail(req: Request<VerifyEmailParams>, res: 
         return res.sendStatus(HttpStatusCode.Ok)
 
       default:
-        return errorHandler(req, res, HttpStatusCode.BadRequest, EMAIL_VERIFICATION.API_ERRORS.INVALID)
+        return errorHandler(res, HttpStatusCode.BadRequest, EMAIL_VERIFICATION.API_ERRORS.INVALID)
     }
   } catch (e) {
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 };

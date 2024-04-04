@@ -1,13 +1,13 @@
-import {RequestHandler} from "express";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import httpStatus from "http-status";
 import {internalErrorHandler} from "../../../utils/errorHandler";
+import {GetRequest} from "../../../types/types";
 
-export type TeamUserPermissionRequestParams = {
+export type TeamUserPermissionParams = {
   teamId: string;
 }
 
-export const teamUserPermission: RequestHandler<TeamUserPermissionRequestParams> = async (req, res) => {
+export const teamUserPermission: GetRequest<TeamUserPermissionParams> = async (req, res) => {
   try {
     const data = await UserTeamModel.findOne({
       where: {
@@ -21,6 +21,6 @@ export const teamUserPermission: RequestHandler<TeamUserPermissionRequestParams>
     res.json(data)
 
   } catch (e) {
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 }

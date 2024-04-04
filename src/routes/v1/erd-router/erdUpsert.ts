@@ -1,10 +1,12 @@
-import {RequestHandler} from "express";
 import {internalErrorHandler} from "../../../utils/errorHandler";
 import {ErdModel, ICErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 import httpStatus from "http-status";
+import {PutRequest} from "../../../types/types";
 
+export type ErdUpsertParams = {}
+export type ErdUpsertBody = ICErdModel
 
-export const put: RequestHandler<{}, {}, ICErdModel> = async (req, res) => {
+export const erdUpsert: PutRequest<ErdUpsertParams, ErdUpsertBody> = async (req, res) => {
   try {
     const data = req.body
     const [erd, created] = await ErdModel.upsert(data)
@@ -13,6 +15,6 @@ export const put: RequestHandler<{}, {}, ICErdModel> = async (req, res) => {
 
   } catch (e: any) {
     console.error(e)
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 }

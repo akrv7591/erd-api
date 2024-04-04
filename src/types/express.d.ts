@@ -9,6 +9,8 @@ declare global {
     export interface Request {
       authorizationUser?: IAuthorizedUser;
       pagination?: Pick<FindOptions, 'where' | 'limit' | 'offset' | 'order'>
+      file: Express.MulterMinIOStorage.File | any
+      files: Express.MulterMinIOStorage.File[]
 
       cookies: {
         jid?: string;

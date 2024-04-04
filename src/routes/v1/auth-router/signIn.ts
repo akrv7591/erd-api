@@ -1,5 +1,4 @@
-import {TypedRequest, UserLoginCredentials} from "../../../types/types";
-import {Response} from "express";
+import {PostRequest} from "../../../types/types";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import * as argon2 from "argon2";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
@@ -7,10 +6,16 @@ import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {AUTH} from "../../../constants/auth";
 
+export type SignInParams = {}
+export type SignInBody = {
+  email: string;
+  password: string;
+}
+
 /**
  * This function handles the login process for users. It expects a request object with the following properties:
  *
- * @param {TypedRequest<UserLoginCredentials>} req - The request object that includes user-router's email and password-router.
+ * @param {SignInBody} req - The request object that includes user-router's email and password-router.
  * @param {Response} res - The response object that will be used to send the HTTP response.
  *
  * @returns {Response} Returns an HTTP response that includes one of the following:
@@ -19,15 +24,12 @@ import {AUTH} from "../../../constants/auth";
  *   - A 200 OK status code and an access token if the login is successful and a new refresh token is stored in the database and a new refresh token cookie is set.
  *   - A 500 INTERNAL SERVER ERROR status code if there is an error in the server.
  */
-export const signIn = async (
-  req: TypedRequest<UserLoginCredentials>,
-  res: Response
-) => {
+export const signIn: PostRequest<SignInParams, SignInBody> = async (req, res) => {
 
   const {email, password} = req.body;
 
   if (!email || !password) {
-    return errorHandler(req, res, HttpStatusCode.BadRequest, AUTH.API_ERRORS.EMAIL_AND_PASSWORD_REQUIRED)
+    return errorHandler(res, HttpStatusCode.BadRequest, AUTH.API_ERRORS.EMAIL_AND_PASSWORD_REQUIRED)
   }
 
   const user = await UserModel.unscoped().findOne({
@@ -36,11 +38,11 @@ export const signIn = async (
     },
   });
   if (!user) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.USER_NOT_FOUND)
+    return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.USER_NOT_FOUND)
   }
 
   if (!user.password) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_AUTHORIZATION)
+    return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_AUTHORIZATION)
   }
 
   // check password-router
@@ -52,9 +54,9 @@ export const signIn = async (
       // send access token per json to user-router so it can be stored in the localStorage
       return res.json({accessToken});
     } else {
-      return errorHandler(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_AUTHORIZATION)
+      return errorHandler(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_AUTHORIZATION)
     }
-  } catch (err) {
-    internalErrorHandler(err, req,res)
+  } catch (e) {
+    internalErrorHandler(res, e)
   }
 };

@@ -1,17 +1,17 @@
-import {RequestHandler} from "express";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import httpStatus from "http-status";
 import {internalErrorHandler} from "../../../utils/errorHandler";
+import {DeleteRequest} from "../../../types/types";
 
-export type TeamDeleteUserRequestParams = {
+export type TeamDeleteUserParams = {
   teamId: string
 }
 
-export type TeamDeleteUserRequestBody = {
+export type TeamDeleteUserBody = {
   userId: string
 }
 
-export const teamDeleteUser: RequestHandler<TeamDeleteUserRequestParams, {}, TeamDeleteUserRequestBody> = async (req, res) => {
+export const teamDeleteUser: DeleteRequest<TeamDeleteUserParams, TeamDeleteUserBody> = async (req, res) => {
   try {
     const {teamId} = req.params
     const {userId} = req.body
@@ -30,6 +30,6 @@ export const teamDeleteUser: RequestHandler<TeamDeleteUserRequestParams, {}, Tea
     res.sendStatus(httpStatus.OK)
 
   } catch (e) {
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 }

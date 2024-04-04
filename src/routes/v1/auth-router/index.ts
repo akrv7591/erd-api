@@ -10,12 +10,29 @@ import {AUTH} from "../../../constants/auth";
 
 const authRouter = Router();
 
-authRouter.post(AUTH.ENDPOINTS.signUp, validate(signupSchema), signup);
-authRouter.post(AUTH.ENDPOINTS.signIn, validate(signInSchema), signIn);
-authRouter.post(AUTH.ENDPOINTS.logout, logout);
-authRouter.post(AUTH.ENDPOINTS.refresh, refresh);
+authRouter.post(
+  AUTH.ENDPOINTS.signUp,
+  validate(signupSchema),
+  signup
+)
+authRouter.post(
+  AUTH.ENDPOINTS.signIn,
+  validate(signInSchema),
+  signIn
+);
+authRouter.post(
+  AUTH.ENDPOINTS.logout,
+  logout
+);
+authRouter.post(
+  AUTH.ENDPOINTS.refresh,
+  refresh
+);
 
 // SocialLogin
-authRouter.post(AUTH.ENDPOINTS.google, google)
+authRouter.post(
+  AUTH.ENDPOINTS.google,
+  google
+)
 
 export default authRouter;

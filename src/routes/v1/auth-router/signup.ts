@@ -1,5 +1,4 @@
-import {Response} from "express";
-import {TypedRequest, UserSignUpCredentials} from "../../../types/types";
+import {PostRequest} from "../../../types/types";
 import httpStatus from "http-status";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import * as argon2 from "argon2";
@@ -9,6 +8,13 @@ import {sendVerifyEmail} from "../../../utils/sendEmail.util";
 import handleAuthTokens from "../../../utils/handleAuthTokens";
 import {EMAIL_VERIFICATION} from "../../../constants/emailVerification";
 
+export type SignupParams = {}
+
+export type SignupBody = {
+  name: string;
+  email: string;
+  password: string;
+}
 /**
  * This function handles the signup process for new users. It expects a request object with the following properties:
  *
@@ -21,10 +27,7 @@ import {EMAIL_VERIFICATION} from "../../../constants/emailVerification";
  *   - A 201 CREATED status code and a success message if the new user-router is successfully created and a verification email is sent.
  *   - A 500 INTERNAL SERVER ERROR status code if there is an error in the server.
  */
-export const signup = async (
-  req: TypedRequest<UserSignUpCredentials>,
-  res: Response
-) => {
+export const signup: PostRequest<SignupParams, SignupBody> = async (req, res) => {
   const {name, email, password} = req.body;
 
   // check req.body values

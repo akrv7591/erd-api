@@ -1,20 +1,21 @@
-import {RequestHandler} from "express";
 import httpStatus from "http-status";
 import {ErdModel} from "../../../sequelize-models/erd-api/Erd.model";
-import {Includeable} from "sequelize";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
+import {GetRequest} from "../../../types/types";
 
-export const detail: RequestHandler<{ erdId: string }> = async (req, res) => {
-  const include: Includeable[] = []
+export type ErdDetailParams = {
+  erdId: string
+}
 
-  include.push({
-    model: TeamModel,
-  })
+export type ErdDetailQuery = {}
 
+export const erdDetail: GetRequest<ErdDetailParams> = async (req, res) => {
 
   try {
     const data = await ErdModel.findByPk(req.params.erdId, {
-      include,
+      include: [{
+        model: TeamModel,
+      }],
     })
 
     res.json(data)

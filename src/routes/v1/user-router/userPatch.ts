@@ -1,16 +1,18 @@
-import {RequestHandler} from "express";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {ProfileModel} from "../../../sequelize-models/erd-api/Profile.model";
 import {StaticFileModel} from "../../../sequelize-models/erd-api/StaticFile";
 import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../../../constants/common";
+import {PatchRequest} from "../../../types/types";
 
-type UserPatchRequestBody = {
+export type UserPatchParams = {}
+
+export type UserPatchBody = {
   name?: string
 }
 
-export const userPatch: RequestHandler<{}, UserPatchRequestBody> = async (req, res) => {
+export const userPatch: PatchRequest<UserPatchParams, UserPatchBody> = async (req, res) => {
   try {
     const file = req.file as Express.MulterMinIOStorage.File
     const {name} = req.body
@@ -23,11 +25,11 @@ export const userPatch: RequestHandler<{}, UserPatchRequestBody> = async (req, r
     })
 
     if (!user) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, COMMON.API_ERRORS.NOT_FOUND)
+      return errorHandler(res, HttpStatusCode.NotFound, COMMON.API_ERRORS.NOT_FOUND)
     }
 
     if (!file && !name) {
-      return errorHandler(req, res, HttpStatusCode.BadRequest, COMMON.API_ERRORS.BAD_REQUEST)
+      return errorHandler(res, HttpStatusCode.BadRequest, COMMON.API_ERRORS.BAD_REQUEST)
     }
 
     if (file) {
@@ -48,6 +50,6 @@ export const userPatch: RequestHandler<{}, UserPatchRequestBody> = async (req, r
     res.json(user)
 
   } catch (e) {
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 }

@@ -53,7 +53,7 @@ export class ErdiagramlySequelize {
 
       // await MemoModel.sync({alter: true})
 
-      console.log("\u2714 DB CONNECTION SUCCESS")
+      console.log("🎉 DB CONNECTION SUCCESS")
 
     } catch (e) {
       console.error(e)

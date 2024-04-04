@@ -1,17 +1,20 @@
-import {RequestHandler} from "express";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../../../constants/common";
+import {ListRequest} from "../../../types/types";
 
-export type TeamUserListRequestParams = {
+export type TeamUserListParams = {
   teamId: string
 }
 
-export const teamUserList: RequestHandler<TeamUserListRequestParams> = async (req, res) => {
+export type TeamUserListQuery = {
+}
+
+export const teamUserList: ListRequest<TeamUserListParams, TeamUserListQuery> = async (req, res) => {
   try {
-    const data = await UserModel.findAll({
+    const data = await UserModel.findAndCountAll({
       include: [{
         model: TeamModel,
         where: {
@@ -22,12 +25,12 @@ export const teamUserList: RequestHandler<TeamUserListRequestParams> = async (re
     })
 
     if (!data) {
-      return errorHandler(req, res, HttpStatusCode.NotFound, COMMON.API_ERRORS.NOT_FOUND)
+      return errorHandler(res, HttpStatusCode.NotFound, COMMON.API_ERRORS.NOT_FOUND)
     }
 
     res.json(data)
 
   } catch (e) {
-    internalErrorHandler(e, req, res)
+    internalErrorHandler(res, e)
   }
 }

@@ -1,4 +1,3 @@
-import {Request, Response} from "express";
 import httpStatus from "http-status";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {EmailVerificationTokenModel} from "../../../sequelize-models/erd-api/EmailVerificationToken.model";
@@ -9,14 +8,13 @@ import {createId} from "@paralleldrive/cuid2";
 import {errorHandler} from "../../../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../../../constants/common";
+import {PostRequest} from "../../../types/types";
 
 export interface EmailRequestBody {
   email: string;
 }
-export const sendVerificationEmail = async (
-  req: Request<{}, EmailRequestBody>,
-  res: Response
-) => {
+
+export const sendVerificationEmail: PostRequest<{}, EmailRequestBody> = async (req, res) => {
   const {email} = req.body;
 
   // Check if the email exists in the database
@@ -28,7 +26,7 @@ export const sendVerificationEmail = async (
   });
 
   if (!user) {
-    return errorHandler(req, res, HttpStatusCode.Unauthorized, COMMON.API_ERRORS.UNAUTHORIZED)
+    return errorHandler(res, HttpStatusCode.Unauthorized, COMMON.API_ERRORS.UNAUTHORIZED)
   }
 
   // Check if the user-router's email is already verified

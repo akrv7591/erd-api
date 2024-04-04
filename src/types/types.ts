@@ -1,6 +1,8 @@
-import type { NextFunction, Request, Response } from 'express';
+import type {NextFunction, Request, RequestHandler, Response} from 'express';
 import type { DeepPartial } from 'utility-types';
 import type { IFilterXSSOptions } from 'xss';
+import {FindOptions} from "sequelize/types/model";
+import {ObjectSchema} from "joi";
 
 // See this for the following types
 // https://stackoverflow.com/questions/34508081/how-to-add-typescript-definitions-to-express-req-res
@@ -33,6 +35,44 @@ export type ExpressMiddleware<
   next: NextFunction
 ) => Promise<void> | void;
 
+export type PaginationRequestQuery<T = {}> = {
+  q?: string
+  limit?: string
+  offset?: string
+  order?: FindOptions['order']
+} & T
+
+interface PaginationOptions {
+  searchFields?: string[],
+  like?: boolean
+}
+
+export type ListResponse = {
+  count: number,
+  rows: any[]
+}
+
+// CRUD requests
+
+export type ListRequest<Params = {}, Query = {}> = RequestHandler<Params, ListResponse, {}, PaginationRequestQuery<Query>>
+export type PostRequest<Params = {}, Body = {}> = RequestHandler<Params, {}, Body>
+export type GetRequest<Params = {}> = RequestHandler<Params>
+export type PutRequest<Params = {}, Body = {}> = RequestHandler<Params, {}, Body>
+export type PatchRequest<Params = {}, Body = {}> = RequestHandler<Params, {}, Body>
+export type DeleteRequest<Params = {}, Body = {}> = RequestHandler<Params, Body>
+
+export type Pagination = (options: PaginationOptions) => ListRequest
+
+export type Requests = ListRequest & PostRequest & GetRequest & PutRequest & PatchRequest & DeleteRequest
+
+// Validation types
+export type RequestValidationSchema = RequireAtLeastOne<
+  Record<'body' | 'query' | 'params', ObjectSchema>
+>;
+
+export type Validate = (schema: RequestValidationSchema) => Requests
+
+
 // Example usage from Stackoverflow:
 // type Req = { email: string; password-router: string };
 
@@ -42,17 +82,7 @@ export type ExpressMiddleware<
 //   /* strongly typed `req.body`. yay autocomplete 🎉 */
 //   res.json({ message: 'you have signed up' }) // strongly typed response obj
 // };
-export interface UserSignUpCredentials {
-  name: string;
-  email: string;
-  password: string;
-}
 
-export type UserLoginCredentials = Omit<UserSignUpCredentials, 'username'>;
-
-export interface ResetPasswordRequestBodyType {
-  newPassword: string;
-}
 
 export type Sanitized<T> = T extends (...args: unknown[]) => unknown
   ? T // if T is a function, return it as is
