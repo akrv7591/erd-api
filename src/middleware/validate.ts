@@ -5,9 +5,10 @@ import {errorHandler} from "../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {COMMON} from "../constants/common";
 
-type RequestValidationSchema = RequireAtLeastOne<
+export type RequestValidationSchema = RequireAtLeastOne<
   Record<'body' | 'query' | 'params', ObjectSchema>
 >;
+
 
 /**
  * This functions handles the validation of the given request validation schema
@@ -31,7 +32,7 @@ const validate =
     if (!error) {
       next();
     } else {
-      const errors = error?.details.map((err) => ({
+      const errors = error.details.map((err) => ({
         field: err.path.join(', '),
         message: err.message
       }));
