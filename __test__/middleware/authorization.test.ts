@@ -35,21 +35,21 @@ describe('authorization middleware', () => {
 
   it('should return unauthorized if no authorization header is provided', async () => {
     await authorization(req as Request, res as Response, next);
-    expect(errorHandler).toHaveBeenCalledWith(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
+    expect(errorHandler).toHaveBeenCalledWith(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
     expect(next).not.toHaveBeenCalled();
   });
 
   it('should return unauthorized if authorization header does not start with "Bearer "', async () => {
     req.headers = { authorization: 'InvalidToken' };
     await authorization(req as Request, res as Response, next);
-    expect(errorHandler).toHaveBeenCalledWith(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
+    expect(errorHandler).toHaveBeenCalledWith(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
     expect(next).not.toHaveBeenCalled();
   });
 
   it('should return unauthorized if token is missing', async () => {
     req.headers = { authorization: 'Bearer ' };
     await authorization(req as Request, res as Response, next);
-    expect(errorHandler).toHaveBeenCalledWith(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
+    expect(errorHandler).toHaveBeenCalledWith(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
     expect(next).not.toHaveBeenCalled();
   });
 
@@ -57,7 +57,7 @@ describe('authorization middleware', () => {
     (jwtVerify as jest.Mock).mockRejectedValueOnce({ code: 'ERR_JWS_EXPIRED' });
     req.headers = { authorization: 'Bearer expiredToken' };
     await authorization(req as Request, res as Response, next);
-    expect(errorHandler).toHaveBeenCalledWith(req, res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.ACCESS_TOKEN_EXPIRED);
+    expect(errorHandler).toHaveBeenCalledWith(res, HttpStatusCode.Forbidden, AUTH.API_ERRORS.ACCESS_TOKEN_EXPIRED);
     expect(next).not.toHaveBeenCalled();
   });
 
@@ -66,7 +66,7 @@ describe('authorization middleware', () => {
     (jwtVerify as jest.Mock).mockRejectedValueOnce(new Error(errorMessage));
     req.headers = { authorization: 'Bearer invalidToken' };
     await authorization(req as Request, res as Response, next);
-    expect(errorHandler).toHaveBeenCalledWith(req, res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
+    expect(errorHandler).toHaveBeenCalledWith(res, HttpStatusCode.Unauthorized, AUTH.API_ERRORS.INVALID_ACCESS_TOKEN);
     expect(next).not.toHaveBeenCalled();
   });
 

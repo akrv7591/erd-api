@@ -43,13 +43,13 @@ describe("pagination middleware", () => {
   it("should return InternalError if q and like is valid but searchFields is not an array", () => {
     req.query = {q: "search"}
     pagination({searchFields: "name" as unknown as []})(req as Request, res as Response, next)
-    expect(errorHandler).toBeCalledWith(req, res, HttpStatusCode.InternalServerError, COMMON.API_ERRORS.INTERNAL_SERVER_ERROR)
+    expect(errorHandler).toBeCalledWith(res, HttpStatusCode.InternalServerError, COMMON.API_ERRORS.INTERNAL_SERVER_ERROR)
   })
 
   it("should return InternalError if q and searchFields valid and like is defined but it is not boolean", () => {
     req.query = {q: "search"}
     pagination({searchFields: ["name"], like: "true" as unknown as boolean})(req as Request, res as Response, next)
-    expect(errorHandler).toBeCalledWith(req, res, HttpStatusCode.InternalServerError, COMMON.API_ERRORS.INTERNAL_SERVER_ERROR)
+    expect(errorHandler).toBeCalledWith(res, HttpStatusCode.InternalServerError, COMMON.API_ERRORS.INTERNAL_SERVER_ERROR)
   })
 
   it("should not to have req.pagination.where if searchFields length is 0", () => {
@@ -81,7 +81,7 @@ describe("pagination middleware", () => {
   it("should return InternalError if req.query.order is provided but it is not an array", () => {
     req.query = {order: "name"}
     pagination({})(req as Request, res as Response, next)
-    expect(errorHandler).toBeCalledWith(req, res, HttpStatusCode.InternalServerError, COMMON.API_ERRORS.INTERNAL_SERVER_ERROR)
+    expect(errorHandler).toBeCalledWith(res, HttpStatusCode.InternalServerError, COMMON.API_ERRORS.INTERNAL_SERVER_ERROR)
   })
 
   it("should not have req.pagination.order if order length is 0", () => {
@@ -106,12 +106,12 @@ describe("pagination middleware", () => {
   it("should return BadRequestError if req.query.limit is provided but it is not a numeric string or a number", () => {
     req.query = {limit: "not a number"}
     pagination({})(req as Request, res as Response, next)
-    expect(errorHandler).toBeCalledWith(req, res, HttpStatusCode.BadRequest, COMMON.API_ERRORS.LIMIT_IS_NOT_VALID)
+    expect(errorHandler).toBeCalledWith(res, HttpStatusCode.BadRequest, COMMON.API_ERRORS.LIMIT_IS_NOT_VALID)
   })
 
   it("should return BadRequestError if req.query.offset is provided but it is not a numeric string or a number", () => {
     req.query = {offset: "not a number"}
     pagination({})(req as Request, res as Response, next)
-    expect(errorHandler).toBeCalledWith(req, res, HttpStatusCode.BadRequest, COMMON.API_ERRORS.OFFSET_IS_NOT_VALID)
+    expect(errorHandler).toBeCalledWith(res, HttpStatusCode.BadRequest, COMMON.API_ERRORS.OFFSET_IS_NOT_VALID)
   })
 })

@@ -1,9 +1,9 @@
-import {NextFunction, Request, Response} from 'express';
 import Joi from 'joi';
 import validate from '../../src/middleware/validate';
 import {HttpStatusCode} from 'axios';
 import {errorHandler} from '../../src/utils/errorHandler';
 import {COMMON} from "../../src/constants/common";
+import type {NextFunction, Request, Response} from 'express';
 
 jest.mock("../../src/utils/errorHandler", () => ({
   errorHandler: jest.fn(),
@@ -63,7 +63,6 @@ describe('validate middleware', () => {
     validateMiddleware(req, res, next);
 
     expect(errorHandler).toHaveBeenCalledWith(
-      req,
       res,
       HttpStatusCode.BadRequest,
       COMMON.API_ERRORS.BAD_REQUEST,

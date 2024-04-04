@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import type { SanitizeOptions } from '../../src/types/types';
 import { sanitize } from '../../src/utils/sanitize.util';
 
