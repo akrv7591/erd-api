@@ -1,95 +1,75 @@
-import {Server, Socket} from "socket.io";
-import {RedisClientType} from "redis";
 import {CallbackDataStatus, Key, PlayerEnum} from "../../enums/multiplayer";
+import {MultiplayerControllerBase} from "../../utils/multiplayerControllerBase";
+import {Server, Socket} from "socket.io";
 
-export interface CallbackDataType {
-  type: PlayerEnum;
-  status: CallbackDataStatus
-  data: any
-}
+export class PlayerController extends MultiplayerControllerBase<PlayerEnum> {
+  constructor(io: Server, socket: Socket) {
+    super(io, socket);
 
-// Helper functions
-
-function getCallbackData(type: PlayerEnum): CallbackDataType {
-  return {
-    type,
-    status: CallbackDataStatus.FAILED,
-    data: null
+    this.initListeners()
   }
-}
 
-
-export const playerController = (io: Server, socket: Socket, redis: RedisClientType) => {
-  const playerId = socket.handshake.auth['playerId']
-  const playgroundId = socket.handshake.auth['playgroundId']
-
-  async function onSubscribe(targetPlayer: any, callback: Function) {
-    const callbackData = getCallbackData(PlayerEnum.subscribe)
-    const subscribeKey = `${Key.subscribe}:${targetPlayer.id}`
+  initListeners = () => {
+    this.socket.on(PlayerEnum.subscribe, this.onSubscribe)
+    this.socket.on(PlayerEnum.unsubscribe, this.onUnsubscribe)
+    this.socket.on(PlayerEnum.viewpointChange, this.onViewportChange)
+    this.socket.on(PlayerEnum.mouseChange, this.onMouseChange)
+  }
+  onSubscribe = async (targetPlayerId: string, callback: Function) => {
+    const callbackData = this.getCallbackData(PlayerEnum.subscribe)
+    const subscribeKey = Key.subscribers + ":" + targetPlayerId
 
     try {
+      this.socket.join(subscribeKey)
+      this.socket.to(subscribeKey).emit(PlayerEnum.subscribe, this.playerId)
+
       callbackData.status = CallbackDataStatus.OK
-      callbackData.data = targetPlayer
-      socket.join(subscribeKey)
-      socket.to(targetPlayer.id).emit(PlayerEnum.subscribe, playerId)
-      callback(callbackData)
-      console.log(`Player ${playerId} subscribed to `, subscribeKey)
+      callbackData.data = targetPlayerId
     } catch (e) {
       console.error(e)
-      callback(callbackData)
     }
+    callback(callbackData)
   }
 
-  async function onUnsubscribe(targetPlayer: any, callback: Function) {
-    const callbackData = getCallbackData(PlayerEnum.unsubscribe)
-    const subscribeKey = `${Key.subscribe}:${targetPlayer.id}`
+  onUnsubscribe = async (targetPlayerId: string, callback: Function) => {
+    const callbackData = this.getCallbackData(PlayerEnum.unsubscribe)
+    const subscribeKey = `${Key.subscribers}:${targetPlayerId}`
 
     try {
-      socket.leave(subscribeKey)
-      socket.to(targetPlayer.id as string).emit(PlayerEnum.unsubscribe, playerId)
+      this.socket.to(subscribeKey).emit(PlayerEnum.unsubscribe, this.playerId)
+      this.socket.leave(subscribeKey)
+
       callbackData.status = CallbackDataStatus.OK
-      callbackData.data = targetPlayer
-      callback(callbackData)
-      console.log(`Player ${playerId} unsubscribed from ${subscribeKey}`)
+      callbackData.data = targetPlayerId
     } catch (e) {
       console.error(e)
-      callback(callbackData)
     }
+    callback(callbackData)
   }
 
-  async function onViewportChange(data: any, callback: Function) {
-    const callbackData = getCallbackData(PlayerEnum.viewpointChange)
-    const subscribeKey = [Key.subscribe, playerId].join(":")
+  onViewportChange = async (data: any, callback: Function) => {
+    const callbackData = this.getCallbackData(PlayerEnum.viewpointChange)
+    const subscribeKey = [Key.subscribers, this.playerId].join(":")
 
     try {
-      socket.to(subscribeKey).emit(PlayerEnum.viewpointChange, data)
+      this.socket.to(subscribeKey).emit(PlayerEnum.viewpointChange, data)
       callbackData.status = CallbackDataStatus.OK
-      callback(callbackData)
     } catch (e) {
       console.error(e)
-      callback(callbackData)
     }
+    callback(callbackData)
   }
 
-  async function onMouseChange(data: any, callback: Function) {
-    const callbackData = getCallbackData(PlayerEnum.mouseChange)
-    const playgroundKey = [Key.playground, playgroundId].join(":")
+  onMouseChange = async (data: {x: number, y: number} | null, callback: Function) => {
+    const callbackData = this.getCallbackData(PlayerEnum.mouseChange)
 
     try {
-      socket.to(playgroundKey).emit(PlayerEnum.mouseChange, {playerId, cursorPosition: data})
+      this.socket.to(this.playgroundKey).emit(PlayerEnum.mouseChange, {playerId: this.playerId, cursorPosition: data})
       callbackData.status = CallbackDataStatus.OK
-      callback(callbackData)
     } catch (e) {
       console.error(e)
-      callback(callbackData)
     }
-  }
+    callback(callbackData)
 
-
-  return {
-    onSubscribe,
-    onUnsubscribe,
-    onViewportChange,
-    onMouseChange
   }
 }

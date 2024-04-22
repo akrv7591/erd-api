@@ -1,32 +1,35 @@
-import {CallbackDataStatus, Key, EntityEnum} from "../../enums/multiplayer";
-import {Server, Socket} from "socket.io";
-import {RedisClientType} from "redis";
+import {CallbackDataStatus, EntityEnum, NodeEnum} from "../../enums/multiplayer";
 import {Transaction} from "sequelize";
 import {erdSequelize} from "../../sequelize-models/erd-api";
 import {ColumnModel} from "../../sequelize-models/erd-api/Column.model";
-import {EntityModel, IEntityModel} from "../../sequelize-models/erd-api/Entity.model"
+import {EntityModel} from "../../sequelize-models/erd-api/Entity.model"
+import {MultiplayerControllerBase} from "../../utils/multiplayerControllerBase";
+import {Server, Socket} from "socket.io";
 
-export interface CallbackDataType {
-  type: EntityEnum;
-  status: CallbackDataStatus
-  data: any
-}
+/**
+ * Entity controller class
+ */
+export class EntityController extends MultiplayerControllerBase<EntityEnum> {
+  constructor(io: Server, socket: Socket) {
+    super(io, socket);
 
-// Helper functions
-function getCallbackData(type: EntityEnum): CallbackDataType {
-  return {
-    type,
-    status: CallbackDataStatus.FAILED,
-    data: null
+    this.initListeners()
   }
-}
 
-export const entityControllers = (io: Server, socket: Socket, redis: RedisClientType) => {
-  const playgroundId = socket.handshake.auth['playgroundId']
-  const playgroundKey = `${Key.playground}:${playgroundId}`
+  /**
+   * Initialize Socket.IO event listeners
+   */
+  initListeners = () => {
+    this.socket.on(EntityEnum.add, this.onAdd);
+    this.socket.on(EntityEnum.patch, this.onPatch);
+    this.socket.on(EntityEnum.delete, this.onDelete);
+  };
 
-  async function onAdd(entityData: any, callback: Function) {
-    const callbackData = getCallbackData(EntityEnum.add)
+  /**
+   * Handler for 'add' event
+   */
+  private onAdd = async (entityData: any, callback: Function) => {
+    const callbackData = this.getCallbackData(EntityEnum.add)
     let transaction: Transaction | null = null
     try {
       transaction = await erdSequelize.transaction()
@@ -36,93 +39,71 @@ export const entityControllers = (io: Server, socket: Socket, redis: RedisClient
         ...icTable,
         name: data.name,
         color: data.color,
-        erdId: playgroundId
-      }, {transaction})
-      await ColumnModel.bulkCreate(data.columns, {transaction})
-      await redis.json.arrAppend(playgroundKey, '.entities', entityData as any)
-      await transaction.commit()
+        erdId: this.playgroundId
+      }, {transaction}),
 
-      socket.to(playgroundKey).emit(EntityEnum.add, entityData)
+        await ColumnModel.bulkCreate(data.columns, {transaction}),
+
+        await transaction.commit()
+
+      this.socket.to(this.playgroundKey).emit(EntityEnum.add, entityData)
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = entityData
-      callback(callbackData)
     } catch (e) {
       await transaction?.rollback()
       console.error(e)
-      callback(callbackData)
     }
+    callback(callbackData)
+  };
 
-  }
-
-  async function onUpdate(entityData: IEntityModel, callback: Function) {
-    const callbackData = getCallbackData(EntityEnum.update)
+  /**
+   * Handler for 'patch' event
+   */
+  private onPatch = async (data: { entityId: string, key: string, value: any }, callback: Function) => {
+    const callbackData = this.getCallbackData(EntityEnum.patch)
 
     try {
-      if (entityData.position) {
-        socket.to(playgroundKey).emit(EntityEnum.update, {...entityData, type: "position"})
-        await redis.json.set(playgroundKey, `.entities[?(@.id=='${entityData.id}')].position`, entityData.position as any)
-        callbackData.status = CallbackDataStatus.OK
-        callback(callbackData)
-      }
+      await EntityModel.update({
+        [data.key]: data.value
+      }, {
+        where: {
+          id: data.entityId
+        }
+      })
+      callbackData.status = CallbackDataStatus.OK
+      callbackData.data = data
+
+      this.socket.to(this.playgroundKey).emit(EntityEnum.patch, data)
+
     } catch (e) {
-      callback(callbackData)
       console.error(e)
     }
+    callback(callbackData)
+  };
 
-  }
-
-  async function onDelete(entityId: string, callback: Function) {
-    const callbackData = getCallbackData(EntityEnum.delete)
+  /**
+   * Handler for 'delete' event
+   */
+  private onDelete = async (entityId: string | string[], callback: Function) => {
+    const callbackData = this.getCallbackData(EntityEnum.delete)
 
     try {
-      await redis.json.del(playgroundKey, `.entities[?(@.id=='${entityId}')]`)
-      socket.to(playgroundKey).emit(EntityEnum.delete, entityId)
       await EntityModel.destroy({
         where: {
           id: entityId
         }
       })
+
+      console.log("DELETING ENTITY: ", entityId)
+
+      this.socket.to(this.playgroundKey).emit(NodeEnum.delete, entityId)
+
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = entityId
-      callback(callbackData)
     } catch (e) {
-      callback(callbackData)
       console.error(e)
     }
-  }
-
-  async function onSet({entityId, key, value}: { entityId: string, key: string, value: any }, callback: Function) {
-    const callbackData = getCallbackData(EntityEnum.set)
-
-    try {
-      await redis.json.set(playgroundKey, `$.entities[?(@.id=='${entityId}')].data.${key}`, value)
-      socket.to(playgroundKey).emit(EntityEnum.set, {entityId, data: {[key]: value}})
-      await EntityModel.update({
-        [key]: value
-      }, {
-        where: {
-          id: entityId
-        }
-      })
-      callbackData.status = CallbackDataStatus.OK
-      callbackData.data = {
-        entityId,
-        data: {
-          [key]: value
-        }
-      }
-      callback(callbackData)
-    } catch (e) {
-      callback(callbackData)
-      console.error(e)
-    }
-  }
-
-  return {
-    onAdd,
-    onUpdate,
-    onDelete,
-    onSet
-  }
+    callback(callbackData)
+  };
 
 }

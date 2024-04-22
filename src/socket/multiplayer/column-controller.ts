@@ -1,36 +1,30 @@
-import {CallbackDataStatus, ColumnEnum, Key} from "../../enums/multiplayer";
+import {CallbackDataStatus, ColumnEnum} from "../../enums/multiplayer";
+import {ColumnModel as ColumnModel, ICColumnModel} from "../../sequelize-models/erd-api/Column.model"
+import {MultiplayerControllerBase} from "../../utils/multiplayerControllerBase";
 import {Server, Socket} from "socket.io";
-import {RedisClientType} from "redis";
-import {ColumnModel as ColumnModel} from "../../sequelize-models/erd-api/Column.model"
 
-export interface CallbackDataType {
-  type: ColumnEnum;
-  status: CallbackDataStatus
-  data: any
-}
+export class ColumnController extends MultiplayerControllerBase<ColumnEnum> {
+  constructor(io: Server, socket: Socket) {
+    super(io, socket);
 
-// Helper functions
-function getCallbackData(type: ColumnEnum): CallbackDataType {
-  return {
-    type,
-    status: CallbackDataStatus.FAILED,
-    data: null
+    this.initListeners()
   }
-}
 
-export function columnController(io: Server, socket: Socket, redis: RedisClientType) {
-  const playgroundId = socket.handshake.auth['playgroundId']
-  const playgroundKey = `${Key.playground}:${playgroundId}`
+  initListeners = () => {
+    this.socket.on(ColumnEnum.add, this.onAdd);
+    this.socket.on(ColumnEnum.patch, this.onPatch);
+    this.socket.on(ColumnEnum.delete, this.onDelete);
+  }
 
-  async function onAdd(column: any, callback: Function) {
-    const callbackData = getCallbackData(ColumnEnum.add)
+  onAdd = async (column: ICColumnModel, callback: Function) => {
+    const callbackData = this.getCallbackData(ColumnEnum.add)
+
     try {
-      await redis.json.arrAppend(playgroundKey, `$.entities[?(@.id=='${column.entityId}')].data.columns`, column as any)
       await ColumnModel.create(column)
-      socket.to(playgroundKey).emit(ColumnEnum.add, {column})
+      this.socket.to(this.playgroundKey).emit(ColumnEnum.add, {column})
 
       callbackData.status = CallbackDataStatus.OK
-      callbackData.data = {column}
+      callbackData.data = column
       callback(callbackData)
     } catch (e) {
       console.error(e)
@@ -38,57 +32,49 @@ export function columnController(io: Server, socket: Socket, redis: RedisClientT
     }
   }
 
-  async function onUpdate(column: any, callback: Function) {
-    const callbackData = getCallbackData(ColumnEnum.update)
+  onPatch = async (data: {entityId: string, columnId: string, key: string, value: string | number}, callback: Function) => {
+    const callbackData = this.getCallbackData(ColumnEnum.patch)
 
     try {
-      const result = await redis.json.set(playgroundKey, `$.entities[?(@.id=='${column.entityId}')].data.columns[?(@.id=='${column.id}')].${column.key}`, column.value)
+      this.socket.to(this.playgroundKey).emit(ColumnEnum.patch, data)
 
-      if (result !== "OK") {
-        callback(callbackData)
-      } else {
-        socket.to(playgroundKey).emit(ColumnEnum.update, {column})
-        await ColumnModel.update({[column.key]: column.value}, {
-          where: {
-            id: column.id
-          }
-        })
-        callbackData.status = CallbackDataStatus.OK
-        callbackData.data = {column}
-        callback(callbackData)
-      }
-
-    } catch (e) {
-      callback(callbackData)
-      console.error(e)
-    }
-  }
-
-  async function onDelete(column: any, callback: Function) {
-    const callbackData = getCallbackData(ColumnEnum.delete)
-
-    try {
-      await redis.json.del(playgroundKey, `$.entities[?(@.id=='${column.entityId}')].data.columns[?(@.id=='${column.id}')]`)
-      socket.to(playgroundKey).emit(ColumnEnum.delete, {column})
-      await ColumnModel.destroy({
+      await ColumnModel.update({[data.key]: data.value}, {
         where: {
-          id: column.id
+          id: data.columnId
         }
       })
-      callbackData.status = CallbackDataStatus.OK
-      callbackData.data = { column}
 
+      callbackData.data = data
+      callbackData.status = CallbackDataStatus.OK
+      callback(callbackData)
+
+    } catch (e) {
+      callback(callbackData)
+      console.error(e)
+    }
+
+  }
+
+  onDelete = async (columnId: string[], entityId: string, callback: Function) => {
+    const callbackData = this.getCallbackData(ColumnEnum.delete)
+
+    try {
+      await ColumnModel.destroy({
+        where: {
+          id: columnId
+        }
+      })
+      this.socket.to(this.playgroundKey).emit(ColumnEnum.delete, columnId, entityId)
+
+      callbackData.status = CallbackDataStatus.OK
+      callbackData.data = {
+        entityId,
+        columnId
+      }
       callback(callbackData)
     } catch (e) {
       callback(callbackData)
       console.error(e)
     }
   }
-
-  return {
-    onAdd,
-    onUpdate,
-    onDelete
-  }
-
 }

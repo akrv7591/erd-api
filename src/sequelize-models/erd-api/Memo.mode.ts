@@ -5,6 +5,8 @@ import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from 
 import {createId} from "@paralleldrive/cuid2";
 import {INodePosition} from "./Entity.model";
 import {NODE_TYPES} from "../../enums/node-type";
+import redisClient from "../../redis/multiplayerRedisClient";
+import {Key} from "../../enums/multiplayer";
 
 export interface IMemoModel {
   id: string;
@@ -30,6 +32,45 @@ export interface ICMemoModel extends Optional<IMemoModel, 'id' | 'createdAt' | '
 @Table({
   modelName: "MemoModel",
   tableName: "Memo",
+  hooks: {
+    async afterFind(data: MemoModel | MemoModel[] | null) {
+      if (data === null) {
+        return
+      }
+
+      if (Array.isArray(data)) {
+        await Promise.all(data.map(entity => entity.getRealtimePosition()))
+      }
+
+      if (data instanceof MemoModel) {
+        await data.getRealtimePosition()
+      }
+    },
+    async afterCreate(data: MemoModel, {transaction}) {
+      const nodeKey = Key.playgrounds + ":" + data.erdId + ":"+ Key.nodes + ":" + data.id + ":" + Key.position
+      const savePositionToRedis = () => {
+        redisClient.set(nodeKey, JSON.stringify(data.position))
+      }
+
+      if (transaction) {
+        transaction.afterCommit(savePositionToRedis)
+      } else {
+        savePositionToRedis()
+      }
+    },
+    async afterDestroy(data: MemoModel, {transaction}) {
+      const nodeKey = Key.playgrounds + ":" + data.erdId + ":"+ Key.nodes + ":" + data.id + ":" + Key.position
+      const removePositionFromRedis = async () => {
+        await redisClient.del(nodeKey)
+      }
+
+      if (transaction) {
+        transaction.afterCommit(removePositionFromRedis)
+      } else {
+        await removePositionFromRedis()
+      }
+    }
+  }
 })
 export class MemoModel extends Model<IMemoModel, ICMemoModel> {
   @PrimaryKey
@@ -57,20 +98,6 @@ export class MemoModel extends Model<IMemoModel, ICMemoModel> {
     allowNull: false,
   })
   declare position: string
-
-  // @Column({
-  //   type: DataType.INTEGER,
-  //   allowNull: false,
-  //   defaultValue: () => 200,
-  // })
-  // declare height: number;
-  //
-  // @Column({
-  //   type: DataType.INTEGER,
-  //   allowNull: false,
-  //   defaultValue: () => 200,
-  // })
-  // declare width: number;
 
   @ForeignKey(() => ErdModel)
   @Column({
@@ -102,5 +129,20 @@ export class MemoModel extends Model<IMemoModel, ICMemoModel> {
   @Column(DataType.VIRTUAL)
   get type() {
     return NODE_TYPES.MEMO
+  }
+
+  async getRealtimePosition() {
+    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${this.getDataValue("id")}:${Key.position}`)
+    if (position) {
+      this.dataValues.position = JSON.parse(position)
+    }
+  }
+
+  async saveRealtimePosition() {
+    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${this.getDataValue("id")}:${Key.position}`)
+    if (position) {
+      this.dataValues.position = JSON.parse(position)
+      await this.save()
+    }
   }
 }

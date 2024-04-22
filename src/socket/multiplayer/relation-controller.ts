@@ -1,73 +1,52 @@
-import {CallbackDataStatus, Key, RelationEnum} from "../../enums/multiplayer";
+import {CallbackDataStatus, RelationEnum} from "../../enums/multiplayer";
+import {ICRelationModel, RelationModel as RelationModel} from "../../sequelize-models/erd-api/Relation.model"
+import {MultiplayerControllerBase} from "../../utils/multiplayerControllerBase";
 import {Server, Socket} from "socket.io";
-import {RedisClientType} from "redis";
-import {RelationModel as RelationModel} from "../../sequelize-models/erd-api/Relation.model"
 
-export interface CallbackDataType {
-  type: RelationEnum;
-  status: CallbackDataStatus
-  data: any
-}
+export class RelationController extends MultiplayerControllerBase<RelationEnum> {
+  constructor(io: Server, socket: Socket) {
+    super(io, socket);
 
-// Helper functions
-function getCallbackData(type: RelationEnum): CallbackDataType {
-  return {
-    type,
-    status: CallbackDataStatus.FAILED,
-    data: null
+    this.initListeners()
   }
-}
 
-export function relationController(io: Server, socket: Socket, redis: RedisClientType) {
-  const playgroundId = socket.handshake.auth['playgroundId']
-  const playgroundKey = `${Key.playground}:${playgroundId}`
+  initListeners = () => {
+    this.socket.on(RelationEnum.add, this.onAdd)
+    this.socket.on(RelationEnum.delete, this.onDelete)
+  }
 
-  async function onAdd(relation: any, callback: Function) {
-    const callbackData = getCallbackData(RelationEnum.add)
+  onAdd = async (relation: ICRelationModel, callback: Function) => {
+    const callbackData = this.getCallbackData(RelationEnum.add)
 
     try {
-      await redis.json.arrAppend(playgroundKey, '.relations', relation as any)
-      socket.to(playgroundKey).emit(RelationEnum.add, relation)
-      await RelationModel.create({
-        ...relation,
-        erdId: playgroundId
-      })
+      await RelationModel.create(relation)
+      this.socket.to(this.playgroundKey).emit(RelationEnum.add, relation)
+
       callbackData.status = CallbackDataStatus.OK
-      callbackData.data = {
-        relation
-      }
-      callback(callbackData)
+      callbackData.data = relation
     } catch (e) {
-      callback(callbackData)
-      console.error(e)
+      console.error("RELATION ADD ERROR: ", e)
     }
-
+    callback(callbackData)
   }
 
-  async function onDelete(relation: any, callback: Function) {
-    const callbackData = getCallbackData(RelationEnum.delete)
+  onDelete = async (relationId: string[], callback: Function) => {
+    const callbackData = this.getCallbackData(RelationEnum.delete)
 
     try {
-      await redis.json.del(playgroundKey, `$.relations[?(@.id=='${relation.id}')]`)
-      socket.to(playgroundKey).emit(RelationEnum.delete, relation.id)
       await RelationModel.destroy({
         where: {
-          id: relation.id
+          id: relationId
         }
       })
-      callbackData.status = CallbackDataStatus.OK
-      callbackData.data = {
-        relation
-      }
-      callback(callbackData)
-    } catch (e) {
-      callback(callbackData)
-      console.error(e)
-    }
-  }
+      this.socket.to(this.playgroundKey).emit(RelationEnum.delete, relationId)
 
-  return {
-    onAdd,
-    onDelete
+      callbackData.status = CallbackDataStatus.OK
+      callbackData.data = relationId
+    } catch (e) {
+      console.error("RELATION DELETE ERROR: ", e)
+    }
+
+    callback(callbackData)
   }
 }

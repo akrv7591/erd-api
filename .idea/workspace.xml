@@ -4,9 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added test for authorization.ts">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed tests">
+      <change afterPath="$PROJECT_DIR$/src/constants/socket.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/socket/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/node-controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enums/multiplayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/multiplayer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Memo.mode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Memo.mode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/column-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/column-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/entity-controllers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/entity-controllers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/erd-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/erd-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/memo-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/memo-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-socket.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/player-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/player-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/relation-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/relation-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/playground.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/playground.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/__test__/middleware&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/src/socket/multiplayer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -53,10 +73,10 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
       <recent name="$PROJECT_DIR$/__test__/middleware" />
       <recent name="$PROJECT_DIR$/src/validations" />
       <recent name="$PROJECT_DIR$/src/sequelize-models/erd-api" />
-      <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
       <recent name="$PROJECT_DIR$/dist" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -65,7 +85,7 @@
       <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.authorization middleware">
+  <component name="RunManager" selected="Jest.pagination middleware">
     <configuration name="authorization middleware" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -78,64 +98,63 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="authorization middleware.should set authorizationUser in request and call next if token is valid" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
-      <test-names>
-        <test-name value="authorization middleware" />
-        <test-name value="should set authorizationUser in request and call next if token is valid" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="authorization" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="pagination middleware" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/pagination.test.ts" />
       <test-names>
-        <test-name value="authorization" />
+        <test-name value="pagination middleware" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="authorization.should return an error when access token is expired" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="pagination middleware.should have default req.pagination.limit and req.pagination.offset if req.query.limit and req.query.offset is not provided" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/pagination.test.ts" />
       <test-names>
-        <test-name value="authorization" />
-        <test-name value="should return an error when access token is expired" />
+        <test-name value="pagination middleware" />
+        <test-name value="should have default req.pagination.limit and req.pagination.offset if req.query.limit and req.query.offset is not provided" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="authorization.should return an error when access token is invalid" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="validate middleware" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/validate.test.ts" />
+      <test-names>
+        <test-name value="validate middleware" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="validate middleware.should call errorHandler if validation fails" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__test__/middleware/authorization.test.ts" />
+      <test-file value="$PROJECT_DIR$/__test__/middleware/validate.test.ts" />
       <test-names>
-        <test-name value="authorization" />
-        <test-name value="should return an error when access token is invalid" />
+        <test-name value="validate middleware" />
+        <test-name value="should call errorHandler if validation fails" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.pagination middleware" />
         <item itemvalue="Jest.authorization middleware" />
-        <item itemvalue="Jest.authorization middleware.should set authorizationUser in request and call next if token is valid" />
-        <item itemvalue="Jest.authorization.should return an error when access token is expired" />
-        <item itemvalue="Jest.authorization" />
-        <item itemvalue="Jest.authorization.should return an error when access token is invalid" />
+        <item itemvalue="Jest.validate middleware.should call errorHandler if validation fails" />
+        <item itemvalue="Jest.validate middleware" />
+        <item itemvalue="Jest.pagination middleware.should have default req.pagination.limit and req.pagination.offset if req.query.limit and req.query.offset is not provided" />
       </list>
     </recent_temporary>
   </component>
@@ -204,111 +223,14 @@
       <workItem from="1711584545986" duration="24859000" />
       <workItem from="1712016189143" duration="22312000" />
       <workItem from="1712052091729" duration="11000" />
-      <workItem from="1712102032849" duration="4125000" />
-    </task>
-    <task id="LOCAL-00045" summary="added ErdEnum">
-      <option name="closed" value="true" />
-      <created>1710377390727</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1710377390727</updated>
-    </task>
-    <task id="LOCAL-00046" summary="added erd-controller.ts with onPatch function">
-      <option name="closed" value="true" />
-      <created>1710377406537</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1710377406537</updated>
-    </task>
-    <task id="LOCAL-00047" summary="added put message">
-      <option name="closed" value="true" />
-      <created>1710378947859</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1710378947859</updated>
-    </task>
-    <task id="LOCAL-00048" summary="added onPut method">
-      <option name="closed" value="true" />
-      <created>1710378959469</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1710378959469</updated>
-    </task>
-    <task id="LOCAL-00049" summary="added onPut method to multiplayer socket listener">
-      <option name="closed" value="true" />
-      <created>1710379016889</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1710379016889</updated>
-    </task>
-    <task id="LOCAL-00050" summary="added entity router">
-      <option name="closed" value="true" />
-      <created>1710379671315</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1710379671315</updated>
-    </task>
-    <task id="LOCAL-00051" summary="removed unused include object">
-      <option name="closed" value="true" />
-      <created>1710379687218</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1710379687218</updated>
-    </task>
-    <task id="LOCAL-00052" summary="added entity count apu">
-      <option name="closed" value="true" />
-      <created>1710379937339</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1710379937339</updated>
-    </task>
-    <task id="LOCAL-00053" summary="added entityCount to entityRouter">
-      <option name="closed" value="true" />
-      <created>1710379983184</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1710379983184</updated>
-    </task>
-    <task id="LOCAL-00054" summary="fixed entity count router">
-      <option name="closed" value="true" />
-      <created>1710380148841</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1710380148841</updated>
-    </task>
-    <task id="LOCAL-00055" summary="fixed erd-controller.ts">
-      <option name="closed" value="true" />
-      <created>1710393104591</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1710393104591</updated>
-    </task>
-    <task id="LOCAL-00056" summary="added Memo model">
-      <option name="closed" value="true" />
-      <created>1710396633749</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1710396633749</updated>
-    </task>
-    <task id="LOCAL-00057" summary="added Memo model">
-      <option name="closed" value="true" />
-      <created>1710396640896</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1710396640896</updated>
+      <workItem from="1712102032849" duration="5157000" />
+      <workItem from="1712107869795" duration="35061000" />
+      <workItem from="1712276815763" duration="23654000" />
+      <workItem from="1712793908143" duration="31058000" />
+      <workItem from="1713145994018" duration="9907000" />
+      <workItem from="1713169065266" duration="16543000" />
+      <workItem from="1713495021356" duration="5513000" />
+      <workItem from="1713744919876" duration="2225000" />
     </task>
     <task id="LOCAL-00058" summary="Added MemoEnum">
       <option name="closed" value="true" />
@@ -598,7 +520,111 @@
       <option name="project" value="LOCAL" />
       <updated>1712106473723</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="added authLimiter to authRouter">
+      <option name="closed" value="true" />
+      <created>1712106627069</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1712106627069</updated>
+    </task>
+    <task id="LOCAL-00095" summary="added LIMIT_NOT_VALID,&#10;OFFSET_NOT_VALID enums">
+      <option name="closed" value="true" />
+      <created>1712108137172</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1712108137172</updated>
+    </task>
+    <task id="LOCAL-00096" summary="updated pagination middleware">
+      <option name="closed" value="true" />
+      <created>1712108159457</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1712108159457</updated>
+    </task>
+    <task id="LOCAL-00097" summary="added internal error to API_ERRORS in COMMON namespace">
+      <option name="closed" value="true" />
+      <created>1712190647703</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1712190647703</updated>
+    </task>
+    <task id="LOCAL-00098" summary="updated pagination middleware">
+      <option name="closed" value="true" />
+      <created>1712190670667</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1712190670667</updated>
+    </task>
+    <task id="LOCAL-00099" summary="exported RequestValidationSchema type">
+      <option name="closed" value="true" />
+      <created>1712190688117</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1712190688117</updated>
+    </task>
+    <task id="LOCAL-00100" summary="update IAuthorizedUser type">
+      <option name="closed" value="true" />
+      <created>1712190711659</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1712190711659</updated>
+    </task>
+    <task id="LOCAL-00101" summary="added test suite pagination.ts">
+      <option name="closed" value="true" />
+      <created>1712190750494</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1712190750494</updated>
+    </task>
+    <task id="LOCAL-00102" summary="added test suite validate.ts">
+      <option name="closed" value="true" />
+      <created>1712190761405</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1712190761405</updated>
+    </task>
+    <task id="LOCAL-00103" summary="fixed pagination apis">
+      <option name="closed" value="true" />
+      <created>1712191646822</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1712191646822</updated>
+    </task>
+    <task id="LOCAL-00104" summary="Fixed pagination.test.ts">
+      <option name="closed" value="true" />
+      <created>1712216272846</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1712216272846</updated>
+    </task>
+    <task id="LOCAL-00105" summary="updated RequestHandlers">
+      <option name="closed" value="true" />
+      <created>1712216287811</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1712216287811</updated>
+    </task>
+    <task id="LOCAL-00106" summary="fixed tests">
+      <option name="closed" value="true" />
+      <created>1712217038553</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1712217038553</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -616,18 +642,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated memo patch function" />
-    <MESSAGE value="added virtual selected field for Column.model.ts" />
-    <MESSAGE value="removed Entity type column" />
-    <MESSAGE value="added NODE_TYPE enum" />
-    <MESSAGE value="added minio package" />
-    <MESSAGE value="added endpoint.ts constants" />
-    <MESSAGE value="added s3 config keys" />
-    <MESSAGE value="added s3Util and s3Util.initS3 added to init" />
-    <MESSAGE value="updated team apis" />
-    <MESSAGE value="removed console.log" />
-    <MESSAGE value="update Erd list api" />
-    <MESSAGE value="added file upload function" />
     <MESSAGE value="removed readme" />
     <MESSAGE value="added isPasswordSetColumn to User model" />
     <MESSAGE value="added set password api" />
@@ -641,6 +655,18 @@
     <MESSAGE value="added testing packages" />
     <MESSAGE value="refactored&#10;/middleware/logger.ts -&gt; utils/logger.ts, &#10;/middleware/errorHandler.ts -&gt; utils/errorHandler.ts" />
     <MESSAGE value="added test for authorization.ts" />
-    <option name="LAST_COMMIT_MESSAGE" value="added test for authorization.ts" />
+    <MESSAGE value="added authLimiter to authRouter" />
+    <MESSAGE value="added LIMIT_NOT_VALID,&#10;OFFSET_NOT_VALID enums" />
+    <MESSAGE value="added internal error to API_ERRORS in COMMON namespace" />
+    <MESSAGE value="updated pagination middleware" />
+    <MESSAGE value="exported RequestValidationSchema type" />
+    <MESSAGE value="update IAuthorizedUser type" />
+    <MESSAGE value="added test suite pagination.ts" />
+    <MESSAGE value="added test suite validate.ts" />
+    <MESSAGE value="fixed pagination apis" />
+    <MESSAGE value="Fixed pagination.test.ts" />
+    <MESSAGE value="updated RequestHandlers" />
+    <MESSAGE value="fixed tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed tests" />
   </component>
 </project>

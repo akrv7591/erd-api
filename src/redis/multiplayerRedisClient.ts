@@ -1,16 +1,10 @@
 import {createClient} from "redis";
 import config from "../config/config";
 
-export class MultiplayerRedisClient {
-  static async getRedisClient() {
-    const redisClient = createClient({url: config.redis.url});
+const redisClient = createClient({url: config.redis.url})
 
-    try {
-      await redisClient.connect();
-    } catch (e) {
-      throw new Error("REDIS CONNECTION FAILED ")
-    }
+redisClient.on("error", (err) => {
+  console.log("REDIS CONNECTION ERROR: ", err)
+})
 
-    return redisClient
-  }
-}
+export default redisClient

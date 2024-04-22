@@ -1,50 +1,34 @@
-import {CallbackDataStatus, ErdEnum, Key} from "../../enums/multiplayer";
-import {Server, Socket} from "socket.io";
-import {RedisClientType} from "redis";
+import {CallbackDataStatus, ErdEnum} from "../../enums/multiplayer";
 import {ErdModel, IErdModel} from "../../sequelize-models/erd-api/Erd.model";
+import {MultiplayerControllerBase} from "../../utils/multiplayerControllerBase";
+import {Server, Socket} from "socket.io";
 
-export interface CallbackDataType {
-  type: ErdEnum;
-  status: CallbackDataStatus
-  data: any
-}
+export class ErdController extends MultiplayerControllerBase<ErdEnum> {
+  constructor(io: Server, socket: Socket) {
+    super(io, socket);
 
-// Helper functions
-
-function getCallbackData(type: ErdEnum): CallbackDataType {
-  return {
-    type,
-    status: CallbackDataStatus.FAILED,
-    data: null
+    this.initListeners()
   }
-}
 
+  initListeners = () => {
+    this.socket.on(ErdEnum.put, this.onPut)
+    this.socket.on(ErdEnum.patch, this.onPatch)
+  }
 
-export const erdController = (io: Server, socket: Socket, redis: RedisClientType) => {
-  const playgroundId = socket.handshake.auth['playgroundId']
-  const playgroundKey = `${Key.playground}:${playgroundId}`
-
-  const onPut = async (data: Partial<IErdModel>, callback: Function) => {
-    const callbackData = getCallbackData(ErdEnum.put)
+  onPut = async (data: Partial<IErdModel>, callback: Function) => {
+    const callbackData = this.getCallbackData(ErdEnum.put)
 
     try {
-      const erdRedisData: any[] = []
-
-      for (const [key, value] of Object.entries(data)) {
-        erdRedisData.push({ key: playgroundKey, path: `$.${key}`, value });
-      }
-
       await Promise.all([
-        redis.json.mSet(erdRedisData),
         ErdModel.update(data, {
           where: {
-            id: playgroundId
+            id: this.playgroundId
           }
         })
       ])
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = data
-      socket.to(playgroundKey).emit(ErdEnum.put, data)
+      this.socket.to(this.playgroundKey).emit(ErdEnum.put, data)
       callback(callbackData)
 
     } catch (e) {
@@ -54,22 +38,21 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
   }
 
 
-  const onPatch = async ({key, value}: { key: string, value: any }, callback: Function) => {
-    const callbackData = getCallbackData(ErdEnum.patch)
+  onPatch = async ({key, value}: { key: string, value: any }, callback: Function) => {
+    const callbackData = this.getCallbackData(ErdEnum.patch)
 
     try {
       await Promise.all([
-        redis.json.set(playgroundKey, `$.${key}`, value),
         ErdModel.update({[key]: value}, {
           where: {
-            id: playgroundId
+            id: this.playgroundId
           }
         })
       ])
 
       callbackData.status = CallbackDataStatus.OK
       callbackData.data[key] = value
-      socket.to(playgroundKey).emit(ErdEnum.patch, {key, value})
+      this.socket.to(this.playgroundKey).emit(ErdEnum.patch, {key, value})
       callback(callbackData)
 
     } catch (e) {
@@ -77,10 +60,4 @@ export const erdController = (io: Server, socket: Socket, redis: RedisClientType
       callback(callbackData)
     }
   }
-
-  return {
-    onPatch,
-    onPut
-  }
-
 }

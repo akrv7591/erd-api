@@ -1,8 +1,11 @@
 
 export enum Key {
-  playground = "playground",
-  subscribe = "subscribe",
-  table = "table",
+  playgrounds = "playgrounds",
+  players = "players",
+  subscribers = "subscribers",
+  entities = "entities",
+  nodes = "nodes",
+  position = "position",
 }
 
 
@@ -20,14 +23,17 @@ export enum PlayerEnum {
 export enum ErdEnum {
   patch = "erd:patch",
   put = "erd:put",
-  delete = "erd:delete",
+}
+
+export enum NodeEnum {
+  patchPositions = "node:patchPositions",
+  delete = "node:delete",
 }
 
 export enum EntityEnum {
   add = "entity:add",
-  update = "entity:update",
+  patch = "entity:patch",
   delete = "entity:delete",
-  set = "entity:set",
 }
 
 export enum RelationEnum {
@@ -37,7 +43,7 @@ export enum RelationEnum {
 
 export enum ColumnEnum {
   add = "column:add",
-  update = "column:update",
+  patch = "column:patch",
   delete = "column:delete",
 }
 

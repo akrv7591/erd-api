@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM nodes:alpine
 
 WORKDIR /app
 
@@ -9,5 +9,5 @@ RUN yarn install
 RUN yarn build
 EXPOSE 3002
 
-CMD ["node", "dist/index.js"]
+CMD ["nodes", "dist/index.js"]
 
