@@ -9,5 +9,5 @@ RUN yarn install
 RUN yarn build
 EXPOSE 3002
 
-CMD ["nodes", "dist/index.js"]
+CMD ["node", "dist/index.js"]
 
