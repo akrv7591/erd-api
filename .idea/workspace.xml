@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed Dockerfile">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="performance optimization">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enums/multiplayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/multiplayer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/entity-controllers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/entity-controllers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/memo-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/memo-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/node-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/node-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/playground.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/playground.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -250,15 +240,7 @@
       <workItem from="1713918187063" duration="1849000" />
       <workItem from="1713939465990" duration="15000" />
       <workItem from="1714106510097" duration="1837000" />
-      <workItem from="1715508659480" duration="657000" />
-    </task>
-    <task id="LOCAL-00061" summary="fixed Typo invalid import">
-      <option name="closed" value="true" />
-      <created>1710398223631</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1710398223631</updated>
+      <workItem from="1715508659480" duration="4309000" />
     </task>
     <task id="LOCAL-00062" summary="fixed Typo invalid import">
       <option name="closed" value="true" />
@@ -644,7 +626,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713771799058</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="performance optimization">
+      <option name="closed" value="true" />
+      <created>1715558782780</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1715558782780</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -662,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="auth api and email verification api is updated" />
     <MESSAGE value="auth api endpoints moved to Auth namespace" />
     <MESSAGE value="email-verification api endpoints moved to EmailVerification namespace" />
     <MESSAGE value="moved user apis from UserController.ts to seperate modules" />
@@ -687,6 +676,7 @@
     <MESSAGE value="big update performance" />
     <MESSAGE value="docker node fixed" />
     <MESSAGE value="fixed Dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed Dockerfile" />
+    <MESSAGE value="performance optimization" />
+    <option name="LAST_COMMIT_MESSAGE" value="performance optimization" />
   </component>
 </project>

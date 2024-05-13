@@ -25,8 +25,6 @@ let server: http.Server
   server.listen(Number(config.server.port), () => {
     logger.log('info', `Server is running on Port: ${config.server.port}`);
   });
-
-
 })()
 
 

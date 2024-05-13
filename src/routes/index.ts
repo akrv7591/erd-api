@@ -8,6 +8,9 @@ routes.use((req, _, next) => {
   console.log(`${dayjs().toISOString()} ${req.method.toUpperCase()}: ${req.url}`)
   next()
 })
+routes.get("health-check", (_, res) => {
+  res.sendStatus(200)
+})
 routes.use("/v1", v1)
 
 export default routes
