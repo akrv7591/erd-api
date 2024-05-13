@@ -31,7 +31,7 @@ export class MemoController extends MultiplayerControllerBase<MemoEnum> {
         ...memo.toJSON(),
       }
       await transaction.commit()
-      this.socket.to(this.playgroundKey).emit(MemoEnum.add, memo.toJSON())
+      this.socket.to(this.playgroundKey).emit(NodeEnum.add, memo.toJSON())
       callback(callbackData)
     } catch (e) {
       console.error("MEMO ADD ERROR", e)

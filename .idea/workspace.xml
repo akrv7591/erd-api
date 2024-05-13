@@ -4,29 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed tests">
-      <change afterPath="$PROJECT_DIR$/src/constants/socket.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/socket/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/socket/multiplayer/node-controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed Dockerfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/enums/multiplayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/multiplayer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Memo.mode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Memo.mode.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/column-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/column-controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/entity-controllers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/entity-controllers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/erd-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/erd-controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/memo-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/memo-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-socket.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/player-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/player-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/relation-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/relation-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/node-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/multiplayer/node-controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/playground.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/playground.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,12 +33,28 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "akrv7591"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/akrv7591/erd-api.git",
+    "accountId": "c871a74e-80fa-460c-b4b3-23ecd7337230"
+  }
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/node_modules/multer-minio-storage/index.d.ts" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="2XVGj10Qm3cEgaAQXaXIiFjrusM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -158,6 +165,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -230,31 +244,13 @@
       <workItem from="1713145994018" duration="9907000" />
       <workItem from="1713169065266" duration="16543000" />
       <workItem from="1713495021356" duration="5513000" />
-      <workItem from="1713744919876" duration="2225000" />
-    </task>
-    <task id="LOCAL-00058" summary="Added MemoEnum">
-      <option name="closed" value="true" />
-      <created>1710396783351</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1710396783351</updated>
-    </task>
-    <task id="LOCAL-00059" summary="fixed type memoes -&gt; memos">
-      <option name="closed" value="true" />
-      <created>1710397379851</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1710397379851</updated>
-    </task>
-    <task id="LOCAL-00060" summary="removed unused Key">
-      <option name="closed" value="true" />
-      <created>1710398004827</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1710398004827</updated>
+      <workItem from="1713744919876" duration="4318000" />
+      <workItem from="1713830607647" duration="19696000" />
+      <workItem from="1713861074695" duration="861000" />
+      <workItem from="1713918187063" duration="1849000" />
+      <workItem from="1713939465990" duration="15000" />
+      <workItem from="1714106510097" duration="1837000" />
+      <workItem from="1715508659480" duration="657000" />
     </task>
     <task id="LOCAL-00061" summary="fixed Typo invalid import">
       <option name="closed" value="true" />
@@ -624,7 +620,31 @@
       <option name="project" value="LOCAL" />
       <updated>1712217038553</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="big update performance">
+      <option name="closed" value="true" />
+      <created>1713771047636</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1713771047637</updated>
+    </task>
+    <task id="LOCAL-00108" summary="docker node fixed">
+      <option name="closed" value="true" />
+      <created>1713771413967</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1713771413967</updated>
+    </task>
+    <task id="LOCAL-00109" summary="fixed Dockerfile">
+      <option name="closed" value="true" />
+      <created>1713771799058</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1713771799058</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -642,9 +662,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="removed readme" />
-    <MESSAGE value="added isPasswordSetColumn to User model" />
-    <MESSAGE value="added set password api" />
     <MESSAGE value="auth api and email verification api is updated" />
     <MESSAGE value="auth api endpoints moved to Auth namespace" />
     <MESSAGE value="email-verification api endpoints moved to EmailVerification namespace" />
@@ -667,6 +684,9 @@
     <MESSAGE value="Fixed pagination.test.ts" />
     <MESSAGE value="updated RequestHandlers" />
     <MESSAGE value="fixed tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed tests" />
+    <MESSAGE value="big update performance" />
+    <MESSAGE value="docker node fixed" />
+    <MESSAGE value="fixed Dockerfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed Dockerfile" />
   </component>
 </project>

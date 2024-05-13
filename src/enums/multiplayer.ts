@@ -1,6 +1,8 @@
 
 export enum Key {
   playgrounds = "playgrounds",
+  cleanUpQueue = "cleanUpQueue",
+  finish = "finish",
   players = "players",
   subscribers = "subscribers",
   entities = "entities",
@@ -26,6 +28,7 @@ export enum ErdEnum {
 }
 
 export enum NodeEnum {
+  add = "node:add",
   patchPositions = "node:patchPositions",
   delete = "node:delete",
 }

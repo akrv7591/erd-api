@@ -1,7 +1,7 @@
 import app from './app';
 import config from './config/config';
 import logger from './utils/logger';
-import {ErdiagramlySequelize} from "./sequelize-models/erd-api";
+import {ErdiagramlySequelize, erdSequelize} from "./sequelize-models/erd-api";
 import * as http from "http";
 import redisClient from "./redis/multiplayerRedisClient";
 import {S3Util} from "./utils/s3Util";
@@ -14,7 +14,7 @@ let server: http.Server
   await Promise.all([
     ErdiagramlySequelize.initSequelize(),
     S3Util.initS3(),
-    redisClient.connect()
+    redisClient.connect().then(() => console.log("🎉 REDIS CONNECTION SUCCESS")),
   ])
 
   console.log("----- ALL GOOD TO GO -----")
@@ -40,5 +40,6 @@ process.on('SIGTERM', () => {
   });
 
   redisClient.quit()
+  erdSequelize.close()
 });
 

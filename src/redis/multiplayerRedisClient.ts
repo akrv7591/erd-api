@@ -1,7 +1,9 @@
 import {createClient} from "redis";
 import config from "../config/config";
 
-const redisClient = createClient({url: config.redis.url})
+export const createRedisClient = () => createClient({url: config.redis.url})
+
+const redisClient = createRedisClient()
 
 redisClient.on("error", (err) => {
   console.log("REDIS CONNECTION ERROR: ", err)

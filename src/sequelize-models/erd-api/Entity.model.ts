@@ -15,6 +15,7 @@ import {ColumnModel as ColumnModel, IColumnModel} from "./Column.model";
 import {NODE_TYPES} from "../../enums/node-type";
 import redisClient from "../../redis/multiplayerRedisClient";
 import {Key} from "../../enums/multiplayer";
+import {isEqual} from "lodash";
 
 export interface INodePosition {
   x: number,
@@ -54,6 +55,7 @@ export interface ICEntityModel extends Optional<IEntityModel, 'id' | 'createdAt'
       }
 
       if (Array.isArray(data)) {
+        console.log("ENTITY MODEL FETCH MULTIPLE HOOK: ", data.length)
         await Promise.all(data.map(entity => entity.getRealtimePosition()))
       }
 
@@ -62,7 +64,7 @@ export interface ICEntityModel extends Optional<IEntityModel, 'id' | 'createdAt'
       }
     },
     async afterCreate(data: EntityModel, {transaction}) {
-      const nodeKey = Key.playgrounds + ":" + data.erdId + ":"+ Key.nodes + ":" + data.id + ":" + Key.position
+      const nodeKey = Key.playgrounds + ":" + data.erdId + ":" + Key.nodes + ":" + data.id + ":" + Key.position
       const savePositionToRedis = () => {
         redisClient.set(nodeKey, JSON.stringify(data.position))
       }
@@ -74,7 +76,7 @@ export interface ICEntityModel extends Optional<IEntityModel, 'id' | 'createdAt'
       }
     },
     async afterDestroy(data: EntityModel, {transaction}) {
-      const nodeKey = Key.playgrounds + ":" + data.erdId + ":"+ Key.nodes + ":" + data.id + ":" + Key.position
+      const nodeKey = Key.playgrounds + ":" + data.erdId + ":" + Key.nodes + ":" + data.id + ":" + Key.position
       const removePositionFromRedis = async () => {
         await redisClient.del(nodeKey)
       }
@@ -82,7 +84,7 @@ export interface ICEntityModel extends Optional<IEntityModel, 'id' | 'createdAt'
       if (transaction) {
         transaction.afterCommit(removePositionFromRedis)
       } else {
-       await removePositionFromRedis()
+        await removePositionFromRedis()
       }
     }
   }
@@ -150,15 +152,11 @@ export class EntityModel extends Model<IEntityModel, ICEntityModel> {
   async getRealtimePosition() {
     const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${this.getDataValue("id")}:${Key.position}`)
     if (position) {
-      this.dataValues.position = JSON.parse(position)
-    }
-  }
-
-  async saveRealtimePosition() {
-    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${this.getDataValue("id")}:${Key.position}`)
-    if (position) {
-      this.dataValues.position = JSON.parse(position)
-      await this.save()
+      const newPosition = JSON.parse(position)
+      if (isEqual(this.dataValues.position, newPosition)) {
+        return
+      }
+      this.position = newPosition
     }
   }
 }

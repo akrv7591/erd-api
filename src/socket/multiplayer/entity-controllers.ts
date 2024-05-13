@@ -35,23 +35,23 @@ export class EntityController extends MultiplayerControllerBase<EntityEnum> {
       transaction = await erdSequelize.transaction()
       const {data, ...icTable} = entityData
 
-      await EntityModel.create({
+      const entity = await EntityModel.create({
         ...icTable,
         name: data.name,
         color: data.color,
         erdId: this.playgroundId
-      }, {transaction}),
+      }, {transaction})
 
-        await ColumnModel.bulkCreate(data.columns, {transaction}),
+        await ColumnModel.bulkCreate(data.columns, {transaction})
 
         await transaction.commit()
 
-      this.socket.to(this.playgroundKey).emit(EntityEnum.add, entityData)
+      this.socket.to(this.playgroundKey).emit(NodeEnum.add, entity.toJSON())
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = entityData
     } catch (e) {
       await transaction?.rollback()
-      console.error(e)
+      console.error("ENTITY ADD ERROR: ", e)
     }
     callback(callbackData)
   };

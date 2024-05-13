@@ -1,5 +1,6 @@
 import {Server, Socket} from "socket.io";
 import {CallbackDataStatus, Key} from "../enums/multiplayer";
+import {NODE_TYPES} from "../enums/node-type";
 
 
 export class MultiplayerBase {
@@ -28,6 +29,28 @@ export class MultiplayerBase {
 
   get playgroundKey(): string {
     return Key.playgrounds + ":" + this.playgroundId
+  }
+
+  get playgroundNodesPattern(): string {
+    return this.playgroundKey + ":" + Key.nodes + ":*"
+  }
+
+  get playerRoom(): string {
+    return Key.subscribers + ":" + this.playerId
+  }
+
+
+  nodePositionKey(nodeType: NODE_TYPES, nodeId: string): string {
+    return this.playgroundKey + ":" + Key.nodes + ":" + nodeType + ":" + nodeId + ":" + Key.position
+  }
+
+  nodePositionKeyParsed(key: string): {nodeType: NODE_TYPES, nodeId: string} {
+    const parsedKey = key.split(":") as [Key.playgrounds, string, Key.nodes, NODE_TYPES, string, Key.position]
+
+    return {
+      nodeType: parsedKey[3],
+      nodeId: parsedKey[4],
+    }
   }
 }
 

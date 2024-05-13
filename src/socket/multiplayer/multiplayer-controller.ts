@@ -6,14 +6,16 @@ import {ColumnController} from "./column-controller";
 import {ErdModel} from "../../sequelize-models/erd-api/Erd.model";
 import {RelationModel} from "../../sequelize-models/erd-api/Relation.model";
 import {ColumnModel} from "../../sequelize-models/erd-api/Column.model";
-import {EntityModel, IEntityModel} from "../../sequelize-models/erd-api/Entity.model";
+import {EntityModel} from "../../sequelize-models/erd-api/Entity.model";
 import {ErdController} from "./erd-controller";
-import {IMemoModel, MemoModel} from "../../sequelize-models/erd-api/Memo.mode";
+import {MemoModel} from "../../sequelize-models/erd-api/Memo.mode";
 import {MemoController} from "./memo-controller";
 import redisClient from "../../redis/multiplayerRedisClient";
 import {NodeController} from "./node-controller";
 import {MultiplayerBase} from "../../utils/multiplayerControllerBase";
 import {Server, Socket} from "socket.io";
+import {NODE_TYPES} from "../../enums/node-type";
+import {SocketReservedEventsMap} from "socket.io/dist/socket";
 
 export class MultiplayerController extends MultiplayerBase {
   constructor(io: Server, socket: Socket) {
@@ -29,27 +31,30 @@ export class MultiplayerController extends MultiplayerBase {
     console.log("CONNECTION: ", this.playerId)
 
     try {
+      const isPlaygroundInCleaningUpQueue = await this.isInCleaningUpQueue()
+
+      if (isPlaygroundInCleaningUpQueue) {
+        console.log("--WAITING FOR CLEANING UP QUEUE TO FINISH")
+        await this.subscribeCleaningUpQueueFinish()
+      }
+
       let data
+      // Check if playground exists
+      const playgroundExists = await this.isPlaygroundExist()
+
       // Add player to playground
       await this.addPlayerToPlayground()
-      // Check if playground exists
-      const playgroundExists = await this.doesPlaygroundExist()
-
 
       // If not,
       if (!playgroundExists) {
         // Create it
-        await this.addPlayground()
-
         data = await this.initPlayground()
       } else {
         // Get it
         data = await this.getPlaygroundData()
       }
 
-      const playerRoom = Key.subscribers + ":" + this.playerId
-
-      this.socket.join([this.playgroundKey, playerRoom ])
+      this.socket.join([this.playgroundKey, this.playerRoom])
       this.socket.to(this.playgroundKey).emit(PlayerEnum.join, this.playerId)
       this.socket.emit("data", data)
 
@@ -59,16 +64,13 @@ export class MultiplayerController extends MultiplayerBase {
       console.error("GET PLAYGROUND ERROR: ", e)
     }
 
-    this.socket.on("disconnect", () => this.onDisconnect())
+    this.socket.on("disconnect", this.onDisconnect)
 
   }
 
-  private async doesPlaygroundExist() {
-    return await redisClient.sIsMember(Key.playgrounds, this.playgroundId)
-  }
-
-  private async addPlayground() {
-    await redisClient.sAdd(Key.playgrounds, this.playgroundId)
+  private async isPlaygroundExist() {
+    const pattern = this.playgroundKey + ":*"
+    return await redisClient.keys(pattern).then(keys => keys.length > 0)
   }
 
   private async addPlayerToPlayground() {
@@ -90,7 +92,9 @@ export class MultiplayerController extends MultiplayerBase {
 
   private async removePlayerFromPlayground() {
     const key = this.playgroundKey + ":" + Key.players
-    return await redisClient.sRem(key, this.playerId)
+    const result = await redisClient.sRem(key, this.playerId)
+
+    console.log("PLAYER " + (result? `REMOVED FROM ` : "NO T FOUND IN") + key +  " - " + this.playerId)
   }
 
   private async isPlaygroundEmpty() {
@@ -100,35 +104,115 @@ export class MultiplayerController extends MultiplayerBase {
   }
 
   private async handleEmptyPlayground() {
-    console.log("PLAYGROUND IS EMPTY CLEANING UP PLAYGROUND", )
+    // Create playground cleaning up event queue
+    await this.createCleaningUpQueue()
+
     // save node positions to db
     await this.saveRealtimeNodePositionsToDb()
     await this.removeNodePositionsFromPlayground()
 
     // Remove playground from redis
-    await redisClient.sRem(Key.playgrounds, this.playgroundId)
+    const result = await redisClient.sRem(Key.playgrounds, this.playgroundId)
+
+    await new Promise(resolve => setTimeout(resolve, 2000))
+
+    await this.removeCleaningUpQueue()
+    await this.publishCleaningUpQueueFinish()
+
+    console.log("PLAYGROUND " + (result? `REMOVED FROM ` : "NOT FOUND IN") + Key.playgrounds +  " - " + this.playgroundId)
+  }
+
+  private async createCleaningUpQueue() {
+    const key = this.playgroundKey + ":" + Key.cleanUpQueue
+    await redisClient.sAdd(key, this.playgroundId)
+    console.log("PLAYGROUND: " + this.playgroundId + " ADDED TO " + "CLEANING UP QUEUE: ")
+  }
+
+  private async removeCleaningUpQueue() {
+    const key = this.playgroundKey + ":" + Key.cleanUpQueue
+    await redisClient.sRem(key, this.playgroundId)
+    console.log("PLAYGROUND: " + this.playgroundId + " REMOVED FROM " + "CLEANING UP QUEUE: ")
+  }
+
+  private async isInCleaningUpQueue() {
+    const key = this.playgroundKey + ":" + Key.cleanUpQueue
+    return await redisClient.sIsMember(key, this.playgroundId)
+  }
+
+  private async publishCleaningUpQueueFinish() {
+    const key = this.playgroundKey + ":" + Key.cleanUpQueue
+    await redisClient.publish(key, Key.finish)
+  }
+
+  private async subscribeCleaningUpQueueFinish() {
+    return new Promise(async (resolve, reject) => {
+      const key = this.playgroundKey + ":" + Key.cleanUpQueue
+      const subscribeClient = redisClient.duplicate()
+      await subscribeClient.connect()
+
+      const unsubscribe = async (callback: VoidFunction) => {
+        await subscribeClient.unsubscribe(key)
+        await subscribeClient.disconnect()
+        callback()
+      }
+      await subscribeClient.subscribe(key, (message) => {
+        switch (message) {
+          case Key.finish:
+            unsubscribe(() => resolve("CLEANING UP QUEUE FINISHED"))
+            break
+        }
+      })
+
+      setTimeout(() => {
+        unsubscribe(() => reject("TIMEOUT"))
+      }, 10000)
+    })
   }
 
   private async removeNodePositionsFromPlayground() {
-    const keyPattern = `${Key.playgrounds}:${this.playgroundId}:${Key.nodes}:*`
-    const keys = await redisClient.keys(keyPattern)
-    await redisClient.del(keys)
+    const keys = await redisClient.keys(this.playgroundNodesPattern)
+    const result = await redisClient.del(keys)
+
+    console.log(keys.length + " NODES " + (result? `REMOVED FROM ` : "NOT FOUND IN") + this.playgroundNodesPattern +  " - " + this.playgroundId)
   }
 
-  private nodeModelsToData = (nodeModels: (EntityModel | MemoModel)[]): (IEntityModel | IMemoModel)[] => {
-    return nodeModels.map(nodeModel => nodeModel.toJSON() as IEntityModel | IMemoModel)
-  }
 
   private async saveRealtimeNodePositionsToDb() {
-    await Promise.all([
-      await this.getNodeModels()
-        .then(nodes => Promise.all(nodes.map(node => node.saveRealtimePosition()))),
-    ])
+    const keys = await redisClient.keys(this.playgroundNodesPattern)
+    const nodePositions = await redisClient.mGet(keys)
 
+    await Promise.all(keys.map((key, i) => {
+      const {nodeId, nodeType} = this.nodePositionKeyParsed(key)
+
+      const positionValue = nodePositions[i]
+
+      if (!positionValue) {
+        return Promise.resolve()
+      }
+      const position = JSON.parse(positionValue)
+
+      if (!position) {
+        return Promise.resolve()
+      }
+
+      switch (nodeType) {
+        case NODE_TYPES.ENTITY:
+          return EntityModel.update({position}, {
+            where: { id: nodeId}
+          })
+        case NODE_TYPES.MEMO:
+          return MemoModel.update({position}, {
+            where: { id: nodeId}
+          })
+      }
+    }))
+
+    console.log("NODES SAVED TO DB")
   }
 
-  private async onDisconnect() {
-    console.log("DISCONNECT: ", this.socket.id)
+  private onDisconnect: SocketReservedEventsMap['disconnect'] = async (reason, description) => {
+
+    console.log(("--PLAYER " + this.playerId + " DISCONNECTED. Reason: " + reason + ". Description: " + description))
 
     try {
 
@@ -143,7 +227,7 @@ export class MultiplayerController extends MultiplayerBase {
         await this.handleEmptyPlayground()
       } else {
 
-        // Emit player leave event to other players
+        // Emit player leave event to other players if playground is not empty
         this.socket.to(this.playgroundKey).emit(PlayerEnum.leave, this.playerId)
       }
 
@@ -165,14 +249,14 @@ export class MultiplayerController extends MultiplayerBase {
   // Util functions
   private getPlaygroundData = async () => {
     const [nodes, players, erd, relations] = await Promise.all([
-      this.getNodeModels().then(this.nodeModelsToData),
+      this.getNodeModels(),
       this.getPlayers().then(this.applyPlayerCursorPositionToPlayers),
-      ErdModel.findByPk(this.playgroundId).then(erd => erd?.toJSON()),
+      ErdModel.findByPk(this.playgroundId).then(e => e?.toJSON()),
       RelationModel.findAll({
         where: {
           erdId: this.playgroundId
         }
-      }).then(relations => relations.map(r => r.toJSON()))
+      })
     ])
 
     return {
@@ -184,10 +268,18 @@ export class MultiplayerController extends MultiplayerBase {
   }
 
 
-  private setNodesPosition = async (nodes: (IEntityModel | IMemoModel)[]) => {
+  private setNodesPosition = async (nodes: (EntityModel | MemoModel)[]) => {
     const nodeKeyValueData: { [key: string]: string } = {}
     nodes.forEach(node => {
-      const key = `${Key.playgrounds}:${node.erdId}:${Key.nodes}:${node.id}:${Key.position}`
+      let key = ""
+      switch (true) {
+        case node instanceof EntityModel:
+          key = this.nodePositionKey(NODE_TYPES.ENTITY, node.id)
+          break
+        case node instanceof MemoModel:
+          key = this.nodePositionKey(NODE_TYPES.MEMO, node.id)
+
+      }
       nodeKeyValueData[key] = JSON.stringify(node.position)
     })
 

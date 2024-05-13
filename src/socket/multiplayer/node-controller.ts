@@ -24,12 +24,10 @@ export class NodeController extends MultiplayerControllerBase<NodeEnum> {
 
       callbackData.status = CallbackDataStatus.OK
       callbackData.data = nodesObject
-      callback(callbackData)
     } catch (e) {
       console.error("SET_NODE_POSITIONS_ERROR", e)
-      callback(callbackData)
     }
+    callback(callbackData)
+
   }
-
-
 }
