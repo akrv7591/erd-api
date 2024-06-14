@@ -13,8 +13,6 @@ export class MultiplayerBase {
    * @param socket - Socket.IO client socket
    */
   constructor(io: Server, socket: Socket) {
-    // this.playgroundId = socket.handshake.auth['playgroundId'];
-    // this.playgroundKey = `${Key.playground}:${this.playgroundId}`;
     this.io = io;
     this.socket = socket;
   }

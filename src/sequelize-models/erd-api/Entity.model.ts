@@ -11,17 +11,28 @@ import {
 } from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
 import {ErdModel, IErdModel} from "./Erd.model";
-import {ColumnModel as ColumnModel, IColumnModel} from "./Column.model";
+import {ColumnModel, IColumnModel} from "./Column.model";
 import {NODE_TYPES} from "../../enums/node-type";
 import redisClient from "../../redis/multiplayerRedisClient";
 import {Key} from "../../enums/multiplayer";
 import {isEqual} from "lodash";
+import {NodeType} from "../../factories/ERDFactory/department/multiplayer/type";
+
+export type EntityNode = {
+  id: string;
+  type: NODE_TYPES.ENTITY;
+  position: INodePosition;
+  data: {
+    name: string;
+    color: string;
+    columns: IColumnModel[];
+  }
+}
 
 export interface INodePosition {
   x: number,
-  string: number
+  y: number
 }
-
 
 export interface IEntityModel {
   id: string;
@@ -31,17 +42,16 @@ export interface IEntityModel {
   name: string;
   color: string;
   position: INodePosition;
-  type: string;
+  type: NODE_TYPES;
 
   // Foreign key
   erdId: string;
-
   // Relations
   erd?: IErdModel
   columns?: IColumnModel[]
 }
 
-export interface ICEntityModel extends Optional<IEntityModel, 'id' | 'createdAt' | 'updatedAt'> {
+export interface ICEntityModel extends Omit<Optional<IEntityModel, 'id' | 'createdAt' | 'updatedAt'>, 'data'> {
 }
 
 @SequelizeTable({
@@ -135,22 +145,21 @@ export class EntityModel extends Model<IEntityModel, ICEntityModel> {
   })
   declare columns: ColumnModel[]
 
-  @Column(DataType.VIRTUAL)
-  get data() {
+  node = (): NodeType<NODE_TYPES.ENTITY> => {
     return {
-      name: this.getDataValue('name'),
-      color: this.getDataValue('color'),
-      columns: this.getDataValue('columns' as any),
+      id: this.getDataValue('id'),
+      type: NODE_TYPES.ENTITY,
+      position: this.getDataValue('position'),
+      data: {
+        name: this.getDataValue('name'),
+        color: this.getDataValue('color'),
+        columns: this.getDataValue('columns') || [],
+      }
     }
   }
 
-  @Column(DataType.VIRTUAL)
-  get type() {
-    return NODE_TYPES.ENTITY
-  }
-
   async getRealtimePosition() {
-    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${this.getDataValue("id")}:${Key.position}`)
+    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${NODE_TYPES.ENTITY}:${this.getDataValue("id")}:${Key.position}`)
     if (position) {
       const newPosition = JSON.parse(position)
       if (isEqual(this.dataValues.position, newPosition)) {

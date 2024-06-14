@@ -4,10 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="performance optimization">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added healthcheck">
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/ERDFactory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/MultiplayerWorker.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/column-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/entity-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/erd-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/memo-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/node-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/player-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/relation-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/type.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/factories/ERDFactory/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ws/server.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enums/multiplayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/multiplayer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Column.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Column.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Memo.mode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Memo.mode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/socket/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/column-controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/entity-controllers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/erd-controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/memo-controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/multiplayer-controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/node-controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/player-controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/multiplayer/relation-controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/s3Util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/s3Util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="removed readme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,28 +53,28 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "akrv7591"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;akrv7591&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/akrv7591/erd-api.git",
-    "accountId": "c871a74e-80fa-460c-b4b3-23ecd7337230"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/akrv7591/erd-api.git&quot;,
+    &quot;accountId&quot;: &quot;c871a74e-80fa-460c-b4b3-23ecd7337230&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/node_modules/multer-minio-storage/index.d.ts" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2XVGj10Qm3cEgaAQXaXIiFjrusM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -56,15 +86,15 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/src/socket/multiplayer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/typescript/lib&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.typescriptcompiler&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/akrv/Dev/Nodejs/personal/erdiagramly/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -77,6 +107,7 @@
       <recent name="$PROJECT_DIR$/dist" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/factories/ERDFactory" />
       <recent name="$PROJECT_DIR$/src/utils" />
       <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
       <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
@@ -158,7 +189,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17890.13" />
       </set>
     </attachedChunks>
   </component>
@@ -240,15 +271,14 @@
       <workItem from="1713918187063" duration="1849000" />
       <workItem from="1713939465990" duration="15000" />
       <workItem from="1714106510097" duration="1837000" />
-      <workItem from="1715508659480" duration="4309000" />
-    </task>
-    <task id="LOCAL-00062" summary="fixed Typo invalid import">
-      <option name="closed" value="true" />
-      <created>1710398226841</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1710398226841</updated>
+      <workItem from="1715508659480" duration="6268000" />
+      <workItem from="1716789879234" duration="21824000" />
+      <workItem from="1716941464444" duration="25239000" />
+      <workItem from="1717033905536" duration="23284000" />
+      <workItem from="1717375502978" duration="572000" />
+      <workItem from="1717978532810" duration="1100000" />
+      <workItem from="1717989246784" duration="24299000" />
+      <workItem from="1718266998150" duration="3242000" />
     </task>
     <task id="LOCAL-00063" summary="added memo controller">
       <option name="closed" value="true" />
@@ -634,7 +664,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715558782780</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="added healthcheck">
+      <option name="closed" value="true" />
+      <created>1715564152027</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1715564152027</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +690,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="auth api endpoints moved to Auth namespace" />
     <MESSAGE value="email-verification api endpoints moved to EmailVerification namespace" />
     <MESSAGE value="moved user apis from UserController.ts to seperate modules" />
     <MESSAGE value="temp fixes" />
@@ -677,6 +714,7 @@
     <MESSAGE value="docker node fixed" />
     <MESSAGE value="fixed Dockerfile" />
     <MESSAGE value="performance optimization" />
-    <option name="LAST_COMMIT_MESSAGE" value="performance optimization" />
+    <MESSAGE value="added healthcheck" />
+    <option name="LAST_COMMIT_MESSAGE" value="added healthcheck" />
   </component>
 </project>

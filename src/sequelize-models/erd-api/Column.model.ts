@@ -19,7 +19,7 @@ export interface IColumnModel {
   primary: boolean;
   type: string;
   foreignKey: boolean;
-  null: boolean;
+  notNull: boolean;
   unique: boolean;
   unsigned: boolean;
   autoIncrement: boolean;
@@ -83,7 +83,7 @@ export class ColumnModel extends Model<IColumnModel, ICColumnModel> {
     type: DataType.BOOLEAN,
     defaultValue: false
   })
-  declare null: boolean;
+  declare notNull: boolean;
 
   @SequelizeColumn({
     type: DataType.BOOLEAN,

@@ -7,21 +7,38 @@ import multerMinio from "multer-minio-storage";
 
 
 export class S3Util {
-  static get s3Client() {
-    return new Client({
-      endPoint: config.s3.end_point,
-      useSSL: true,
-      accessKey: config.s3.access_key,
-      secretKey: config.s3.secret_key,
-    })
+  private static instance: Client;
+
+  static getInstance() {
+    if (!S3Util.instance) {
+      S3Util.instance = new Client({
+        endPoint: config.s3.end_point,
+        useSSL: true,
+        accessKey: config.s3.access_key,
+        secretKey: config.s3.secret_key,
+      })
+    }
+
+    return S3Util.instance
+  }
+  static s3Client() {
+    if (S3Util.instance) {
+      this.instance = new Client({
+        endPoint: config.s3.end_point,
+        useSSL: true,
+        accessKey: config.s3.access_key,
+        secretKey: config.s3.secret_key,
+      })
+    }
+    return S3Util.instance
   }
 
   static async initS3() {
     try {
-      const bucketExists = await this.s3Client.bucketExists(config.s3.bucket)
+      const bucketExists = await S3Util.getInstance().bucketExists(config.s3.bucket)
 
       if (!bucketExists) {
-        this.s3Client.makeBucket(config.s3.bucket, (error) => {
+        this.s3Client().makeBucket(config.s3.bucket, (error) => {
           if (error) {
             console.error(error)
           } else {
@@ -40,7 +57,7 @@ export class S3Util {
   static fileUpload(directory: string) {
     return multer({
       storage: multerMinio({
-        minioClient: S3Util.s3Client,
+        minioClient: S3Util.getInstance(),
         bucket: config.s3.bucket,
         contentType: multerMinio.AUTO_CONTENT_TYPE,
         metadata: function (req, file, cb) {

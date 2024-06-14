@@ -5,8 +5,7 @@ import {ErdiagramlySequelize, erdSequelize} from "./sequelize-models/erd-api";
 import * as http from "http";
 import redisClient from "./redis/multiplayerRedisClient";
 import {S3Util} from "./utils/s3Util";
-import {SocketController} from "./socket";
-
+import {ERDFactory} from "./factories/ERDFactory";
 
 let server: http.Server
 
@@ -20,7 +19,11 @@ let server: http.Server
   console.log("----- ALL GOOD TO GO -----")
 
   server = http.createServer(app)
-  new SocketController(server)
+  // new SocketController(server)
+
+  const erdFactory = new ERDFactory(server)
+
+  erdFactory.startOperation()
 
   server.listen(Number(config.server.port), () => {
     logger.log('info', `Server is running on Port: ${config.server.port}`);
@@ -38,6 +41,7 @@ process.on('SIGTERM', () => {
   });
 
   redisClient.quit()
+  erdSequelize.close()
   erdSequelize.close()
 });
 

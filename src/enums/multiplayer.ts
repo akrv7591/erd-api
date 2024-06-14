@@ -10,15 +10,16 @@ export enum Key {
   position = "position",
 }
 
+export enum WorkerEnum {
+  join = "worker:join",
+  leave = "worker:leave",
+  data = "worker:data",
+}
 
 export enum PlayerEnum {
-  join = "player:join",
-  leave = "player:leave",
-  connection = 'connection',
-  disconnect = "disconnect",
   subscribe = "player:subscribe",
   unsubscribe = "player:unsubscribe",
-  viewpointChange = "player:viewpointChange",
+  viewportChange = "player:viewportChange",
   mouseChange = "player:mouseChange",
 }
 
@@ -56,6 +57,8 @@ export enum MemoEnum {
   patch = "memo:patch",
   delete = "memo:delete",
 }
+
+export type MultiplayerServiceActions = WorkerEnum | PlayerEnum | ErdEnum | NodeEnum | EntityEnum | RelationEnum | ColumnEnum | MemoEnum
 
 export enum CallbackDataStatus {
   OK="ok",

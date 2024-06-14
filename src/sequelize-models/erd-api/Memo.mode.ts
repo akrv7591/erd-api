@@ -7,27 +7,37 @@ import {INodePosition} from "./Entity.model";
 import {NODE_TYPES} from "../../enums/node-type";
 import redisClient from "../../redis/multiplayerRedisClient";
 import {Key} from "../../enums/multiplayer";
+import {NodeType} from "../../factories/ERDFactory/department/multiplayer/type";
+import {isEqual} from "lodash";
+
+export type MemoNode = {
+  id: string,
+  type: NODE_TYPES.MEMO,
+  position: INodePosition,
+  data: {
+    content: string,
+    color: string,
+  }
+}
 
 export interface IMemoModel {
   id: string;
   content: string;
   color: string;
   position: INodePosition;
-  width: number;
-  height: number;
   createdAt: string;
   updatedAt: string;
 
   // Foreign Key
   erdId: string;
   userId: string | null;
-
   // Relations
   erd?: IErdModel;
   user?: IUserModel;
 }
 
-export interface ICMemoModel extends Optional<IMemoModel, 'id' | 'createdAt' | 'updatedAt'> {}
+export interface ICMemoModel extends Optional<IMemoModel, 'id' | 'createdAt' | 'updatedAt'> {
+}
 
 @Table({
   modelName: "MemoModel",
@@ -47,7 +57,7 @@ export interface ICMemoModel extends Optional<IMemoModel, 'id' | 'createdAt' | '
       }
     },
     async afterCreate(data: MemoModel, {transaction}) {
-      const nodeKey = Key.playgrounds + ":" + data.erdId + ":"+ Key.nodes + ":" + data.id + ":" + Key.position
+      const nodeKey = Key.playgrounds + ":" + data.erdId + ":" + Key.nodes + ":" + data.id + ":" + Key.position
       const savePositionToRedis = () => {
         redisClient.set(nodeKey, JSON.stringify(data.position))
       }
@@ -59,7 +69,7 @@ export interface ICMemoModel extends Optional<IMemoModel, 'id' | 'createdAt' | '
       }
     },
     async afterDestroy(data: MemoModel, {transaction}) {
-      const nodeKey = Key.playgrounds + ":" + data.erdId + ":"+ Key.nodes + ":" + data.id + ":" + Key.position
+      const nodeKey = Key.playgrounds + ":" + data.erdId + ":" + Key.nodes + ":" + data.id + ":" + Key.position
       const removePositionFromRedis = async () => {
         await redisClient.del(nodeKey)
       }
@@ -118,31 +128,26 @@ export class MemoModel extends Model<IMemoModel, ICMemoModel> {
   @BelongsTo(() => UserModel)
   declare user: IUserModel;
 
-  @Column(DataType.VIRTUAL)
-  get data() {
+  node = (): NodeType<NODE_TYPES.MEMO> => {
     return {
-      content: this.getDataValue('content'),
-      color: this.getDataValue('color'),
+      id: this.getDataValue('id'),
+      position: this.getDataValue('position'),
+      type: NODE_TYPES.MEMO,
+      data: {
+        content: this.getDataValue('content'),
+        color: this.getDataValue('color'),
+      }
     }
-  }
-
-  @Column(DataType.VIRTUAL)
-  get type() {
-    return NODE_TYPES.MEMO
   }
 
   async getRealtimePosition() {
-    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${this.getDataValue("id")}:${Key.position}`)
+    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${NODE_TYPES.MEMO}:${this.getDataValue("id")}:${Key.position}`)
     if (position) {
-      this.dataValues.position = JSON.parse(position)
-    }
-  }
-
-  async saveRealtimePosition() {
-    const position = await redisClient.get(`${Key.playgrounds}:${this.getDataValue("erdId")}:${Key.nodes}:${this.getDataValue("id")}:${Key.position}`)
-    if (position) {
-      this.dataValues.position = JSON.parse(position)
-      await this.save()
+      const newPosition = JSON.parse(position)
+      if (isEqual(this.dataValues.position, newPosition)) {
+        return
+      }
+      this.position = newPosition
     }
   }
 }
