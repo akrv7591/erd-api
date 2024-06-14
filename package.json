@@ -60,7 +60,9 @@
     "utility-types": "^3.10.0",
     "uuid": "^9.0.0",
     "winston": "^3.8.2",
-    "xss": "^1.0.15"
+    "xss": "^1.0.15",
+    "y-webrtc": "^10.3.0",
+    "yjs": "^13.6.16"
   },
   "devDependencies": {
     "@types/argon2": "^0.15.0",
