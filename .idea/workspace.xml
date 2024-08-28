@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed types">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="packages updated">
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="Generating..." />
     <option name="SHOW_DIALOG" value="false" />
@@ -270,15 +268,7 @@
       <workItem from="1723445769791" duration="831000" />
       <workItem from="1723530897512" duration="647000" />
       <workItem from="1723593583496" duration="1898000" />
-      <workItem from="1724662110562" duration="11966000" />
-    </task>
-    <task id="LOCAL-00072" summary="added NODE_TYPE enum">
-      <option name="closed" value="true" />
-      <created>1710823214373</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1710823214373</updated>
+      <workItem from="1724662110562" duration="12203000" />
     </task>
     <task id="LOCAL-00073" summary="added minio package">
       <option name="closed" value="true" />
@@ -664,7 +654,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724818481852</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="packages updated">
+      <option name="closed" value="true" />
+      <created>1724818956720</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1724818956720</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -682,7 +680,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added internal error to API_ERRORS in COMMON namespace" />
     <MESSAGE value="updated pagination middleware" />
     <MESSAGE value="exported RequestValidationSchema type" />
     <MESSAGE value="update IAuthorizedUser type" />
@@ -707,6 +704,7 @@
     <MESSAGE value="ts-node to dependencies" />
     <MESSAGE value="fixed package json" />
     <MESSAGE value="fixed types" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed types" />
+    <MESSAGE value="packages updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="packages updated" />
   </component>
 </project>
