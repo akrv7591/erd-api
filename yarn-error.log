@@ -1,5 +1,5 @@
 Arguments: 
-  /opt/homebrew/Cellar/node/22.2.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add @types/y-pojo
+  /opt/homebrew/Cellar/node/22.2.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js
 
 PATH: 
   /Users/akrv/.pyenv/shims:/Users/akrv/.pyenv/shims:/Users/akrv/.pyenv/shims:/Users/akrv/.gem/ruby/2.6.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/akrv/.pyenv/shims:/Users/akrv/.pyenv/shims:/Users/akrv/.pyenv/shims:/Users/akrv/.gem/ruby/2.6.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin://Applications/Topaz Gigapixel AI.app/Contents/Resources/bin:/Library/Apple/usr/bin:/Users/akrv/.pyenv/shims:/Users/akrv/.gem/ruby/2.6.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/mysql/bin:/Applications/WebStorm.app:/Users/akrv/Library/Application Support/JetBrains/Toolbox/scripts:/Users/akrv/Library/Android/sdk/emulator:/Users/akrv/Library/Android/sdk/platform-tools:/Users/akrv/Dev/Nodejs/personal/erdiagramly/node_modules/.bin:/usr/local/mysql/bin:/Applications/WebStorm.app:/Users/akrv/Library/Application Support/JetBrains/Toolbox/scripts:/Users/akrv/Library/Android/sdk/emulator:/Users/akrv/Library/Android/sdk/platform-tools:/usr/local/mysql/bin:/Applications/WebStorm.app:/Users/akrv/Library/Application Support/JetBrains/Toolbox/scripts
@@ -14,17 +14,12 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fy-pojo: Not found
-      at params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:66145:18)
-      at self.callback (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
-      at Request.emit (node:events:520:28)
-      at Request.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141862:10)
-      at Request.emit (node:events:520:28)
-      at IncomingMessage.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141784:12)
-      at Object.onceWrapper (node:events:634:28)
-      at IncomingMessage.emit (node:events:532:35)
-      at endReadableNT (node:internal/streams/readable:1696:12)
-      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+  SyntaxError: /Users/akrv/Dev/Nodejs/personal/erdiagramly/package.json: Expected double-quoted property name in JSON at position 3620 (line 112 column 3)
+      at JSON.parse (<anonymous>)
+      at /opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:310:30)
+      at /opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -101,11 +96,11 @@ npm manifest:
       "winston": "^3.8.2",
       "ws": "^8.17.0",
       "xss": "^1.0.15",
-      "y-pojo": "^0.0.8",
       "y-prosemirror": "^1.2.9",
       "y-protocols": "^1.0.6",
       "y-webrtc": "^10.3.0",
-      "yjs": "^13.6.18"
+      "yjs": "^13.6.18",
+      "ts-node": "^10.9.2"
     },
     "devDependencies": {
       "@types/argon2": "^0.15.0",
@@ -138,7 +133,6 @@ npm manifest:
       "jest": "^29.7.0",
       "supertest": "^6.3.4",
       "ts-jest": "^29.1.2",
-      "ts-node": "^10.9.2"
     },
     "repository": {
       "type": "git",
@@ -7731,11 +7725,6 @@ Lockfile:
     version "4.0.2"
     resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
     integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
-  
-  y-pojo@^0.0.8:
-    version "0.0.8"
-    resolved "https://registry.yarnpkg.com/y-pojo/-/y-pojo-0.0.8.tgz#453528445308335855915dd84997ff47c4e9d617"
-    integrity sha512-FSPP+IVpe28q7/raTcdHQiTvI2dAT1QCXnzkzKlFG9M1f20HQE/pPt47vFrFib0pyWfdyMmGU4irGcmfc3xxtQ==
   
   y-prosemirror@^1.2.9:
     version "1.2.9"
