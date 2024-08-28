@@ -1,7 +1,7 @@
 import type {NextFunction, Request, Response} from 'express';
 import {errors, jwtVerify} from "jose";
 import config from '../config/config';
-import {IAuthorizedUser} from "../types/express";
+import {AuthorizedUser} from "../types/express";
 import {errorHandler} from "../utils/errorHandler";
 import {HttpStatusCode} from "axios";
 import {AUTH} from "../constants/auth";
@@ -28,7 +28,7 @@ const authorization = async (req: Request, res: Response, next: NextFunction) =>
 
   // Verify token
   try {
-    const {payload} = await jwtVerify<IAuthorizedUser>(token, config.jwt.access_token.secret)
+    const {payload} = await jwtVerify<AuthorizedUser>(token, config.jwt.access_token.secret)
     req.authorizationUser = payload;
 
     next()

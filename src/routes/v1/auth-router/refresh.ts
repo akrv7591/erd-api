@@ -3,7 +3,7 @@ import config from "../../../config/config";
 import {RefreshTokenModel} from "../../../sequelize-models/erd-api/RefreshToken.model";
 import logger from "../../../utils/logger";
 import {jwtVerify} from "jose";
-import {IAuthorizedUser} from "../../../types/express";
+import {AuthorizedUser} from "../../../types/express";
 import {createAccessToken, createRefreshToken} from "../../../utils/generateTokens.util";
 import {UserModel} from "../../../sequelize-models/erd-api/User.model";
 import {errorHandler, internalErrorHandler} from "../../../utils/errorHandler";
@@ -48,7 +48,7 @@ export const refresh: PostRequest = async (req, res) => {
   // Detected refresh token reuse!
   if (!foundRefreshToken) {
     try {
-      const {payload} = await jwtVerify<IAuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
+      const {payload} = await jwtVerify<AuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
 
       logger.warn('Attempted refresh token reuse!');
 
@@ -76,7 +76,7 @@ export const refresh: PostRequest = async (req, res) => {
 
   // evaluate jwt
   try {
-    const {payload} = await jwtVerify<IAuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
+    const {payload} = await jwtVerify<AuthorizedUser>(refreshToken, config.jwt.refresh_token.secret)
     const user = await UserModel.findByPk(payload.id)
 
 
