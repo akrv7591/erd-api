@@ -2,10 +2,15 @@ import {Server} from "@hocuspocus/server";
 import config from "../config/config";
 import expressWebsockets from "express-ws";
 import {createErdData, ErdSharedType, updateErdData} from "./collaboration";
+import {redis} from "./extensions/redis";
+import {SERVER_ID} from "../constants/server";
+
 
 export const initiateHocusPocus = (app: expressWebsockets.Application) => {
   const hocuspocusServer = Server.configure({
+    name: SERVER_ID,
     port: config.server.port,
+    extensions: [redis],
 
     async onAuthenticate(obj) {
       console.log("Token: ", obj.token)

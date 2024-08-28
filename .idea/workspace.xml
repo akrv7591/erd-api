@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="packages updated">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="applied entity count change on saving erd">
+      <change afterPath="$PROJECT_DIR$/src/constants/server.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hocuspocus/extensions/redis.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hocuspocus/collaboration/updateErdData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hocuspocus/collaboration/updateErdData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/erd.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/erd.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/hocuspocus.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hocuspocus/hocuspocus.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="Generating..." />
     <option name="SHOW_DIALOG" value="false" />
@@ -270,15 +274,7 @@
       <workItem from="1723445769791" duration="831000" />
       <workItem from="1723530897512" duration="647000" />
       <workItem from="1723593583496" duration="1898000" />
-      <workItem from="1724662110562" duration="13055000" />
-    </task>
-    <task id="LOCAL-00074" summary="added endpoint.ts constants">
-      <option name="closed" value="true" />
-      <created>1710893556905</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1710893556905</updated>
+      <workItem from="1724662110562" duration="15769000" />
     </task>
     <task id="LOCAL-00075" summary="added s3 config keys">
       <option name="closed" value="true" />
@@ -664,7 +660,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724819173557</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="applied entity count change on saving erd">
+      <option name="closed" value="true" />
+      <created>1724820047995</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1724820047995</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -694,7 +698,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated pagination middleware" />
     <MESSAGE value="exported RequestValidationSchema type" />
     <MESSAGE value="update IAuthorizedUser type" />
     <MESSAGE value="added test suite pagination.ts" />
@@ -719,6 +722,7 @@
     <MESSAGE value="fixed package json" />
     <MESSAGE value="fixed types" />
     <MESSAGE value="packages updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="packages updated" />
+    <MESSAGE value="applied entity count change on saving erd" />
+    <option name="LAST_COMMIT_MESSAGE" value="applied entity count change on saving erd" />
   </component>
 </project>

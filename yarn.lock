@@ -551,13 +551,6 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@hocuspocus/common@^2.13.1":
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/common/-/common-2.13.1.tgz#8bc5b7629c4810befcf9ecd0d2ae5ac02dec48b3"
-  integrity sha512-LN5h8+zaU+JlohCYHfKQmi500FyS76A7VtytacQ7iK6J+BKuTX2UhoKUCiWNkiIxv+fEsETQfdOjOmALSYFJPw==
-  dependencies:
-    lib0 "^0.2.87"
-
 "@hocuspocus/common@^2.13.5":
   version "2.13.5"
   resolved "https://registry.yarnpkg.com/@hocuspocus/common/-/common-2.13.5.tgz#ecf4a5cf63d5266701fa1874bef4b82b833afc37"
@@ -565,36 +558,24 @@
   dependencies:
     lib0 "^0.2.87"
 
-"@hocuspocus/extension-logger@^2.13.1":
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/extension-logger/-/extension-logger-2.13.1.tgz#99ceb7be77e8353c6010a24f13a774e0cdf58e12"
-  integrity sha512-n/Z7IFYy4OePUv6mTp6hpXYmvl5C8JjAl5+7jI8Ith2FSBX1zK9EnjFL+nFHZq2lYWEyUbajZuokKATfHrlVNA==
+"@hocuspocus/extension-logger@^2.13.5":
+  version "2.13.5"
+  resolved "https://registry.yarnpkg.com/@hocuspocus/extension-logger/-/extension-logger-2.13.5.tgz#9105b32b38e7f9d1240db7acf01e556ea1618e60"
+  integrity sha512-RwmBQo9O2sW4dHPFHdAc6IvBHXBSPknZmmgPTStIXi/zUaJxtxXfrjM0jrs0KLWixBnAKnpgf/yiU3YHXV5UoQ==
   dependencies:
-    "@hocuspocus/server" "^2.13.1"
+    "@hocuspocus/server" "^2.13.5"
 
-"@hocuspocus/extension-redis@^2.13.1":
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/extension-redis/-/extension-redis-2.13.1.tgz#6015347351863998173fb19b797a593239edfe80"
-  integrity sha512-BRHRzASlMzueAmGFHekd8EM5lLhQIHnsZV8LleTcbfEGZpyAnP1FT6DHGZmuYsxakirRA+ZvQWT9UDcUWRpSfg==
+"@hocuspocus/extension-redis@^2.13.5":
+  version "2.13.5"
+  resolved "https://registry.yarnpkg.com/@hocuspocus/extension-redis/-/extension-redis-2.13.5.tgz#31503de2660cc8c443691dc416897ba5ec95934a"
+  integrity sha512-2wShUgOVXOUd2jd+ncmK3Wd/PUUwrIWNp17XZg/YD6L6kNSNvqPKo0vPmaT4uCekhVO6qPYX3fsLgX2j2hMyUQ==
   dependencies:
-    "@hocuspocus/server" "^2.13.1"
+    "@hocuspocus/server" "^2.13.5"
     ioredis "^4.28.2"
     kleur "^4.1.4"
     lodash.debounce "^4.0.8"
     redlock "^4.2.0"
-    uuid "^9.0.0"
-
-"@hocuspocus/server@^2.13.1":
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/server/-/server-2.13.1.tgz#0a9a42d3e0cc1deeeb05cccf8f62ae94cef6ed50"
-  integrity sha512-+fUpePcP5NRPKF7r4akwguf+NtEhmTlD29MFVXxDR01N4bEi4SghCLZ3gQV3ayYgkQ3mXfSAxOwIVXvixJOthQ==
-  dependencies:
-    "@hocuspocus/common" "^2.13.1"
-    async-lock "^1.3.1"
-    kleur "^4.1.4"
-    lib0 "^0.2.47"
-    uuid "^9.0.0"
-    ws "^8.5.0"
+    uuid "^10.0.0"
 
 "@hocuspocus/server@^2.13.5":
   version "2.13.5"
