@@ -4,46 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="added yjs, y-webrtc packages">
-      <change afterPath="$PROJECT_DIR$/src/hocuspocus/collaboration/createErdData.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hocuspocus/collaboration/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hocuspocus/collaboration/updateErdData.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hocuspocus/collaboration/util/applyObjToYjs.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hocuspocus/collaboration/util/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hocuspocus/hocuspocus.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hocuspocus/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="Applied hocuspocus logic to handle yjs changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/ERDFactory.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/MultiplayerWorker.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/column-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/entity-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/erd-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/memo-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/node-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/player-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/services/relation-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/department/multiplayer/type.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/ERDFactory/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/entity-router/entityCount.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/entity-router/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/erdList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/erdList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Column.model.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Entity.model.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Memo.mode.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Relation.model.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/User.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="Generating..." />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +60,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "com.codeium.enabled": "true",
-    "git-widget-placeholder": "socket-io-2-y-webrtc",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -106,7 +69,7 @@
     "nodejs.jest.jest_package": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api/node_modules/jest",
     "nodejs_package_manager_path": "yarn",
     "settings.editor.selected.configurable": "settings.typescriptcompiler",
-    "ts.external.directory.path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/node_modules/typescript/lib",
+    "ts.external.directory.path": "/Users/akrv/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -306,15 +269,7 @@
       <workItem from="1723445769791" duration="831000" />
       <workItem from="1723530897512" duration="647000" />
       <workItem from="1723593583496" duration="1898000" />
-      <workItem from="1724662110562" duration="8965000" />
-    </task>
-    <task id="LOCAL-00067" summary="Fixed IMemo type">
-      <option name="closed" value="true" />
-      <created>1710398953386</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1710398953386</updated>
+      <workItem from="1724662110562" duration="9925000" />
     </task>
     <task id="LOCAL-00068" summary="fixed virtual data object">
       <option name="closed" value="true" />
@@ -700,7 +655,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718330491572</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="Applied hocuspocus logic to handle yjs changes">
+      <option name="closed" value="true" />
+      <created>1724815953958</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1724815953958</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -718,7 +681,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactored&#10;/middleware/logger.ts -&gt; utils/logger.ts, &#10;/middleware/errorHandler.ts -&gt; utils/errorHandler.ts" />
     <MESSAGE value="added test for authorization.ts" />
     <MESSAGE value="added authLimiter to authRouter" />
     <MESSAGE value="added LIMIT_NOT_VALID,&#10;OFFSET_NOT_VALID enums" />
@@ -743,6 +705,7 @@
     <MESSAGE value="added workspace" />
     <MESSAGE value="Generating..." />
     <MESSAGE value="added yjs, y-webrtc packages" />
-    <option name="LAST_COMMIT_MESSAGE" value="added yjs, y-webrtc packages" />
+    <MESSAGE value="Applied hocuspocus logic to handle yjs changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Applied hocuspocus logic to handle yjs changes" />
   </component>
 </project>
