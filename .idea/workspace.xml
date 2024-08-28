@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed package json">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="fixed types">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth-router/refresh.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/env.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/env.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/express.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/express.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/playground.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/response.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/response.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/express.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/express.d.ts" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="Generating..." />
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +89,7 @@
       <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.pagination middleware">
+  <component name="RunManager" selected="Docker.Dockerfile">
     <configuration name="authorization middleware" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -116,19 +111,6 @@
       <test-file value="$PROJECT_DIR$/__test__/middleware/pagination.test.ts" />
       <test-names>
         <test-name value="pagination middleware" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="pagination middleware.should have default req.pagination.limit and req.pagination.offset if req.query.limit and req.query.offset is not provided" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/__test__/middleware/pagination.test.ts" />
-      <test-names>
-        <test-name value="pagination middleware" />
-        <test-name value="should have default req.pagination.limit and req.pagination.offset if req.query.limit and req.query.offset is not provided" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -157,13 +139,25 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="Jest.pagination middleware" />
         <item itemvalue="Jest.authorization middleware" />
         <item itemvalue="Jest.validate middleware.should call errorHandler if validation fails" />
         <item itemvalue="Jest.validate middleware" />
-        <item itemvalue="Jest.pagination middleware.should have default req.pagination.limit and req.pagination.offset if req.query.limit and req.query.offset is not provided" />
       </list>
     </recent_temporary>
   </component>
@@ -274,15 +268,7 @@
       <workItem from="1723445769791" duration="831000" />
       <workItem from="1723530897512" duration="647000" />
       <workItem from="1723593583496" duration="1898000" />
-      <workItem from="1724662110562" duration="10855000" />
-    </task>
-    <task id="LOCAL-00070" summary="added virtual selected field for Column.model.ts">
-      <option name="closed" value="true" />
-      <created>1710736953724</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1710736953724</updated>
+      <workItem from="1724662110562" duration="11380000" />
     </task>
     <task id="LOCAL-00071" summary="removed Entity type column">
       <option name="closed" value="true" />
@@ -668,7 +654,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724817056935</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="fixed types">
+      <option name="closed" value="true" />
+      <created>1724817829841</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1724817829841</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -686,7 +680,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added LIMIT_NOT_VALID,&#10;OFFSET_NOT_VALID enums" />
     <MESSAGE value="added internal error to API_ERRORS in COMMON namespace" />
     <MESSAGE value="updated pagination middleware" />
     <MESSAGE value="exported RequestValidationSchema type" />
@@ -711,6 +704,7 @@
     <MESSAGE value="Applied hocuspocus logic to handle yjs changes" />
     <MESSAGE value="ts-node to dependencies" />
     <MESSAGE value="fixed package json" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed package json" />
+    <MESSAGE value="fixed types" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed types" />
   </component>
 </project>
