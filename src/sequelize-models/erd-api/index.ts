@@ -8,11 +8,7 @@ import {ResetTokenModel} from "./ResetToken.model";
 import {TeamModel} from "./Team.model";
 import {UserTeamModel} from "./UserTeam.model";
 import {ErdModel} from "./Erd.model";
-import {EntityModel} from "./Entity.model";
-import {ColumnModel} from "./Column.model";
-import {RelationModel} from "./Relation.model";
 import {TeamErdModel} from "./TeamErd.model";
-import {MemoModel} from "./Memo.mode";
 import {ProfileModel} from "./Profile.model";
 import {StaticFileModel} from "./StaticFile";
 
@@ -32,11 +28,7 @@ export const erdSequelize = new Sequelize({
     TeamModel,
     UserTeamModel,
     ErdModel,
-    EntityModel,
-    ColumnModel,
-    RelationModel,
     TeamErdModel,
-    MemoModel,
     ProfileModel,
     StaticFileModel,
   ]

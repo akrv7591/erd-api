@@ -41,6 +41,9 @@ export const erdList: ListRequest<RequestParams, RequestQuery> = async (req, res
         ...req.pagination?.where,
         ...where,
       },
+      attributes: {
+        exclude: ["data"]
+      }
     })
 
     res.json(data)

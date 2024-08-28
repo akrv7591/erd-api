@@ -5,3 +5,4 @@ logs/
 coverage/
 data
 .idea/
+yarn-error.log

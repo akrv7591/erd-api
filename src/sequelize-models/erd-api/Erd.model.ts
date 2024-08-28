@@ -1,10 +1,7 @@
 import {Optional} from "sequelize";
-import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {EntityModel, IEntityModel,} from "./Entity.model";
-import {IRelationModel, RelationModel} from "./Relation.model";
 import {ITeamModel, TeamModel} from "./Team.model";
-import {IMemoModel, MemoModel} from "./Memo.mode";
 
 export interface IErdModel {
   id: string
@@ -15,14 +12,14 @@ export interface IErdModel {
   isPublic: boolean;
   tableNameCase: "snake" | "pascal" | "camel";
   columnNameCase: "snake" | "camel";
+  data: Object
+  entityCount: number
 
+  // Foreign key
   teamId: string
 
   //Relations
   team?: ITeamModel
-  entities?: IEntityModel[]
-  relations?: IRelationModel[]
-  memos?: IMemoModel[]
 }
 
 export interface ICErdModel extends Optional<IErdModel, 'id' | 'createdAt' | 'description'> {
@@ -77,6 +74,20 @@ export class ErdModel extends Model<IErdModel, ICErdModel> {
   })
   declare columnNameCase: "snake" | "camel";
 
+  @Column({
+    type: DataType.JSON,
+    allowNull: false,
+  })
+  declare data: Object
+
+  @Column({
+    type: DataType.INTEGER.UNSIGNED,
+    defaultValue: () => 0,
+    allowNull: false
+  })
+  declare entityCount: number
+
+  // Foreign keys
   @ForeignKey(() => TeamModel)
   @Column({
     type: DataType.STRING,
@@ -88,21 +99,20 @@ export class ErdModel extends Model<IErdModel, ICErdModel> {
   @BelongsTo(() => TeamModel)
   declare team: TeamModel
 
-  @HasMany(() => EntityModel, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE"
-  })
-  declare entities: EntityModel[]
-
-  @HasMany(() => RelationModel, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE"
-  })
-  declare relations: RelationModel[]
-
-  @HasMany(() => MemoModel, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE"
-  })
-  declare memos: MemoModel[]
+  toYDocData() {
+    const erd = this.toJSON()
+    return {
+      erd: {
+        id: erd.id,
+        name: erd.name,
+        description: erd.description,
+        isPublic: erd.isPublic,
+        tableNameCase: erd.tableNameCase,
+        columnNameCase: erd.columnNameCase,
+      },
+      ...erd.data
+      // nodes: [],
+      // relations: []
+    }
+  }
 }

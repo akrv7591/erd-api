@@ -1,5 +1,4 @@
 import express from "express";
-import entityRouter from "./entity-router";
 import {erdDeleteSchema, erdDetailSchema, erdUpsertSchema} from "../../../validations/erd";
 import {ERD} from "../../../constants/erd";
 import {pagination} from "../../../middleware/pagination";
@@ -11,11 +10,6 @@ import validate from "../../../middleware/validate";
 
 const erdRouter = express.Router()
 
-erdRouter.use(
-  ERD.ENDPOINTS.erdEntityRouter,
-  validate(erdDetailSchema),
-  entityRouter
-)
 erdRouter.get(
   ERD.ENDPOINTS.erdDetail,
   validate(erdDetailSchema),

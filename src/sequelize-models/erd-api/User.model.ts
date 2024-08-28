@@ -8,7 +8,6 @@ import {IResetTokenModel, ResetTokenModel} from "./ResetToken.model";
 import {ICTeamModel, ITeamModel, TeamModel} from "./Team.model";
 import {ICUserTeamModel, IUserTeamModel, UserTeamModel} from "./UserTeam.model";
 import {ROLE} from "../../enums/role";
-import {IMemoModel, MemoModel} from "./Memo.mode";
 import {IProfileModel, ProfileModel} from "./Profile.model";
 
 
@@ -28,7 +27,6 @@ export interface IUserModel {
   refreshTokens?: IRefreshTokenModel[]
   resetTokens?: IResetTokenModel[]
   teams?: ITeamModel[]
-  memos?: IMemoModel[]
   profile?: IProfileModel
   UserTeam?: IUserTeamModel
 }
@@ -134,12 +132,6 @@ export class UserModel extends Model<IUserModel, ICUserModel> {
     onDelete: 'CASCADE'
   })
   declare resetTokens: ResetTokenModel[]
-
-  @HasMany(() => MemoModel, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL"
-  })
-  declare memos: MemoModel[]
 
   @HasOne(() => ProfileModel, {
     onUpdate: "CASCADE",
