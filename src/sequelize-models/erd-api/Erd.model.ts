@@ -110,7 +110,10 @@ export class ErdModel extends Model<IErdModel, ICErdModel> {
         tableNameCase: erd.tableNameCase,
         columnNameCase: erd.columnNameCase,
       },
-      ...erd.data
+      ...erd.data as {
+        nodes: Record<string, any>,
+        edges: Record<string, any>
+      }
       // nodes: [],
       // relations: []
     }
