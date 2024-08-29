@@ -6,47 +6,55 @@ import {teamUpsert} from "./teamUpsert";
 import {teamDelete} from "./teamDelete";
 import {teamDetail} from "./teamDetail";
 import {teamUserList} from "./teamUserList";
-import {teamUserPermission} from "./teamUserPermission";
 import {teamDeleteUser} from "./teamDeleteUser";
-import {putTeamSchema, teamDeleteUserSchema, teamDetailOrDeleteSchema, teamIdSchema} from "../../../validations/team";
+import {teamSchemas} from "../../../validations/team";
 import {TEAM} from "../../../constants/team";
+import {teamInviteUser} from "./teamInviteUser";
+import {teamUserDetail} from "./teamUserDetail";
 
-
-const teamRouter = express.Router()
+const teamRouter = express.Router({mergeParams: true})
 
 teamRouter.get(
-  TEAM.ENDPOINTS.teamUserList,
-  validate(teamIdSchema),
+  TEAM.ENDPOINTS.teamUserDetail,
+  validate(teamSchemas.userTeamDetail),
+  teamUserDetail
+)
+
+teamRouter.post(
+  TEAM.ENDPOINTS.inviteUser,
+  validate(teamSchemas.inviteUser),
+  teamInviteUser
+)
+teamRouter.get(
+  TEAM.ENDPOINTS.userList,
+  validate(teamSchemas.teamId),
   teamUserList
 )
-teamRouter.get(
-  TEAM.ENDPOINTS.teamUserPermission,
-  validate(teamIdSchema),
-  teamUserPermission
-)
+
 teamRouter.delete(
-  TEAM.ENDPOINTS.teamDeleteUser,
-  validate(teamDeleteUserSchema),
+  TEAM.ENDPOINTS.deleteUser,
+  validate(teamSchemas.userDelete),
   teamDeleteUser
 )
+
+teamRouter.get(
+  TEAM.ENDPOINTS.detail,
+  validate(teamSchemas.teamId),
+  teamDetail
+)
 teamRouter.delete(
-  TEAM.ENDPOINTS.teamDelete,
-  validate(teamDetailOrDeleteSchema),
+  TEAM.ENDPOINTS.delete,
+  validate(teamSchemas.teamId),
   teamDelete
 )
 teamRouter.get(
-  TEAM.ENDPOINTS.teamDetail,
-  validate(teamDetailOrDeleteSchema),
-  teamDetail
-)
-teamRouter.get(
-  TEAM.ENDPOINTS.teamList,
+  TEAM.ENDPOINTS.list,
   pagination({searchFields: ['name'], like: true}),
   teamList
 )
 teamRouter.put(
-  TEAM.ENDPOINTS.teamUpsert,
-  validate(putTeamSchema),
+  TEAM.ENDPOINTS.upsert,
+  validate(teamSchemas.put),
   teamUpsert
 )
 

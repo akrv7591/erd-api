@@ -13,7 +13,7 @@ export const pagination: Pagination = ({searchFields, like = true}) => async (re
     q,
     limit = 10,
     offset = 0,
-    order = ['createdAt', 'DESC'],
+    order = [['createdAt', 'DESC']],
   } = req.query;
 
   // Check if the query string is valid and search fields exist

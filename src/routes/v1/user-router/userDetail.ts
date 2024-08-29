@@ -18,7 +18,6 @@ export const userDetail: GetRequest<UserDetailParams> = async (req, res) => {
       },
       include: [{
         model: ProfileModel,
-
         include: [StaticFileModel]
       }]
     })

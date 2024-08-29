@@ -1,17 +1,11 @@
-/**
- * This function sends an email to the given email invitation link
- *
- * @param {string} email - The email of the user-router
- * @param {IUser} user - The email verification token
- */
 import config from "../../config/config";
 import transporter from "../../config/nodemailer";
 import logger from "../logger";
-import { UserModel } from "../../sequelize-models/erd-api/User.model";
+import {UserModel} from "../../sequelize-models/erd-api/User.model";
 import {TeamModel} from "../../sequelize-models/erd-api/Team.model";
 
 
-export const sendUserInvitationEmail = (user: UserModel, team: TeamModel) => {
+export const sendUserInvitationEmail = async (user: UserModel, team: TeamModel) => {
   const verifyLink = `${config.client.url}/team/${team.id}/join`;
   const mailOptions = {
     from: config.email.from,
@@ -422,12 +416,17 @@ export const sendUserInvitationEmail = (user: UserModel, team: TeamModel) => {
   };
 
   console.log("TRYING TO SEND EMAIL")
-  transporter?.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      logger.error(error);
-    } else {
-      logger.info('Verify email sent: ' + info.response);
-    }
-  });
+  return new Promise((resolve, reject) => {
+    transporter?.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        reject(error)
+        logger.error(error);
+      } else {
+        resolve(info)
+        logger.info('Verify email sent: ' + info.response);
+      }
+    });
+  })
+
 };
 

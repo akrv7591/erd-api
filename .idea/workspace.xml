@@ -4,9 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="updated packages and applied redis">
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="ws package is upgraded to =&gt; 8.18.0">
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamInviteUser.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserDetail.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/team.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/team.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/pagination.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/pagination.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/erdDetail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/erdDetail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/erdList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/erdList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserPermission.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/user-router/userDetail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/user-router/userDetail.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/response.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/response.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/email/sendUserInvitation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/email/sendUserInvitation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/errorHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/errorHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/team.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/team.ts" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="Generating..." />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +81,7 @@
     "WebServerToolWindowFactoryState": "false",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/api",
+    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/src/routes/v1/team-router",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,11 +95,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routes/v1/team-router" />
       <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
       <recent name="$PROJECT_DIR$/__test__/middleware" />
       <recent name="$PROJECT_DIR$/src/validations" />
       <recent name="$PROJECT_DIR$/src/sequelize-models/erd-api" />
-      <recent name="$PROJECT_DIR$/dist" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/hocuspocus" />
@@ -149,7 +168,9 @@
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile" />
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -269,15 +290,8 @@
       <workItem from="1723445769791" duration="831000" />
       <workItem from="1723530897512" duration="647000" />
       <workItem from="1723593583496" duration="1898000" />
-      <workItem from="1724662110562" duration="17354000" />
-    </task>
-    <task id="LOCAL-00076" summary="added s3Util and s3Util.initS3 added to init">
-      <option name="closed" value="true" />
-      <created>1710893639101</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1710893639101</updated>
+      <workItem from="1724662110562" duration="26000000" />
+      <workItem from="1724893301208" duration="7046000" />
     </task>
     <task id="LOCAL-00077" summary="updated team apis">
       <option name="closed" value="true" />
@@ -663,7 +677,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724823666141</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="ws package is upgraded to =&gt; 8.18.0">
+      <option name="closed" value="true" />
+      <created>1724825599255</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1724825599255</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -693,7 +715,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update IAuthorizedUser type" />
     <MESSAGE value="added test suite pagination.ts" />
     <MESSAGE value="added test suite validate.ts" />
     <MESSAGE value="fixed pagination apis" />
@@ -718,6 +739,7 @@
     <MESSAGE value="packages updated" />
     <MESSAGE value="applied entity count change on saving erd" />
     <MESSAGE value="updated packages and applied redis" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated packages and applied redis" />
+    <MESSAGE value="ws package is upgraded to =&gt; 8.18.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="ws package is upgraded to =&gt; 8.18.0" />
   </component>
 </project>

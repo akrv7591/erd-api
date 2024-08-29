@@ -1,9 +1,9 @@
-import httpStatus from "http-status";
 import {ErdModel, IErdModel} from "../../../sequelize-models/erd-api/Erd.model";
 import {WhereOptions} from "sequelize";
 import {TeamModel} from "../../../sequelize-models/erd-api/Team.model";
 import {UserTeamModel} from "../../../sequelize-models/erd-api/UserTeam.model";
 import {ListRequest} from "../../../types/types";
+import {internalErrorHandler} from "../../../utils/errorHandler";
 
 interface RequestParams {}
 
@@ -48,7 +48,6 @@ export const erdList: ListRequest<RequestParams, RequestQuery> = async (req, res
 
     res.json(data)
   } catch (e) {
-    console.error(e)
-    res.status(httpStatus.INTERNAL_SERVER_ERROR)
+    internalErrorHandler(res, e)
   }
 }

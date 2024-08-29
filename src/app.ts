@@ -4,7 +4,6 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import compressFilter from './utils/compressFilter.util';
-import { internalErrorHandler } from './utils/errorHandler';
 import config from './config/config';
 import { xssMiddleware } from './middleware/xssMiddleware';
 import routes from "./routes";
@@ -37,7 +36,6 @@ export const initApp = (app: expressWebsockets.Application) => {
   );
 
   app.use("/api", routes)
-  app.use(internalErrorHandler);
 
 
   // app.all('*', (req, res) => {

@@ -91,4 +91,7 @@ export class UserTeamModel extends Model<IUserTeamModel, ICUserTeamModel> {
 
   @BelongsTo(() => TeamModel)
   declare team: TeamModel
+
+  @BelongsTo(() => UserModel)
+  declare user: UserModel
 }

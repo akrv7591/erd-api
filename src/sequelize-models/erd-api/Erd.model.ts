@@ -77,6 +77,7 @@ export class ErdModel extends Model<IErdModel, ICErdModel> {
   @Column({
     type: DataType.JSON,
     allowNull: false,
+    defaultValue: () => ({nodes: {}, edges: {}}),
   })
   declare data: Object
 

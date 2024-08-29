@@ -7,9 +7,8 @@ export const internalErrorHandler = (
   res: Response,
   err: Error | any,
 ): void => {
-  logger.error(err);
-
-  res.status(HttpStatusCode.InternalServerError).json({message: err.message});
+  logger.warn(err);
+  res.sendStatus(HttpStatusCode.InternalServerError);
 };
 
 

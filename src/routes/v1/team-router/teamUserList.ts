@@ -21,6 +21,7 @@ export const teamUserList: ListRequest<TeamUserListParams, TeamUserListQuery> = 
           id: req.params.teamId
         },
         required: true,
+        attributes: []
       }]
     })
 
