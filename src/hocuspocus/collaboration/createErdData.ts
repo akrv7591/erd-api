@@ -11,5 +11,9 @@ export const createErdData = async (erdId: string, ymap: YMap<unknown>) => {
 
   const jsonData = erd.toYDocData()
 
+  if (!jsonData.entityConfigs) {
+    jsonData.entityConfigs = {}
+  }
+
   applyObjToYjs(ymap, jsonData)
 }

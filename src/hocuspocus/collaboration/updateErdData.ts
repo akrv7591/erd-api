@@ -9,10 +9,7 @@ export const updateErdData = async (erdId: string, ymap: Y.Map<ErdSharedType>) =
 
   await ErdModel.update({
     ...erd,
-    data: {
-      ...data,
-      clients: {}
-    },
+    data,
     entityCount
   }, {
     where: {
