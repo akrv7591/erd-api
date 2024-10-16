@@ -1,14 +1,16 @@
 export namespace TEAM {
   export const ENDPOINTS = {
     teamUserDetail: "/:teamId/user/:userId",
+    deleteUserFromTeam: "/:teamId/users/:userId",
     inviteUser: "/:teamId/user-invite",
-    userList: "/:teamId/user",
+    userList: "/:teamId/users",
     userPermission: "/:teamId/user-permission",
     deleteUser: "/:teamId/delete-user/:userId",
     delete: "/:teamId",
     detail: "/:teamId",
     list: "",
-    upsert: "",
+    add: "",
+    update: "/:teamId",
   }
 
   export enum API_ERRORS {

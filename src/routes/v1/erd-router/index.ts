@@ -1,35 +1,31 @@
-import express from "express";
-import {erdDeleteSchema, erdDetailSchema, erdUpsertSchema} from "../../../validations/erd";
-import {ERD} from "../../../constants/erd";
-import {pagination} from "../../../middleware/pagination";
-import {erdList} from "./erdList";
-import {erdUpsert} from "./erdUpsert";
-import {erdDelete} from "./erdDelete";
-import {erdDetail} from "./erdDetail";
+import {Router} from "express";
+import {list} from "./list";
+import {erdSchemas} from "../../../validations/erd-schemas";
 import validate from "../../../middleware/validate";
+import {addOrUpdate} from "./add-or-update";
+import {remove} from "./remove";
+import {S3Util} from "../../../utils/s3Util";
 
-const erdRouter = express.Router()
+const erdRouter = Router({mergeParams: true})
 
 erdRouter.get(
-  ERD.ENDPOINTS.erdDetail,
-  validate(erdDetailSchema),
-  erdDetail
+  "",
+  list
 )
-erdRouter.delete(
-  ERD.ENDPOINTS.erdDelete,
-  validate(erdDeleteSchema),
-  erdDelete
-)
-erdRouter.get(
-  ERD.ENDPOINTS.erdList,
-  pagination({searchFields: ['name'], like: true}),
-  erdList
-)
+
 erdRouter.put(
-  ERD.ENDPOINTS.erdUpsert,
-  validate(erdUpsertSchema),
-  erdUpsert
+  "",
+  S3Util.fileUpload("erds/thumbnails/").single("file"),
+  validate(erdSchemas.addOrUpdate),
+  addOrUpdate
 )
 
+erdRouter.delete(
+  "/:erdId",
+  validate(erdSchemas.remove),
+  remove
+)
 
-export default erdRouter
+export {
+  erdRouter
+}

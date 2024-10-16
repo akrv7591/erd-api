@@ -1,22 +1,19 @@
 import * as dotenv from 'dotenv';
 import path from 'path';
 import Joi from 'joi';
+import {createRemoteJWKSet} from "jose";
+import {CustomEnvValues} from "../types/env";
+import * as process from "node:process";
 
 dotenv.config({
   path: path.resolve(__dirname, '../../.env')
 });
 
-const envSchema = Joi.object().keys({
-  NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
-  PORT: Joi.string().required().default('4000'),
+const envSchema = Joi.object<CustomEnvValues>().keys({
+  PORT: Joi.number().required().default('4000'),
   SERVER_URL: Joi.string().required(),
   CLIENT_URL: Joi.string().required(),
   CORS_ORIGIN: Joi.string().required().default('*'),
-  ACCESS_TOKEN_SECRET: Joi.string().min(8).required(),
-  ACCESS_TOKEN_EXPIRE: Joi.string().required().default('20m'),
-  REFRESH_TOKEN_SECRET: Joi.string().min(8).required(),
-  REFRESH_TOKEN_EXPIRE: Joi.string().required().default('1d'),
-  REFRESH_TOKEN_COOKIE_NAME: Joi.string().required().default('jid'),
   DB_USERNAME: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
   DB_HOST: Joi.string().required(),
@@ -34,23 +31,36 @@ const envSchema = Joi.object().keys({
   S3_ACCESS_KEY: Joi.string().required(),
   S3_SECRET_KEY: Joi.string().required(),
   S3_BUCKET: Joi.string().required(),
-  S3_BASE_URL: Joi.string().required()
+  S3_ENDPOINT: Joi.string().required(),
+  LOG_TO_ENDPOINT: Joi.string().required(),
+  LOG_TO_APP_ID: Joi.string().required(),
+  LOG_TO_APP_SECRET: Joi.string().required(),
+
 });
 
-const { value: validatedEnv, error } = envSchema
+
+const result = envSchema
   .prefs({ errors: { label: 'key' } })
   .validate(process.env, { abortEarly: false, stripUnknown: true });
 
-if (error) {
+if (result.error) {
   throw new Error(
-    `Environment variable validation error: \n${error.details
+    `Environment variable validation error: \n${result.error.details
       .map((detail) => detail.message)
       .join('\n')}`
   );
 }
 
+if (!result.value) {
+  throw new Error(
+    `Environment variable there are no values`
+  );
+}
+
+const validatedEnv = result.value
+
 const config = {
-  node_env: validatedEnv.NODE_ENV,
+  node_env: process.env['NODE_ENV'],
   server: {
     port: validatedEnv.PORT,
     url: validatedEnv.SERVER_URL
@@ -60,17 +70,6 @@ const config = {
   },
   cors: {
     cors_origin: validatedEnv.CORS_ORIGIN
-  },
-  jwt: {
-    access_token: {
-      secret: new TextEncoder().encode(validatedEnv.ACCESS_TOKEN_SECRET),
-      expire: validatedEnv.ACCESS_TOKEN_EXPIRE
-    },
-    refresh_token: {
-      secret: new TextEncoder().encode(validatedEnv.REFRESH_TOKEN_SECRET),
-      expire: validatedEnv.REFRESH_TOKEN_EXPIRE,
-      cookie_name: validatedEnv.REFRESH_TOKEN_COOKIE_NAME
-    }
   },
   email: {
     smtp: {
@@ -102,8 +101,16 @@ const config = {
     access_key: validatedEnv.S3_ACCESS_KEY,
     secret_key: validatedEnv.S3_SECRET_KEY,
     bucket: validatedEnv.S3_BUCKET,
-    base_url: validatedEnv.S3_BASE_URL,
-    end_point: validatedEnv.S3_BASE_URL.split("//")[1]
+    base_url: "https://" + validatedEnv.S3_ENDPOINT,
+    end_point: validatedEnv.S3_ENDPOINT
+  },
+  logTo: {
+    endpoint: validatedEnv.LOG_TO_ENDPOINT,
+    appId: validatedEnv.LOG_TO_APP_ID,
+    appSecret: validatedEnv.LOG_TO_APP_SECRET,
+    jwks: createRemoteJWKSet(new URL(`${validatedEnv.LOG_TO_ENDPOINT}/oidc/jwks`)),
+    issuer: `${validatedEnv.LOG_TO_ENDPOINT}/oidc`
+
   }
 } as const;
 

@@ -7,12 +7,14 @@ import expressWebsockets from "express-ws";
 import express from "express";
 import {initApp} from "./app";
 import {initiateHocusPocus} from "./hocuspocus";
+import {LogToService} from "./services/logto";
 
 
 (async () => {
   await Promise.all([
     ErdiagramlySequelize.initSequelize(),
     S3Util.initS3(),
+    LogToService.init(),
   ])
 
   const {app} = expressWebsockets(express())

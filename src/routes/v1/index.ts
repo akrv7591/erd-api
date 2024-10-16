@@ -1,23 +1,23 @@
 import express from "express";
 import userRouter from "./user-router";
-import authRouter from "./auth-router";
-import verifyEmailRouter from "./verify-email";
-import passwordRouter from "./password-router";
-import teamRouter from "./team-router";
-import erdRouter from "./erd-router";
-import authorization from "../../middleware/authorization";
-import authLimiter from "../../middleware/authLimiter";
-
+import {teamRouter} from "./team-router";
+import {logToWebhookRouter} from "./logto-webhook-router";
+import {logToAuth} from "../../middleware/logtoAuth";
+import teamInvitationRouter from "./team-invitation";
+import {rolesRouter} from "./roles-router";
+import {erdRouter} from "./erd-router";
+import {staticRouter} from "./static-router";
 
 const router = express.Router()
 
-router.use("/auth", authLimiter, authRouter)
-router.use("/users", authorization, userRouter)
-router.use("/team", authorization, teamRouter)
-router.use("/erd", authorization, erdRouter)
-
-router.use("", verifyEmailRouter)
-router.use("", passwordRouter)
+router.use("/logto-webhook", logToWebhookRouter)
+router.use(logToAuth)
+router.use("/users", userRouter)
+router.use("/teams", teamRouter)
+router.use("/team-invitations", teamInvitationRouter)
+router.use("/roles", rolesRouter)
+router.use("/erds", erdRouter)
+router.use("/static-files", staticRouter)
 
 
 export default router

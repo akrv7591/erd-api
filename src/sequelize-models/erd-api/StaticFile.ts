@@ -1,29 +1,31 @@
 import {Optional} from "sequelize";
 import {Column, DataType, HasOne, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {createId} from "@paralleldrive/cuid2";
-import {IProfileModel, ProfileModel} from "./Profile.model";
 import config from "../../config/config";
+import {Erd, IErd} from "./Erd";
 
-export interface IStaticFileModel {
+export interface IStaticFile {
   id: string;
   key: string;
   mime: string;
   name: string;
+  url: string;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date | null;
 
   // Relations
-  profile?: IProfileModel
+  erd?: IErd[]
 }
 
-export interface ICStaticFileModel extends Optional<IStaticFileModel, 'id' | 'createdAt' | 'updatedAt'> {}
-
-
+export interface ICStaticFile extends Optional<IStaticFile, 'id' | 'createdAt' | 'updatedAt' | 'url'> {}
 @Table({
-  modelName: "StaticFileModel",
+  modelName: "StaticFile",
   tableName: "StaticFile",
+  paranoid: true,
+  deletedAt: true
 })
-export class StaticFileModel extends Model<IStaticFileModel, ICStaticFileModel> {
+export class StaticFile extends Model<IStaticFile, ICStaticFile> {
   @PrimaryKey
   @Column({
     type: DataType.STRING,
@@ -51,11 +53,11 @@ export class StaticFileModel extends Model<IStaticFileModel, ICStaticFileModel> 
   })
   declare name: string;
 
-  @HasOne(() => ProfileModel, {
+  @HasOne(() => Erd, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE"
+    onDelete: "SET NULL"
   })
-  declare profile: IProfileModel;
+  declare erd: Erd;
 
   // Virtual fields
   @Column(DataType.VIRTUAL)

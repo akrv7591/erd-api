@@ -54,7 +54,7 @@ export type ListResponse = {
 
 // CRUD requests
 
-export type ListRequest<Params = {}, Query = {}> = RequestHandler<Params, ListResponse, {}, PaginationRequestQuery<Query>>
+export type ListRequest<Params = {}, Response = {}, Query = {}> = RequestHandler<Params, Response, {}, PaginationRequestQuery<Query>>
 export type PostRequest<Params = {}, Body = {}> = RequestHandler<Params, {}, Body>
 export type GetRequest<Params = {}> = RequestHandler<Params>
 export type PutRequest<Params = {}, Body = {}> = RequestHandler<Params, {}, Body>

@@ -1,73 +1,45 @@
 import Joi from 'joi';
 import {isCuid} from "@paralleldrive/cuid2";
-import {PutTeamBody} from "../routes/v1/team-router/teamUpsert";
-import {TeamDeleteUserBody, TeamDeleteUserParams} from "../routes/v1/team-router/teamDeleteUser";
-import {TeamUserInviteBody, TeamUserInviteParams} from "../routes/v1/team-router/teamInviteUser";
-import {ROLE} from "../enums/role";
-import {TeamUserDetailParams} from "../routes/v1/team-router/teamUserDetail";
+import {AddTeamBody} from "../routes/v1/team-router/add";
+import {UpdateTeamBody, UpdateTeamParams} from "../routes/v1/team-router/update";
+import {DeleteTeamParams} from "../routes/v1/team-router/remove";
+import {DeleteUserFromTeamParams} from "../routes/v1/team-router/user-router/remove";
+import {UpdateTeamUserRoleBody, UpdateTeamUserRoleParams} from "../routes/v1/team-router/user-router/update-role";
+import {TeamUserListParams} from "../routes/v1/team-router/user-router/list";
 
-const teamId = {
-  params: Joi.object().keys({
-    teamId: Joi.string().required().custom(value => isCuid(value)).messages({
-      'string.base': 'Team id must be a string',
-      'string.custom': 'Team id must be a valid cuid',
-    }),
-  }),
-};
-
-
-const put = {
-  body: Joi.object<PutTeamBody>().keys({
-    id: Joi.string().required().custom(value => isCuid(value)).messages({
-      'string.base': 'Team id must be a string',
-      'string.custom': 'Team id must be a valid cuid',
-    }),
+const add = {
+  body: Joi.object<AddTeamBody>().keys({
     name: Joi.string().required().messages({
       'string.base': 'Name must be a string',
     }),
-    users: Joi.array().default([]).messages({
-      'array.base': 'Users must be an array',
-    })
+    description: Joi.string().default("").min(0),
   })
 }
 
-const userDelete = {
-  params: Joi.object<TeamDeleteUserParams>().keys({
-    teamId: Joi.string().required().custom(value => isCuid(value)).messages({
+const update = {
+  params: Joi.object<UpdateTeamParams>().keys({
+    teamId: Joi.string().required().messages({
       'string.base': 'Team id must be a string',
-      'string.custom': 'Team id must be a valid cuid',
     })
   }),
-  body: Joi.object<TeamDeleteUserBody>().keys({
-    userId: Joi.string().required().custom(value => isCuid(value)).messages({
-      'string.base': 'User id must be a string',
-      'string.custom': 'User id must be a valid cuid',
-    })
+  body: Joi.object<UpdateTeamBody>().keys({
+    name: Joi.string().required().messages({
+      'string.base': 'Name must be a string',
+    }),
+    description: Joi.string().min(0)
   })
 }
 
-const inviteUser = {
-  params: Joi.object<TeamUserInviteParams>().keys({
-    teamId: Joi.string().required().custom(value => isCuid(value)).messages({
+const deleteSchema = {
+  params: Joi.object<DeleteTeamParams>().keys({
+    teamId: Joi.string().required().messages({
       'string.base': 'Team id must be a string',
-      'string.custom': 'Team id must be a valid cuid',
     })
   }),
-  body: Joi.object<TeamUserInviteBody>().keys({
-    email: Joi.string().required().email().messages(({
-      'string.base': "Email should be string",
-      'string.custom': "Email should be valid email"
-    })),
-    role: Joi.string().required().custom(value => value in ROLE).messages({
-      'string.base': "Role should be string",
-      'string.custom': "Role should be one of ROLE constant"
-    })
-  })
 }
 
-
-const userTeamDetail = {
-  params: Joi.object<TeamUserDetailParams>().keys({
+const removeUser = {
+  params: Joi.object<DeleteUserFromTeamParams>().keys({
     teamId: Joi.string().required().custom(value => isCuid(value)).messages({
       'string.base': 'Team id must be a string',
       'string.custom': 'Team id must be a valid cuid',
@@ -76,13 +48,44 @@ const userTeamDetail = {
       'string.base': 'User id must be a string',
       'string.custom': 'User id must be a valid cuid',
     })
+  }),
+}
+
+const updateTeamUserRole = {
+  params: Joi.object<UpdateTeamUserRoleParams>().keys({
+    teamId: Joi.string().required().custom(value => isCuid(value)).messages({
+      'string.base': 'Team id must be a string',
+      'string.custom': 'Team id must be a valid cuid',
+    }),
+    userId: Joi.string().required().custom(value => isCuid(value)).messages({
+      'string.base': 'User id must be a string',
+      'string.custom': 'User id must be a valid cuid',
+    })
+  }),
+  body: Joi.object<UpdateTeamUserRoleBody>().keys({
+    roleId: Joi.string().required().custom(value => isCuid(value)).messages({
+      'string.base': 'Role id must be a string',
+      'string.custom': 'Role id must be a valid cuid',
+    }),
+  }),
+}
+
+const userList = {
+  params: Joi.object<TeamUserListParams>().keys({
+    teamId: Joi.string().required().custom(value => isCuid(value)).messages({
+      'string.base': 'Team id must be a string',
+      'string.custom': 'Team id must be a valid cuid',
+    }),
   }),
 }
 
 export const teamSchemas = {
-  teamId,
-  put,
-  userDelete,
-  inviteUser,
-  userTeamDetail,
+  add,
+  update,
+  delete: deleteSchema,
+  userSchemas: {
+    updateRole: updateTeamUserRole,
+    remove: removeUser,
+    list: userList
+  }
 }

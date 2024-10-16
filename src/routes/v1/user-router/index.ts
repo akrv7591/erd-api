@@ -1,23 +1,17 @@
-import express from "express";
-import {S3Util} from "../../../utils/s3Util";
-import {userDetail} from "./userDetail";
-import {userPatch} from "./userPatch";
-import validate from "../../../middleware/validate";
-import {userDetailOrPatchSchema} from "../../../validations/user";
+import {Router} from "express";
+import {teamList} from "./team-list";
+import {detail} from "./detail";
 
-const userRouter = express.Router({mergeParams: true})
+const userRouter = Router({mergeParams: true})
+
+userRouter.get(
+  "/teams",
+  teamList,
+)
 
 userRouter.get(
   "/:userId",
-  validate(userDetailOrPatchSchema),
-  userDetail
-)
-
-userRouter.patch(
-  "/:userId",
-  validate(userDetailOrPatchSchema),
-  S3Util.fileUpload("user/profile/").single("profilePicture"),
-  userPatch
+  detail
 )
 
 export default userRouter

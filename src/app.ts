@@ -13,10 +13,10 @@ export const initApp = (app: expressWebsockets.Application) => {
   // Helmet is used to secure this app by configuring the http-header
   app.use(helmet());
 
-// parse json request body
+  // parse json request body
   app.use(express.json());
 
-// parse urlencoded request body
+  // parse urlencoded request body
   app.use(express.urlencoded({ extended: true }));
 
   app.use(xssMiddleware());

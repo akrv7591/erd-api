@@ -36,4 +36,5 @@
     "noUnusedParameters": false,
     "forceConsistentCasingInFileNames": true,
   },
+  "exclude": ["dist"]
 }
