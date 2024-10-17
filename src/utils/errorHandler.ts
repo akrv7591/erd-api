@@ -24,6 +24,7 @@ export const errorHandler = (
 export const axiosErrorHandler = (res: Response, error: any): void => {
   if (axios.isAxiosError(error)) {
     if (error.response?.status) {
+      logger.error(error.message)
       res.sendStatus(error.response.status)
     } else {
       internalErrorHandler(res, error)
