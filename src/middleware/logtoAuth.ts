@@ -12,6 +12,8 @@ export const logToAuth: RequestHandler = async (req, res, next) => {
     // Extract the token using the helper function defined above
     const token = extractBearerTokenFromHeaders(req.headers);
 
+    console.log(token)
+
     const { payload } = await jwtVerify<Authorization>(
       // The raw Bearer Token extracted from the request header
       token,
@@ -44,6 +46,5 @@ export const logToAuth: RequestHandler = async (req, res, next) => {
       default:
         return internalErrorHandler(res, e)
     }
-
   }
 };
