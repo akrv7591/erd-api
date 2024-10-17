@@ -1,6 +1,6 @@
 import {GetRequest} from "../../../types/types";
 import {LogToService} from "../../../services/logto";
-import {internalErrorHandler} from "../../../utils/errorHandler";
+import {axiosErrorHandler} from "../../../utils/errorHandler";
 
 export const rolesList: GetRequest = async (req, res) => {
   try {
@@ -8,6 +8,6 @@ export const rolesList: GetRequest = async (req, res) => {
 
     res.json(rolesList)
   } catch (e) {
-    internalErrorHandler(res, e)
+    axiosErrorHandler(res, e)
   }
 }
