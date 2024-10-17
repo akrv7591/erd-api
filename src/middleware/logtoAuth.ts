@@ -3,6 +3,7 @@ import {extractBearerTokenFromHeaders} from "../utils/tokenUtils";
 import {RequestHandler} from "express";
 import config from "../config/config";
 import {Authorization} from "../types/express";
+import {internalErrorHandler} from "../utils/errorHandler";
 
 const {logTo, server} = config
 
@@ -41,7 +42,7 @@ export const logToAuth: RequestHandler = async (req, res, next) => {
         return res.sendStatus(401)
 
       default:
-        return res.sendStatus(500)
+        return internalErrorHandler(res, e)
     }
 
   }

@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 const routes = express.Router()
 
 routes.use((req, res, next) => {
-  console.log(`${dayjs().toISOString()} ${req.method.toUpperCase()}: ${req.statusCode} ${req.url}`)
+  console.log(`${dayjs().toISOString()} ${req.method.toUpperCase()}: ${req.url}`)
   next()
 })
 routes.get("/health-check", (_, res) => {
