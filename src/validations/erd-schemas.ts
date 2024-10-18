@@ -13,7 +13,6 @@ const addOrUpdate = {
     entityCount: Joi.number().required(),
     teamId: Joi.string().required(),
     userId: Joi.string().required(),
-    thumbnailId: Joi.string().default(null)
   })
 }
 

@@ -13,6 +13,7 @@ export const addOrUpdate: PutRequest<{}, ErdAddOrUpdateBody> = async (req, res) 
 
   try {
     transaction = await erdSequelize.transaction()
+
     const [data, created] = await Erd.upsert(icErd, {transaction})
     const file = req.file as Express.MulterMinIOStorage.File
 
