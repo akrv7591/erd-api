@@ -80,7 +80,7 @@ export class Erd extends Model<IErd, ICErd> {
   @Column({
     type: DataType.JSON,
     allowNull: false,
-    defaultValue: () => ({nodes: {}, edges: {}}),
+    defaultValue: () => ({nodes: [], edges: []}),
   })
   declare data: Object
 
@@ -113,25 +113,4 @@ export class Erd extends Model<IErd, ICErd> {
   // Relations
   @BelongsTo(() => StaticFile)
   declare thumbnail: StaticFile
-
-  // Custom Methods
-
-  toYDocData() {
-    const erd = this.toJSON()
-    return {
-      erd: {
-        id: erd.id,
-        name: erd.name,
-        description: erd.description,
-        isPublic: erd.isPublic,
-        tableNameCase: erd.tableNameCase,
-        columnNameCase: erd.columnNameCase,
-      },
-      ...erd.data as {
-        nodes: Record<string, any>
-        edges: Record<string, any>
-        entityConfigs: Record<string, any>
-      }
-    }
-  }
 }

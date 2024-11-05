@@ -4,28 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="ws package is upgraded to =&gt; 8.18.0">
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamInviteUser.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserDetail.ts" afterDir="false" />
+    <list default="true" id="f3ccf44b-27cb-4542-9e3b-f5bfc02f524f" name="Changes" comment="- Removed required thumbnailId from team validations">
+      <change afterPath="$PROJECT_DIR$/src/constants/reactflow.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redis/redisClient.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/detail.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/socket-io/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/socket-io/listeners.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/socket-io/socket-io-middlewares.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/broadcast-data.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/socket-io.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/BroadcastDataUtils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/QueueManager.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/RedisUtils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/RoomUpdateQueue.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/team.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/team.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/pagination.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/pagination.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/server.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/socket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/socket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/collaboration/createErdData.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/collaboration/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/collaboration/updateErdData.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/collaboration/util/applyObjToYjs.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/collaboration/util/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/extensions/redis.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/hocuspocus.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hocuspocus/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/logtoAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/logtoAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redis/multiplayerRedisClient.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/erdDetail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/erdDetail.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/erdList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/erdList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/team-router/teamUserPermission.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/v1/user-router/userDetail.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/user-router/userDetail.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/UserTeam.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/response.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/response.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/email/sendUserInvitation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/email/sendUserInvitation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/errorHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/errorHandler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/multiplayerControllerBase.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/team.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/team.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/erd-router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/socket/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/erd-schemas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/erd-schemas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <list id="cb807120-2791-4332-a94a-3b67148a0d77" name="not tracked" comment="Generating..." />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +96,7 @@
     "WebServerToolWindowFactoryState": "false",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/src/routes/v1/team-router",
+    "last_opened_file_path": "/Users/akrv/Dev/Nodejs/personal/erdiagramly/src/utils",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -95,18 +110,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/utils" />
+      <recent name="$PROJECT_DIR$/src/routes/v1/static-router" />
+      <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
+      <recent name="$PROJECT_DIR$/src/routes/v1/user-router" />
       <recent name="$PROJECT_DIR$/src/routes/v1/team-router" />
-      <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
-      <recent name="$PROJECT_DIR$/__test__/middleware" />
-      <recent name="$PROJECT_DIR$/src/validations" />
-      <recent name="$PROJECT_DIR$/src/sequelize-models/erd-api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routes/v1/team-router/user-router" />
+      <recent name="$PROJECT_DIR$/src/types" />
       <recent name="$PROJECT_DIR$/src/hocuspocus" />
       <recent name="$PROJECT_DIR$/src/factories/ERDFactory" />
       <recent name="$PROJECT_DIR$/src/utils" />
-      <recent name="$PROJECT_DIR$/src/socket/multiplayer" />
-      <recent name="$PROJECT_DIR$/src/routes/v1/erd-router" />
     </key>
   </component>
   <component name="RunManager" selected="Docker.Dockerfile">
@@ -186,7 +201,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-WS-242.20224.426" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23726.96" />
       </set>
     </attachedChunks>
   </component>
@@ -291,79 +306,32 @@
       <workItem from="1723530897512" duration="647000" />
       <workItem from="1723593583496" duration="1898000" />
       <workItem from="1724662110562" duration="26000000" />
-      <workItem from="1724893301208" duration="7046000" />
-    </task>
-    <task id="LOCAL-00077" summary="updated team apis">
-      <option name="closed" value="true" />
-      <created>1710923158423</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1710923158423</updated>
-    </task>
-    <task id="LOCAL-00078" summary="removed console.log">
-      <option name="closed" value="true" />
-      <created>1710988407654</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1710988407654</updated>
-    </task>
-    <task id="LOCAL-00079" summary="update Erd list api">
-      <option name="closed" value="true" />
-      <created>1710988427175</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1710988427175</updated>
-    </task>
-    <task id="LOCAL-00080" summary="added file upload function">
-      <option name="closed" value="true" />
-      <created>1711097605084</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1711097605084</updated>
-    </task>
-    <task id="LOCAL-00081" summary="removed readme">
-      <option name="closed" value="true" />
-      <created>1711345574667</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1711345574668</updated>
-    </task>
-    <task id="LOCAL-00082" summary="added isPasswordSetColumn to User model">
-      <option name="closed" value="true" />
-      <created>1711354303824</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1711354303824</updated>
-    </task>
-    <task id="LOCAL-00083" summary="added set password api">
-      <option name="closed" value="true" />
-      <created>1711354326812</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1711354326812</updated>
-    </task>
-    <task id="LOCAL-00084" summary="auth api and email verification api is updated">
-      <option name="closed" value="true" />
-      <created>1711420746876</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1711420746876</updated>
-    </task>
-    <task id="LOCAL-00085" summary="auth api endpoints moved to Auth namespace">
-      <option name="closed" value="true" />
-      <created>1711421523315</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1711421523315</updated>
+      <workItem from="1724893301208" duration="23819000" />
+      <workItem from="1724994642848" duration="3344000" />
+      <workItem from="1725496957162" duration="11809000" />
+      <workItem from="1725600582631" duration="19000" />
+      <workItem from="1725604168812" duration="2237000" />
+      <workItem from="1725860173987" duration="19449000" />
+      <workItem from="1726013037914" duration="6998000" />
+      <workItem from="1726032038238" duration="11181000" />
+      <workItem from="1726186492929" duration="17818000" />
+      <workItem from="1726801438979" duration="619000" />
+      <workItem from="1726819591031" duration="630000" />
+      <workItem from="1727050041593" duration="31865000" />
+      <workItem from="1727397665746" duration="7136000" />
+      <workItem from="1727425574637" duration="2268000" />
+      <workItem from="1728351150967" duration="1244000" />
+      <workItem from="1728540313643" duration="5685000" />
+      <workItem from="1728977459764" duration="4353000" />
+      <workItem from="1728982356003" duration="12595000" />
+      <workItem from="1729131500914" duration="1205000" />
+      <workItem from="1729153289637" duration="6252000" />
+      <workItem from="1729751837858" duration="2114000" />
+      <workItem from="1729818590259" duration="5910000" />
+      <workItem from="1730275070126" duration="19270000" />
+      <workItem from="1730418856986" duration="4291000" />
+      <workItem from="1730679048158" duration="11000" />
+      <workItem from="1730765064933" duration="3258000" />
     </task>
     <task id="LOCAL-00086" summary="email-verification api endpoints moved to EmailVerification namespace">
       <option name="closed" value="true" />
@@ -685,11 +653,176 @@
       <option name="project" value="LOCAL" />
       <updated>1724825599255</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="updated apis logic">
+      <option name="closed" value="true" />
+      <created>1724901344614</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1724901344614</updated>
+    </task>
+    <task id="LOCAL-00127" summary="added entityConfigs logic">
+      <option name="closed" value="true" />
+      <created>1724994769626</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1724994769626</updated>
+    </task>
+    <task id="LOCAL-00128" summary="authentication and routes is changed">
+      <option name="closed" value="true" />
+      <created>1729063498616</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1729063498617</updated>
+    </task>
+    <task id="LOCAL-00129" summary="updated internal errorHandler.ts">
+      <option name="closed" value="true" />
+      <created>1729125196970</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1729125196970</updated>
+    </task>
+    <task id="LOCAL-00130" summary="updated error handler">
+      <option name="closed" value="true" />
+      <created>1729125749844</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1729125749844</updated>
+    </task>
+    <task id="LOCAL-00131" summary="updated error handler">
+      <option name="closed" value="true" />
+      <created>1729126137438</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1729126137438</updated>
+    </task>
+    <task id="LOCAL-00132" summary="updated error handler">
+      <option name="closed" value="true" />
+      <created>1729126853988</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1729126853988</updated>
+    </task>
+    <task id="LOCAL-00133" summary="updated error handler">
+      <option name="closed" value="true" />
+      <created>1729128220146</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1729128220146</updated>
+    </task>
+    <task id="LOCAL-00134" summary="- Removed required thumbnailId from team validations">
+      <option name="closed" value="true" />
+      <created>1729220313864</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1729220313864</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/dist/services/y-websocket/index.js" />
+        <option value="$PROJECT_DIR$/dist/services/y-websocket/index.d.ts" />
+        <option value="$PROJECT_DIR$/dist/services/y-websocket/index.js.map" />
+        <option value="$PROJECT_DIR$/src/routes/index.js" />
+        <option value="$PROJECT_DIR$/src/constants/socket.js" />
+        <option value="$PROJECT_DIR$/src/constants/team-invitation.js" />
+        <option value="$PROJECT_DIR$/src/constants/common.js" />
+        <option value="$PROJECT_DIR$/src/constants/emailVerification.js" />
+        <option value="$PROJECT_DIR$/src/constants/reactflow.js" />
+        <option value="$PROJECT_DIR$/src/constants/erd.js" />
+        <option value="$PROJECT_DIR$/src/constants/team.js" />
+        <option value="$PROJECT_DIR$/src/constants/user.js" />
+        <option value="$PROJECT_DIR$/src/constants/password.js" />
+        <option value="$PROJECT_DIR$/src/constants/auth.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/user-router/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/user-router/detail.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/user-router/team-list.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/roles-router/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/roles-router/rolesList.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/logto-webhook-router/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/logto-webhook-router/userCreated.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/app.js" />
+        <option value="$PROJECT_DIR$/src/enums/multiplayer.js" />
+        <option value="$PROJECT_DIR$/src/enums/log-to.js" />
+        <option value="$PROJECT_DIR$/src/enums/role.js" />
+        <option value="$PROJECT_DIR$/src/enums/node-type.js" />
+        <option value="$PROJECT_DIR$/src/config/nodemailer.js" />
+        <option value="$PROJECT_DIR$/src/config/cookieConfig.js" />
+        <option value="$PROJECT_DIR$/src/config/config.js" />
+        <option value="$PROJECT_DIR$/src/middleware/authLimiter.js" />
+        <option value="$PROJECT_DIR$/src/middleware/pagination.js" />
+        <option value="$PROJECT_DIR$/src/middleware/xssMiddleware.js" />
+        <option value="$PROJECT_DIR$/src/middleware/logtoAuth.js" />
+        <option value="$PROJECT_DIR$/src/middleware/validate.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/index.js" />
+        <option value="$PROJECT_DIR$/src/sequelize-models/erd-api/index.js" />
+        <option value="$PROJECT_DIR$/src/sequelize-models/erd-api/Erd.js" />
+        <option value="$PROJECT_DIR$/src/sequelize-models/erd-api/StaticFile.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/add.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/remove.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/update.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/list.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-invitation/invitationList.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-invitation/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-invitation/invitationJoin.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-invitation/inviteUser.js" />
+        <option value="$PROJECT_DIR$/src/redis/redisClient.js" />
+        <option value="$PROJECT_DIR$/src/utils/sendEmail.util.js" />
+        <option value="$PROJECT_DIR$/src/utils/s3Util.js" />
+        <option value="$PROJECT_DIR$/src/utils/RoomUpdateQueue.js" />
+        <option value="$PROJECT_DIR$/src/utils/sanitize.util.js" />
+        <option value="$PROJECT_DIR$/src/utils/RedisUtils.js" />
+        <option value="$PROJECT_DIR$/src/utils/QueueManager.js" />
+        <option value="$PROJECT_DIR$/src/utils/logger.js" />
+        <option value="$PROJECT_DIR$/src/utils/compressFilter.util.js" />
+        <option value="$PROJECT_DIR$/src/utils/errorHandler.js" />
+        <option value="$PROJECT_DIR$/src/utils/BroadcastDataUtils.js" />
+        <option value="$PROJECT_DIR$/src/utils/tokenUtils.js" />
+        <option value="$PROJECT_DIR$/src/api/logTo.js" />
+        <option value="$PROJECT_DIR$/src/types/team-invitation.js" />
+        <option value="$PROJECT_DIR$/src/types/types.js" />
+        <option value="$PROJECT_DIR$/src/types/response.js" />
+        <option value="$PROJECT_DIR$/src/types/organization-role.js" />
+        <option value="$PROJECT_DIR$/src/types/broadcast-data.js" />
+        <option value="$PROJECT_DIR$/src/types/team.js" />
+        <option value="$PROJECT_DIR$/src/types/log-to.js" />
+        <option value="$PROJECT_DIR$/src/types/socket-io.js" />
+        <option value="$PROJECT_DIR$/src/types/env.js" />
+        <option value="$PROJECT_DIR$/src/validations/team-invitation.js" />
+        <option value="$PROJECT_DIR$/src/validations/user.js" />
+        <option value="$PROJECT_DIR$/src/validations/erd-schemas.js" />
+        <option value="$PROJECT_DIR$/src/validations/team.js" />
+        <option value="$PROJECT_DIR$/src/services/logto/index.js" />
+        <option value="$PROJECT_DIR$/src/services/socket-io/listeners.js" />
+        <option value="$PROJECT_DIR$/src/services/socket-io/index.js" />
+        <option value="$PROJECT_DIR$/src/services/socket-io/socket-io-middlewares.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/erd-router/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/erd-router/detail.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/erd-router/remove.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/erd-router/add-or-update.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/erd-router/list.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/static-router/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/static-router/staticDetail.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/user-router/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/user-router/update-role.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/user-router/remove.js" />
+        <option value="$PROJECT_DIR$/src/routes/v1/team-router/user-router/list.js" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -715,12 +848,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added test suite pagination.ts" />
-    <MESSAGE value="added test suite validate.ts" />
-    <MESSAGE value="fixed pagination apis" />
-    <MESSAGE value="Fixed pagination.test.ts" />
-    <MESSAGE value="updated RequestHandlers" />
-    <MESSAGE value="fixed tests" />
     <MESSAGE value="big update performance" />
     <MESSAGE value="docker node fixed" />
     <MESSAGE value="fixed Dockerfile" />
@@ -740,6 +867,12 @@
     <MESSAGE value="applied entity count change on saving erd" />
     <MESSAGE value="updated packages and applied redis" />
     <MESSAGE value="ws package is upgraded to =&gt; 8.18.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="ws package is upgraded to =&gt; 8.18.0" />
+    <MESSAGE value="updated apis logic" />
+    <MESSAGE value="added entityConfigs logic" />
+    <MESSAGE value="authentication and routes is changed" />
+    <MESSAGE value="updated internal errorHandler.ts" />
+    <MESSAGE value="updated error handler" />
+    <MESSAGE value="- Removed required thumbnailId from team validations" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Removed required thumbnailId from team validations" />
   </component>
 </project>

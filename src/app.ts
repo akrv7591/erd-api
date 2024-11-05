@@ -7,9 +7,9 @@ import compressFilter from './utils/compressFilter.util';
 import config from './config/config';
 import { xssMiddleware } from './middleware/xssMiddleware';
 import routes from "./routes";
-import expressWebsockets from "express-ws";
+import {Application} from "express";
 
-export const initApp = (app: expressWebsockets.Application) => {
+export const initApp = (app: Application) => {
   // Helmet is used to secure this app by configuring the http-header
   app.use(helmet());
 

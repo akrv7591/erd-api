@@ -1,11 +1,11 @@
 import express from "express";
 import v1 from "./v1";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 
 const routes = express.Router()
 
 routes.use((req, res, next) => {
-  console.log(`${dayjs().toISOString()} ${req.method.toUpperCase()}: ${req.url}`)
+  // console.log(`${dayjs().toISOString()} ${req.method.toUpperCase()}: ${req.url}`)
   next()
 })
 routes.get("/health-check", (_, res) => {

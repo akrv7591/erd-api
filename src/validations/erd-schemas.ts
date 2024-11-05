@@ -1,6 +1,7 @@
 import Joi from "joi";
 import {ErdAddOrUpdateBody} from "../routes/v1/erd-router/add-or-update";
 import {ErdRemoveParams} from "../routes/v1/erd-router/remove";
+import { ErdDetailParams } from "src/routes/v1/erd-router/detail";
 
 const addOrUpdate = {
   body: Joi.object<ErdAddOrUpdateBody>().keys({
@@ -16,6 +17,12 @@ const addOrUpdate = {
   })
 }
 
+const detail = {
+  params: Joi.object<ErdDetailParams>().keys({
+    erdId: Joi.string().required()
+  })
+}
+
 const remove = {
   params: Joi.object<ErdRemoveParams>().keys({
     erdId: Joi.string().required()
@@ -24,5 +31,6 @@ const remove = {
 
 export const erdSchemas = {
   addOrUpdate,
+  detail,
   remove
 }
