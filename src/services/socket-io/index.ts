@@ -5,6 +5,8 @@ import { SOCKET } from "../../constants/socket";
 import {socketIoMiddlewares} from "./socket-io-middlewares";
 import {RedisUtils} from "../../utils/RedisUtils";
 import {generateListeners} from "./listeners";
+import {createAdapter} from "@socket.io/redis-streams-adapter";
+import {redisClient} from "../../redis/redisClient";
 
 export class SocketIo {
   io: SocketIoServer
@@ -14,6 +16,7 @@ export class SocketIo {
       cors: {
         origin: "*"
       },
+      adapter: createAdapter(redisClient)
     })
     this.init()
   }
