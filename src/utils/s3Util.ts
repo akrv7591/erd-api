@@ -38,13 +38,13 @@ export class S3Util {
       const bucketExists = await S3Util.getInstance().bucketExists(config.s3.bucket)
 
       if (!bucketExists) {
-        this.s3Client().makeBucket(config.s3.bucket, (error) => {
-          if (error) {
-            console.error(error)
-          } else {
-            console.log(config.s3.bucket + " bucket created")
-          }
-        })
+        try {
+          await this.s3Client().makeBucket(config.s3.bucket)
+          console.log(config.s3.bucket + " bucket created")
+        } catch (error) {
+          console.error(error)
+        }
+
       } else {
         console.log("🎉 S3 CONNECTION SUCCESS")
       }
