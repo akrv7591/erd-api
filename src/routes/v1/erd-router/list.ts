@@ -13,7 +13,7 @@ export const list: ListRequest<{}, {}, ErdListQuery> = async (req, res) => {
   try {
     const data = await Erd.findAll({
       where: {
-        teamId
+        teamId,
       },
       attributes: {
         exclude: ['data']

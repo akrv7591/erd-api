@@ -7,11 +7,13 @@ import teamInvitationRouter from "./team-invitation";
 import {rolesRouter} from "./roles-router";
 import {erdRouter} from "./erd-router";
 import {staticRouter} from "./static-router";
+import { meRouter } from "./me";
 
 const router = express.Router()
 
 router.use("/logto-webhook", logToWebhookRouter)
 router.use(logToAuth)
+router.use("/me", meRouter)
 router.use("/users", userRouter)
 router.use("/teams", teamRouter)
 router.use("/team-invitations", teamInvitationRouter)
