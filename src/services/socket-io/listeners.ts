@@ -2,11 +2,11 @@ import {SocketIoServer, Socket} from "../../types/socket-io";
 import {SOCKET} from "../../constants/socket";
 import {DataBroadcast} from "../../types/broadcast-data";
 import {RedisUtils} from "../../utils/RedisUtils";
-import {RoomUpdateQueue} from "../../utils/RoomUpdateQueue";
+import { RoomQueue } from "../rooms-queue";
 
 export const generateListeners = (io: SocketIoServer, socket: Socket) => {
   const {roomId} = socket.data
-  const {queueManager} = RoomUpdateQueue.getInstance(roomId)
+  const {queueManager} = RoomQueue.getInstance(roomId)
 
   const handleDisconnect = () => {
     console.log("User disconnected: ", socket.data.socketId)

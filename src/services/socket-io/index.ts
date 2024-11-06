@@ -28,6 +28,8 @@ export class SocketIo {
   }
 
   handleConnection = async (socket: Socket) => {
+    console.log("User connected: ", socket.data.socketId)
+
     await socket.join(socket.data.roomId)
     socket.to(socket.data.roomId).emit(SOCKET.USER.JOIN, socket.data)
 
