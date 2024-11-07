@@ -1,5 +1,5 @@
 import {NODE_TYPES} from "../enums/node-type";
-import {DATA_BROADCAST_TYPE} from "../constants/reactflow";
+import { BROADCAST } from "../namespaces/broadcast";
 export type EdgeBase<EdgeData extends Record<string, unknown> = Record<string, unknown>, EdgeType extends string | undefined = string | undefined> = {
   /** Unique id of an edge */
   id: string;
@@ -207,31 +207,49 @@ export type MemoNode = NodeBase<MemoData, NODE_TYPES.MEMO>
 
 export type NodeType = EntityNode | MemoNode
 
+export type EntityConfig =  EntityNode['data'] & {
+  userId: string
+}
 
-export type DataBroadcast =
-  | {
-  type: DATA_BROADCAST_TYPE.REACTFLOW_NODE_CHANGE;
+type ReactflowNodeChange = {
+  type: BROADCAST.DATA.TYPE.REACTFLOW_NODE_CHANGE;
+  server?: boolean
   value: NodeChange<NodeType>[];
-  server?: boolean
 }
-  | {
-  type: DATA_BROADCAST_TYPE.NODE_DATA_UPDATE;
+
+type NodeDataUpdate = {
+  server?: boolean
+  type: BROADCAST.DATA.TYPE.NODE_DATA_UPDATE;
   value: { id: string; data: NodeType["data"] };
-  server?: boolean
 }
-  | {
-  type: DATA_BROADCAST_TYPE.CLIENT_CURSOR_CHANGE;
+
+type ClientCursorChange = {
+  type: BROADCAST.DATA.TYPE.CLIENT_CURSOR_CHANGE;
+  server?: boolean
   value: {
     peerId: string;
     cursor: XYPosition | null;
   };
-  server?: boolean
 }
-  | {
-  type: DATA_BROADCAST_TYPE.REACTFLOW_EDGE_CHANGE;
-  value: EdgeChange[];
+
+type ReactflowEdgeChange = {
+  type: BROADCAST.DATA.TYPE.REACTFLOW_EDGE_CHANGE;
   server?: boolean
-};
+  value: EdgeChange[];
+}
+
+type EntityConfigChange = {
+  type: BROADCAST.DATA.TYPE.ENTITY_CONFIG_CHANGE;
+  server?: boolean;
+  value: EntityConfig
+}
+
+export type DataBroadcast =
+  | NodeDataUpdate
+  | ReactflowNodeChange
+  | ReactflowEdgeChange
+  | ClientCursorChange
+  | EntityConfigChange
 
 // This function applies changes to nodes or edges that are triggered by React Flow internally.
 // When you drag a node for example, React Flow will send a position change update.
@@ -372,7 +390,7 @@ function applyChange(change: any, element: any): any {
  <ReactFLow nodes={nodes} edges={edges} onNodesChange={onNodesChange} />
  );
  */
-export function applyNodeChanges<N extends Node = Node>(
+export function applyNodeChanges<N extends NodeBase = NodeBase>(
   changes: NodeChange<NodeType>[],
   nodes: N[]
 ): N[] {

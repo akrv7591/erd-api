@@ -1,6 +1,6 @@
 import {redisClient} from "../redis/redisClient";
 import {Erd, IErd} from "../sequelize-models/erd-api/Erd";
-import {BroadcastDataUtils} from "./BroadcastDataUtils";
+import {BroadcastDataUtils, DataToUpdate} from "./BroadcastDataUtils";
 import {DataBroadcast} from "../types/broadcast-data";
 
 export class RedisUtils {
@@ -40,9 +40,17 @@ export class RedisUtils {
     }
   }
 
+  static async deleteErdData(erdId: string) {
+    try {
+      await RedisUtils.redis.del(RedisUtils.getErdKey(erdId))
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   static handleBroadcastDataUpdate = (roomId: string, changes: DataBroadcast[]) => async () => {
 
-      const originalData = await (async () => await RedisUtils.getErdData(roomId))()
+      const originalData = await RedisUtils.getErdData(roomId) as DataToUpdate
 
       if (!originalData) {
         console.warn("No data to update")
