@@ -80,7 +80,7 @@ export class Erd extends Model<IErd, ICErd> {
   @Column({
     type: DataType.JSON,
     allowNull: false,
-    defaultValue: () => ({nodes: [], edges: []}),
+    defaultValue: () => ({nodes: [], edges: [], configs: []}),
   })
   declare data: Object
 
