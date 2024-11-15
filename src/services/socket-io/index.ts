@@ -28,10 +28,18 @@ export class SocketIo {
   }
 
   handleConnection = async (socket: Socket) => {
-    console.log("User connected: ", socket.data.socketId)
+    console.log("User connected: ", socket.data.id)
+    const {roomId} = socket.data
+
+    const clientSockets = await this.io.in(roomId).fetchSockets()
+
+    clientSockets.forEach(s => {
+      socket.emit(SOCKET.USER.JOIN, s.data)
+    })
 
     await socket.join(socket.data.roomId)
-    socket.to(socket.data.roomId).emit(SOCKET.USER.JOIN, socket.data)
+
+    socket.to(roomId).emit(SOCKET.USER.JOIN, socket.data)
 
     const initialData = await RedisUtils.getErdData(socket.data.roomId)
 
@@ -45,7 +53,7 @@ export class SocketIo {
   }
 
   initSocketListeners = (socket: Socket) => {
-    const listeners = generateListeners(this.io, socket)
+    const listeners = generateListeners(this, socket)
 
     socket.on("disconnect", listeners.handleDisconnect)
     socket.on(SOCKET.DATA.UPDATE_DATA, listeners.handleDataUpdate)

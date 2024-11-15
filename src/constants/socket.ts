@@ -3,9 +3,14 @@ export namespace SOCKET {
     OK = "status:ok",
     FAILED = "status:failed"
   }
+
   export enum USER {
     JOIN = "user:join",
     LEFT = "user:left"
+  }
+
+  export enum CLIENT {
+    UPDATE = "client:updated"
   }
 
   export enum DATA {
