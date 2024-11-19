@@ -1,13 +1,12 @@
-FROM node:20-alpine
+FROM node:20-alpine as builder
+COPY . .
 
-WORKDIR /app
-
-# Wildcard used to copy to container "package.json" AND "package-lock.json"
-COPY ./ ./
-
-RUN yarn global add pm2
-RUN yarn install
+RUN yarn
 RUN yarn build
+
+FROM keymetrics/pm2:latest-alpine
+
+COPY --from=builder . .
 EXPOSE 3002
 
-CMD ["pm2", "start", "ecosystem.config.js"]
+CMD [ "pm2-runtime", "start", "ecosystem.config.js"]
