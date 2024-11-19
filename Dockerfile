@@ -10,4 +10,4 @@ RUN yarn install
 RUN yarn build
 EXPOSE 3002
 
-CMD ["pm2", "start", "erdiagramly"]
+CMD ["pm2", "start", "ecosystem.config.js"]
