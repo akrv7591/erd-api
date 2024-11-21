@@ -227,7 +227,7 @@ type ClientCursorChange = {
   type: BROADCAST.DATA.TYPE.CLIENT_CURSOR_CHANGE;
   server?: boolean
   value: {
-    peerId: string;
+    id: string;
     cursor: XYPosition | null;
   };
 }

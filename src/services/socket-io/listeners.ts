@@ -4,6 +4,7 @@ import { RedisUtils } from "../../utils/RedisUtils";
 import { RoomQueue } from "../rooms-queue";
 import { Erd } from "../../sequelize-models/erd-api/Erd";
 import { SocketIo } from ".";
+import {DataBroadcast} from "../../types/broadcast-data";
 
 export const generateListeners = (service: SocketIo, socket: Socket) => {
   const { roomId } = socket.data;
@@ -34,10 +35,10 @@ export const generateListeners = (service: SocketIo, socket: Socket) => {
     await erd.save();
   };
 
-  const handleDataUpdate = async (changes: string) => {
+  const handleDataUpdate = async (changes: DataBroadcast[]) => {
     socket.to(roomId).emit(SOCKET.DATA.UPDATE_DATA, changes);
     queueManager.addTask(
-      RedisUtils.handleBroadcastDataUpdate(roomId, JSON.parse(changes))
+      RedisUtils.handleBroadcastDataUpdate(roomId, changes)
     );
   };
 

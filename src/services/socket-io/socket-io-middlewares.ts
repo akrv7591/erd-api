@@ -9,7 +9,7 @@ const handleAuth: MiddleWareFn = async (socket, next) => {
 }
 
 const handleQueryValidation: MiddleWareFn = async (socket, next) => {
-  const {roomId, id, userId} = socket.handshake.query
+  const {roomId, userId} = socket.handshake.query
   let error: ExtendedError | undefined = undefined
 
   if (!roomId) {
@@ -31,25 +31,6 @@ const handleQueryValidation: MiddleWareFn = async (socket, next) => {
     socket.data.roomId = roomId
   }
 
-  if (!id) {
-    error = {
-      name: "",
-      message: "id is not available"
-    }
-  } else if (typeof id !== "string") {
-    error = {
-      name: "",
-      message: "id should be cuid2 string"
-    }
-  } else if(!isCuid(id)) {
-    error = {
-      name: "",
-      message: "id is not valid cuid"
-    }
-  } else {
-    socket.data.id = id
-  }
-
   if (!userId) {
     error = {
       name: "",
@@ -68,6 +49,9 @@ const handleQueryValidation: MiddleWareFn = async (socket, next) => {
   } else {
     socket.data.userId = userId
   }
+
+  socket.data.id = socket.id
+
   next(error)
 }
 
