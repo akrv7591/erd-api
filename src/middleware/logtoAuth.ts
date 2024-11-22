@@ -5,44 +5,41 @@ import config from "../config/config";
 import {Authorization} from "../types/express";
 import {internalErrorHandler} from "../utils/errorHandler";
 
-const {logTo, server} = config
+const {logTo, server} = config;
 
 export const logToAuth: RequestHandler = async (req, res, next) => {
   try {
-    // Extract the token using the helper function defined above
+    // Extract Bearer token from request headers
     const token = extractBearerTokenFromHeaders(req.headers);
 
+    // Verify JWT token with jwks URL and issuer/audience claims
     const { payload } = await jwtVerify<Authorization>(
-      // The raw Bearer Token extracted from the request header
       token,
       logTo.jwks,
       {
-        // Expected issuer of the token, issued by the Logto server
         issuer: logTo.issuer,
-        // Expected audience token, the resource indicator of the current API
         audience: server.url,
       }
     );
 
-    req.authorization = payload
-
-    // Sub is the user ID, used for user identification
-    // const { scope, sub } = payload;
-
-    // For role-based access control, we'll discuss it later
-    // assert(scope.split(' ').includes('read:products'));
+    // Set authorization data on request object
+    req.authorization = payload;
 
     return next();
   } catch (e: any) {
+    // Handle specific error cases for missing/invalid headers
     switch (e.message) {
       case "Authorization header is missing":
-        return res.sendStatus(401)
+        console.error(e.message)
+        return res.sendStatus(401);
 
       case "Authorization header is not in the Bearer scheme":
-        return res.sendStatus(401)
+        console.error(e.message)
+        return res.sendStatus(401);
 
       default:
-        return internalErrorHandler(res, e)
+        // Catch-all for unexpected errors and re-throw with error handler
+        return internalErrorHandler(res, e);
     }
   }
 };
