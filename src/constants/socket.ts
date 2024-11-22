@@ -6,11 +6,12 @@ export namespace SOCKET {
 
   export enum USER {
     JOIN = "user:join",
-    LEFT = "user:left"
-  }
-
-  export enum CLIENT {
-    UPDATE = "client:updated"
+    LEFT = "user:left",
+    SUBSCRIBE = "user:subscribe",
+    UNSUBSCRIBE = "user:unsubscribe",
+    SUBSCRIBED = "user:subscribe",
+    UNSUBSCRIBED = "user:ubsubscribe",
+    VIEWPORT_CHANGE = "user:viewport-change"
   }
 
   export enum DATA {
@@ -19,7 +20,5 @@ export namespace SOCKET {
     UPDATE_DATA = "data:update-data",
   }
 
-  export enum TYPE {
-    ERD = "erd",
-  }
+
 }
