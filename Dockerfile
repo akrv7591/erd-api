@@ -5,6 +5,7 @@ RUN yarn
 RUN yarn build
 
 FROM keymetrics/pm2:latest-alpine
+WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
