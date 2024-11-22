@@ -5,7 +5,7 @@ COPY . .
 RUN yarn
 RUN yarn build
 
-FROM keymetrics/pm2:latest-slim
+FROM keymetrics/pm2:18-slim
 WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
