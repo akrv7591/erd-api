@@ -3,7 +3,6 @@ export namespace SOCKET {
     OK = "status:ok",
     FAILED = "status:failed"
   }
-
   export enum USER {
     JOIN = "user:join",
     LEFT = "user:left",
@@ -11,9 +10,7 @@ export namespace SOCKET {
     UNSUBSCRIBE = "user:unsubscribe",
     SUBSCRIBED = "user:subscribe",
     UNSUBSCRIBED = "user:ubsubscribe",
-    VIEWPORT_CHANGE = "user:viewport-change",
-    CURSOR_CHANGE = "user:cursor-change",
-    NODE_DRAG = "user:node-drag",
+    VIEWPORT_CHANGE = "user:viewport-change"
   }
 
   export enum DATA {
@@ -21,6 +18,4 @@ export namespace SOCKET {
     INITIAL_DATA_NOT_FOUND = "data:initial-data-not-found",
     UPDATE_DATA = "data:update-data",
   }
-
-
 }

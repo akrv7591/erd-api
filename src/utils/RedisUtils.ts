@@ -1,7 +1,7 @@
+import { BROADCAST } from "../namespaces";
 import {redisClient} from "../redis/redisClient";
 import {Erd, IErd} from "../sequelize-models/erd-api/Erd";
 import {BroadcastDataUtils, DataToUpdate} from "./BroadcastDataUtils";
-import {DataBroadcast} from "../types/broadcast-data";
 
 export class RedisUtils {
   static redis = redisClient
@@ -48,7 +48,7 @@ export class RedisUtils {
     }
   }
 
-  static handleBroadcastDataUpdate = (roomId: string, changes: DataBroadcast[]) => async () => {
+  static handleBroadcastDataUpdate = (roomId: string, changes: BROADCAST.DATA[]) => async () => {
 
       const originalData = await RedisUtils.getErdData(roomId) as DataToUpdate
 
@@ -59,6 +59,5 @@ export class RedisUtils {
 
       const updatedData = BroadcastDataUtils.applyDataChanges(changes, originalData)
       await RedisUtils.setErdData(roomId, updatedData)
-
   }
 }

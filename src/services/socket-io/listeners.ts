@@ -1,11 +1,12 @@
-import { Socket, SocketStatusCallback } from "../../types/socket-io";
+import { Socket, SocketStatusCallback, UserCursorData } from "../../types/socket-io";
 import { SOCKET } from "../../constants/socket";
 import { RedisUtils } from "../../utils/RedisUtils";
 import { RoomQueue } from "../rooms-queue";
 import { Erd } from "../../sequelize-models/erd-api/Erd";
-import { SocketIo } from ".";
-import { DataBroadcast } from "../../types/broadcast-data";
-import { Viewport } from "src/types/diagram";
+import { SocketIo } from "./";
+import { Viewport } from "../../types/diagram";
+import { BROADCAST } from "../../namespaces";
+import { NodePositionChange } from "../../types/broadcast-data";
 
 /**
  * Generates listeners for the given socket and room.
@@ -16,6 +17,7 @@ import { Viewport } from "src/types/diagram";
 export const generateListeners = (service: SocketIo, socket: Socket) => {
   // Extract the room ID from the socket data
   const { roomId } = socket.data;
+  const roomSocket = socket.to(roomId)
 
   // Get the queue manager for the current room
   const { queueManager } = RoomQueue.getInstance(roomId);
@@ -60,11 +62,11 @@ export const generateListeners = (service: SocketIo, socket: Socket) => {
    *
    * @param changes The broadcasted data to process.
    */
-  const handleDataUpdate = async (changes: DataBroadcast[]) => {
-    // Emit 'updateData' event to connected sockets
-    socket.to(roomId).emit(SOCKET.DATA.UPDATE_DATA, changes);
+  const handleDataUpdate = async (changes: BROADCAST.DATA[]) => {
     // Add task to the queue manager for further processing
     queueManager.addTask(RedisUtils.handleBroadcastDataUpdate(roomId, changes));
+    // Emit 'updateData' event to connected sockets
+    roomSocket.emit(SOCKET.DATA.UPDATE_DATA, changes);
   };
 
   const handleSubscribe = (id: string, callback?: SocketStatusCallback) => {
@@ -80,8 +82,8 @@ export const generateListeners = (service: SocketIo, socket: Socket) => {
 
   const handleUnsubscribe = async (id: string, callback?: SocketStatusCallback) => {
     try {
-      socket.leave(id + "-room")
       socket.to(id).emit(SOCKET.USER.UNSUBSCRIBED, socket.id)
+      socket.leave(id + "-room")
       callback?.(SOCKET.STATUS.OK)
     } catch(error) {
       console.error(error)
@@ -98,11 +100,29 @@ export const generateListeners = (service: SocketIo, socket: Socket) => {
     }
   }
 
+  const handleUserCursorChange = (cursor: UserCursorData) => {
+    try {
+      roomSocket.emit(SOCKET.USER.CURSOR_CHANGE, cursor)
+    } catch(error){
+      console.error(error)
+    }
+  }
+
+  const handleUserNodeDrag = (changes: NodePositionChange[]) => {
+    try {
+      roomSocket.emit(SOCKET.USER.NODE_DRAG, changes)
+    } catch(error){
+      console.error(error)
+    }
+  }
+
   return {
     handleDisconnect,
     handleDataUpdate,
     handleSubscribe,
     handleUnsubscribe,
-    handleViewportChange
+    handleViewportChange,
+    handleUserCursorChange,
+    handleUserNodeDrag
   };
 };

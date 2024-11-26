@@ -103,5 +103,7 @@ export class SocketIo {
     socket.on(SOCKET.USER.SUBSCRIBE, listeners.handleSubscribe)
     socket.on(SOCKET.USER.UNSUBSCRIBE, listeners.handleUnsubscribe)
     socket.on(SOCKET.USER.VIEWPORT_CHANGE, listeners.handleViewportChange)
+    socket.on(SOCKET.USER.CURSOR_CHANGE, listeners.handleUserCursorChange)
+    socket.on(SOCKET.USER.NODE_DRAG, listeners.handleUserNodeDrag)
   };
 }

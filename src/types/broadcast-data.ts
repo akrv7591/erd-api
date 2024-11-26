@@ -1,5 +1,4 @@
 import {NODE_TYPES} from "../enums/node-type";
-import { BROADCAST } from "../namespaces/broadcast";
 export type EdgeBase<EdgeData extends Record<string, unknown> = Record<string, unknown>, EdgeType extends string | undefined = string | undefined> = {
   /** Unique id of an edge */
   id: string;
@@ -207,49 +206,11 @@ export type MemoNode = NodeBase<MemoData, NODE_TYPES.MEMO>
 
 export type NodeType = EntityNode | MemoNode
 
+export type EdgeType = EdgeBase
+
 export type EntityConfig =  EntityNode['data'] & {
   userId: string
 }
-
-type ReactflowNodeChange = {
-  type: BROADCAST.DATA.TYPE.REACTFLOW_NODE_CHANGE;
-  server?: boolean
-  value: NodeChange<NodeType>[];
-}
-
-type NodeDataUpdate = {
-  server?: boolean
-  type: BROADCAST.DATA.TYPE.NODE_DATA_UPDATE;
-  value: { id: string; data: NodeType["data"] };
-}
-
-type ClientCursorChange = {
-  type: BROADCAST.DATA.TYPE.CLIENT_CURSOR_CHANGE;
-  server?: boolean
-  value: {
-    id: string;
-    cursor: XYPosition | null;
-  };
-}
-
-type ReactflowEdgeChange = {
-  type: BROADCAST.DATA.TYPE.REACTFLOW_EDGE_CHANGE;
-  server?: boolean
-  value: EdgeChange[];
-}
-
-type EntityConfigChange = {
-  type: BROADCAST.DATA.TYPE.ENTITY_CONFIG_CHANGE;
-  server?: boolean;
-  value: EntityConfig
-}
-
-export type DataBroadcast =
-  | NodeDataUpdate
-  | ReactflowNodeChange
-  | ReactflowEdgeChange
-  | ClientCursorChange
-  | EntityConfigChange
 
 // This function applies changes to nodes or edges that are triggered by React Flow internally.
 // When you drag a node for example, React Flow will send a position change update.

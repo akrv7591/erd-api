@@ -1,6 +1,10 @@
 import { BROADCAST } from "../namespaces/broadcast";
-import {DataBroadcast, EdgeBase, EntityConfig, NodeType} from "../types/broadcast-data";
-import {applyEdgeChanges, applyNodeChanges} from "../types/broadcast-data";
+import { EdgeBase, EntityConfig, NodeType} from "../types/broadcast-data";
+import { REACTFLOW } from "../namespaces/broadcast/reactflow";
+import { NODE } from "../namespaces/broadcast/node";
+import { EntityUtils } from "./client/diagram/EntityUtils";
+import { ReactflowUtils } from "./client/diagram/ReactflowUtils";
+
 
 export type DataToUpdate = {
   nodes: NodeType[]
@@ -9,46 +13,43 @@ export type DataToUpdate = {
 }
 
 export class BroadcastDataUtils {
-  static applyDataChanges(changes: DataBroadcast[], dataToUpdate: DataToUpdate) {
+  static applyDataChanges(changes: BROADCAST.DATA[], updatedState: DataToUpdate) {
     changes.forEach((change) => {
-      switch (change.type) {
-        case BROADCAST.DATA.TYPE.NODE_DATA_UPDATE:
-          dataToUpdate.nodes = dataToUpdate.nodes.map((node: NodeType) => {
-            if (node.id !== change.value.id) {
-              return node
-            }
+      const { type, value } = change;
+      switch (type) {
+        // Reactflow
+        case REACTFLOW.TYPE.NODE_CHANGE:
+          ReactflowUtils.updateNodes(updatedState, value);
+          break;
+        case REACTFLOW.TYPE.EDGE_CHANGE:
+          ReactflowUtils.updateEdges(updatedState, value);
+          break;
 
-            node.data = change.value.data
-
-            return node
-          })
-          break
-
-        case BROADCAST.DATA.TYPE.REACTFLOW_NODE_CHANGE:
-          dataToUpdate.nodes = applyNodeChanges<NodeType>(change.value, dataToUpdate.nodes)
-          break
-
-        case BROADCAST.DATA.TYPE.REACTFLOW_EDGE_CHANGE:
-          dataToUpdate.edges = applyEdgeChanges(change.value, dataToUpdate.edges)
-          break
-
-        case BROADCAST.DATA.TYPE.ENTITY_CONFIG_CHANGE:
-          const userConfig = dataToUpdate.configs.find(config => config.userId === change.value.userId)
-
-          if (!userConfig) {
-            dataToUpdate.configs.push(change.value)
-          } else {
-            dataToUpdate.configs = dataToUpdate.configs.map(config => {
-              if (config.userId !== userConfig.userId) {
-                return config
-              }
-
-              return change.value
-            })
-          }
-
+        // Entity
+        case NODE.ENTITY.TYPE.CONFIG_UPDATE:
+          EntityUtils.updateConfig(updatedState, change);
+          break;
+        case NODE.ENTITY.TYPE.NAME_UPDATE:
+          EntityUtils.updateName(updatedState, change);
+          break;
+        case NODE.ENTITY.TYPE.COLOR_UPDATE:
+          EntityUtils.updateColor(updatedState, change);
+          break;
+        case NODE.ENTITY.TYPE.COLUMN_ADD:
+          EntityUtils.addColumn(updatedState, change);
+          break;
+        case NODE.ENTITY.TYPE.COLUMN_UPDATE:
+          EntityUtils.updateColumn(updatedState, change);
+          break;
+        case NODE.ENTITY.TYPE.COLUMN_DELETE:
+          EntityUtils.deleteColumn(updatedState, change);
+          break;
+        case NODE.ENTITY.TYPE.COLUMN_ORDER_UPDATE:
+          EntityUtils.updateColumnOrder(updatedState, change);
+          break;
       }
     })
-    return dataToUpdate
+
+    return updatedState
   }
 }
