@@ -4,6 +4,7 @@ import { REACTFLOW } from "../namespaces/broadcast/reactflow";
 import { NODE } from "../namespaces/broadcast/node";
 import { EntityUtils } from "./client/diagram/EntityUtils";
 import { ReactflowUtils } from "./client/diagram/ReactflowUtils";
+import { MemoUtils } from "./client/diagram/MemoUtils";
 
 
 export type DataToUpdate = {
@@ -47,6 +48,8 @@ export class BroadcastDataUtils {
         case NODE.ENTITY.TYPE.COLUMN_ORDER_UPDATE:
           EntityUtils.updateColumnOrder(updatedState, change);
           break;
+        case NODE.MEMO.TYPE.CONTENT_UPDATE:
+          MemoUtils.updateContent(updatedState, change);
       }
     })
 

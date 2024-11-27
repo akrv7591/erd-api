@@ -99,7 +99,6 @@ export class SocketIo {
 
     // Add event listener for UPDATE_DATA events from clients in the same room
     socket.on(SOCKET.DATA.UPDATE_DATA, listeners.handleDataUpdate);
-
     socket.on(SOCKET.USER.SUBSCRIBE, listeners.handleSubscribe)
     socket.on(SOCKET.USER.UNSUBSCRIBE, listeners.handleUnsubscribe)
     socket.on(SOCKET.USER.VIEWPORT_CHANGE, listeners.handleViewportChange)
