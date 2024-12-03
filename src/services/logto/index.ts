@@ -37,7 +37,6 @@ export class LogToService {
       },
     })
       .then((res) => {
-        console.log(res.data)
         return res.data
       })
 
