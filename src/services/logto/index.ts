@@ -36,7 +36,10 @@ export class LogToService {
         "Authorization": `Basic ${Buffer.from(`${appId}:${appSecret}`).toString("base64")}`
       },
     })
-      .then((res) => res.data)
+      .then((res) => {
+        console.log(res.data)
+        return res.data
+      })
 
     // Update access token 10 minutes before it expires
     setTimeout(this.init, (authentication.expires_in - 600) * 1000)
