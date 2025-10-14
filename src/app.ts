@@ -8,7 +8,6 @@ import config from './config/config';
 import { xssMiddleware } from './middleware/xssMiddleware';
 import routes from "./routes";
 import {Application} from "express";
-import path from 'path';
 
 export const initApp = (app: Application) => {
   // Helmet is used to secure this app by configuring the http-header
@@ -41,9 +40,7 @@ export const initApp = (app: Application) => {
 
   app.all('*', (req, res) => {
     res.status(404);
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, 'views', '404.html'));
-    } else if (req.accepts('json')) {
+    if (req.accepts('json')) {
       res.json({ error: '404 Not Found' });
     } else {
       res.type('txt').send('404 Not Found');

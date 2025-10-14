@@ -85,7 +85,7 @@ export class Erd extends Model<IErd, ICErd> {
   declare data: Object
 
   @Column({
-    type: DataType.INTEGER.UNSIGNED,
+    type: DataType.INTEGER,
     defaultValue: () => 0,
     allowNull: false
   })

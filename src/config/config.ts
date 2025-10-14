@@ -10,7 +10,7 @@ dotenv.config({
 });
 
 const envSchema = Joi.object<CustomEnvValues>().keys({
-  PORT: Joi.number().required().default('4000'),
+  PORT: Joi.number().default('3000'),
   SERVER_URL: Joi.string().required(),
   CLIENT_URL: Joi.string().required(),
   CORS_ORIGIN: Joi.string().required().default('*'),
@@ -22,11 +22,6 @@ const envSchema = Joi.object<CustomEnvValues>().keys({
   DB_DIALECT: Joi.string().required(),
   DB_LOGGING: Joi.boolean().required(),
   DB_SYNC: Joi.boolean().required(),
-  SMTP_HOST: Joi.string().required(),
-  SMTP_PORT: Joi.string().default('587'),
-  SMTP_USERNAME: Joi.string().required(),
-  SMTP_PASSWORD: Joi.string().required(),
-  EMAIL_FROM: Joi.string().email().required(),
   REDIS_URL: Joi.string().required(),
   S3_ACCESS_KEY: Joi.string().required(),
   S3_SECRET_KEY: Joi.string().required(),
@@ -62,25 +57,14 @@ const validatedEnv = result.value
 const config = {
   node_env: process.env['NODE_ENV'],
   server: {
-    port: validatedEnv.PORT,
-    url: validatedEnv.SERVER_URL
+    url: validatedEnv.SERVER_URL,
+    port: validatedEnv.PORT
   },
   client: {
     url: validatedEnv.CLIENT_URL
   },
   cors: {
     cors_origin: validatedEnv.CORS_ORIGIN
-  },
-  email: {
-    smtp: {
-      host: validatedEnv.SMTP_HOST,
-      port: validatedEnv.SMTP_PORT,
-      auth: {
-        username: validatedEnv.SMTP_USERNAME,
-        password: validatedEnv.SMTP_PASSWORD
-      }
-    },
-    from: validatedEnv.EMAIL_FROM
   },
   db: {
     erd: {

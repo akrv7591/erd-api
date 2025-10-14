@@ -30,7 +30,7 @@ Promise.all([
   initApp(express);
 
   server.listen(config.server.port, () => {
-    console.log(`Server is running on Port: ${config.server.port}`);
+    console.log(`Server is running on: ${config.server.url}`);
   });
 
   process.on("SIGTERM", () => {
