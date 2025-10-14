@@ -10,7 +10,6 @@ dotenv.config({
 });
 
 const envSchema = Joi.object<CustomEnvValues>().keys({
-  PORT: Joi.number().default('3000'),
   SERVER_URL: Joi.string().required(),
   CLIENT_URL: Joi.string().required(),
   CORS_ORIGIN: Joi.string().required().default('*'),
@@ -58,7 +57,7 @@ const config = {
   node_env: process.env['NODE_ENV'],
   server: {
     url: validatedEnv.SERVER_URL,
-    port: validatedEnv.PORT
+    port: 3000
   },
   client: {
     url: validatedEnv.CLIENT_URL
